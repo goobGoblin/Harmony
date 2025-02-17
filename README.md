@@ -5,6 +5,16 @@ Application that unifies all of your music streaming services with one interface
 
 ![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExYjhoeGxwNmp2bGdiamx3Z2RtaTZ0MWI1cHFsYXBxeXRvNmg0cG80NyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/g2z1lhDcDC9kkCOsBC/giphy.gif)
 
+# Firebase Layout
+
+## Playlists
+![alt text](/database_layout/playlists.png "Playlists")
+## Songs
+![alt text](/database_layout/Songs.png "songs")
+## Users
+### Here we have each document containing collections for albums,artists, and playlists. Where each document in the collection contains references to other parts of the database.
+![alt text](/database_layout/users.png "users")
+
 ## Flutter Instalation
 [Click here to learn more](https://docs.flutter.dev/get-started/install)
 
