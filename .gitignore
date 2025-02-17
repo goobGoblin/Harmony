@@ -44,9 +44,10 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 #any other relevant files
-lib/customThemes.dart
-lib/themes.dart
-lib/spotify_parser.dart
+# lib/customThemes.dart
+# lib/themes.dart
+# lib/spotify_parser.dart
+lib/firebase_options.dart
 web
 windows
 playlist_data.txt
