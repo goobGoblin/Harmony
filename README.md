@@ -1,10 +1,10 @@
 # Harmony
 Application that unifies all of your music streaming services with one interface and application
 
-##Flutter Instalation
+## Flutter Instalation
 [Click here to learn more](https://docs.flutter.dev/get-started/install)
 
-##Firebase Setup
+## Firebase Setup
 1. Install the [Firebase CLI](https://firebase.google.com/docs/cli?hl=en&authuser=0#install_the_firebase_cli) and log in (run firebase login)
 2. Install the [Flutter SDK](https://docs.flutter.dev/get-started/install)
 3. pull branch for local repository
