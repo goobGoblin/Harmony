@@ -6,13 +6,40 @@ import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 //
 class SpotifyParser extends ChangeNotifier {
   //locals
   dynamic _playlists;
-  var _token = '';
+  String _token = '';
   var _db;
+
+  Future<void> sendRequest(String type, Map<String, String> thisData) async {
+    log("Sending request");
+    var url = Uri.http(
+      '192.168.0.31:8080',
+      '/',
+      thisData,
+    ); //TODO: Change to localhost
+    log("Sending request");
+    http.Response response;
+
+    try {
+      if (type == 'GET') {
+        response = await http.get(url);
+      } else if (type == 'POST') {
+        log("Sending post request");
+        response = await http.post(url);
+      } else {
+        response = http.Response('Invalid request type', 400);
+      }
+
+      log("Response status: ${response.statusCode}");
+    } catch (e) {
+      log("Error: $e");
+    }
+  }
 
   void firebaseInit() async {
     await Firebase.initializeApp(
@@ -40,7 +67,7 @@ class SpotifyParser extends ChangeNotifier {
     }
   }
 
-  void connect() async {
+  void connect(String FirebaseID) async {
     try {
       await SpotifySdk.connectToSpotifyRemote(
         clientId: "", //please contact me for the client id
@@ -58,7 +85,25 @@ class SpotifyParser extends ChangeNotifier {
       ),
     );
     //firebaseInit();
-    play("spotify:track:7221xIgOnuakPdLqT0F3nP");
+    //set value in users collection to true for spotify, and add users token
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .set({
+          'Linked Accounts': {
+            'Spotify': [true, _token],
+          },
+        }, SetOptions(merge: true));
+
+    log('Token: $_token');
+    //connect to backend
+    Map<String, String> thisData = {
+      'Spotify': _token.toString(),
+      'FirebaseID': FirebaseID,
+    };
+    await sendRequest('POST', thisData);
+
+    //play("spotify:track:7221xIgOnuakPdLqT0F3nP");
   }
 
   void retrivePlaylists() async {
