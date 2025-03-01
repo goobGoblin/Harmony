@@ -121,6 +121,38 @@ Future<DocumentSnapshot<Map<String, dynamic>>> getUserData() async {
   return docSnapshot;
 }
 
+Future<List<dynamic>> getGlobalSongData(Map<String, dynamic> tracks) async {
+  //store result of each occurence
+  var results = [];
+
+  log(tracks.toString());
+
+  //when there are no tracks passed assume the request wants all songs
+  if (tracks['Tracklist'] == null) {
+    var docSnapshot =
+        await FirebaseFirestore.instance.collection('Songs').get();
+    return docSnapshot.docs;
+  }
+
+  for (var thisRef in tracks['Tracklist']) {
+    var docSnapshot =
+        await FirebaseFirestore.instance
+            .collection('Songs')
+            .doc(thisRef.id)
+            .get();
+
+    if (docSnapshot != null) {
+      log('Document exists');
+      results.add(docSnapshot);
+    } else {
+      log("Document does not exist");
+    }
+  }
+  log(results.toString());
+
+  return results;
+}
+
 Future<void> sendRequest(String type, Map<String, String> thisData) async {
   log("Sending request");
   var url = Uri.http(
@@ -200,7 +232,7 @@ Future<void> main() async {
         '/playlists': (context) => const Playlists(),
         '/albums': (context) => const Albums(),
         '/artists': (context) => const Artists(),
-        '/songs': (context) => const Songs(),
+        '/songs': (context) => const Songs(thisName: "Songs", tracks: {}),
         '/downloads': (context) => const Downloads(),
         '/settings': (context) => const Settings(),
         '/connectedApps': (context) => const ConnectedApps(),
@@ -237,6 +269,7 @@ class SignUpRoute extends StatelessWidget {
               decoration: const InputDecoration(labelText: 'Email'),
             ),
             TextFormField(
+              obscureText: true,
               controller: passwordController,
               decoration: const InputDecoration(labelText: 'Password'),
             ),
@@ -305,6 +338,7 @@ class SignInRoute extends StatelessWidget {
               decoration: const InputDecoration(labelText: 'Email'),
             ),
             TextFormField(
+              obscureText: true,
               controller: passwordController,
               decoration: const InputDecoration(labelText: 'Password'),
             ),
@@ -458,26 +492,42 @@ class CurrentlyPlaying extends StatelessWidget {
 }
 
 //used for anything that needs to be a list of widgets
-List<Widget> createListOfWidgets(List<dynamic> thisList) {
+List<Widget> createListOfPlaylists(
+  List<dynamic> thisList,
+  BuildContext context,
+) {
   List<Widget> thisWidgets = [];
   for (var i = 0; i < thisList.length; i++) {
-    var newButton = ElevatedButton(
-      onPressed: () {
-        log(thisList[i]["uri"]);
-        spotifyConnection.play(thisList[i]["uri"]);
-      },
-      style: ButtonStyle(
-        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18.0),
-            side: const BorderSide(color: Colors.black),
+    try {
+      log(thisList[i]["URI"]);
+      var newButton = ElevatedButton(
+        onPressed: () {
+          String temp = thisList[i]["Name"];
+          Navigator.push(
+            context,
+            //create new songs page with name of playlist
+            MaterialPageRoute(
+              builder:
+                  (context) =>
+                      Songs(thisName: temp, tracks: thisList[i]['Tracks']),
+            ),
+          );
+        },
+        style: ButtonStyle(
+          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18.0),
+              side: const BorderSide(color: Colors.black),
+            ),
           ),
         ),
-      ),
-      child: Text(thisList[i]["name"]),
-    );
-    //add the new button to the list
-    thisWidgets.add(newButton);
+        child: Text(thisList[i]['Name']),
+      );
+      //add the new button to the list
+      thisWidgets.add(newButton);
+    } catch (e) {
+      log("error:$e");
+    }
   }
   return thisWidgets;
 }
@@ -525,7 +575,10 @@ class Playlists extends StatelessWidget {
                   var temp = snapshot.data?.data();
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: createListOfWidgets(temp!['playlists']),
+                    children: createListOfPlaylists(
+                      temp!['playlists'],
+                      context,
+                    ),
                   );
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
@@ -623,15 +676,73 @@ class Artists extends StatelessWidget {
   }
 }
 
+List<Widget> createListOfSongs(
+  List<dynamic>? collection,
+  BuildContext context,
+) {
+  List<Widget> thisWidgets = [];
+  for (var i = 0; i < collection!.length; i++) {
+    try {
+      //get document snapshot from reference {
+      // log(collection[i].toString());
+      var thisSong = collection[i].data();
+      var newButton = ElevatedButton(
+        onPressed: () {
+          // Navigator.push(
+          //   context,
+          //   //create new songs page with name of playlist
+          //   MaterialPageRoute(
+          //     builder:
+          //         (context) =>
+          //             Songs(thisName: temp, thisUri: thisList[i]["uri"]),
+          //   ),
+          // );
+          spotifyConnection.play(thisSong["URI"]);
+        },
+        style: ButtonStyle(
+          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18.0),
+              side: const BorderSide(color: Colors.black),
+            ),
+          ),
+        ),
+        child: Text(thisSong["Name"]),
+      );
+      //add the new button to the list
+      thisWidgets.add(newButton);
+    } catch (e) {
+      log("Error: $e");
+    }
+  }
+  return thisWidgets;
+}
+
 class Songs extends StatelessWidget {
-  const Songs({Key? key}) : super(key: key);
+  final String thisName;
+  final Map<String, dynamic> tracks;
+  const Songs({Key? key, required this.thisName, required this.tracks})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var docSnapshot =
+        FirebaseFirestore.instance
+            .collection('Users')
+            .doc(FirebaseAuth.instance.currentUser?.uid)
+            .get();
+
+    var theseSongs = [];
+
+    if (docSnapshot != null) {
+      log('Document exists');
+    } else {
+      log("Document does not exist");
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-        title: Text("Songs"),
+        title: Text(thisName),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
@@ -641,12 +752,29 @@ class Songs extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("TODO"), //thisConnection.getSongs()),
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          alignment: Alignment.center,
+          child: FutureBuilder(
+            future: getGlobalSongData(tracks),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasData) {
+                  //collection data
+                  var temp = snapshot.data;
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: createListOfSongs(temp, context),
+                  );
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                }
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
+              return const Text('Loading...');
+            },
+          ),
         ),
       ),
       // floatingActionButton: FloatingActionButton(

@@ -17,16 +17,16 @@ migrate_working_dir/
 /android/app/profile
 /android/app/release
 #any other relevant files
-lib/customThemes.dart
-lib/themes.dart
+/lib/customThemes.dart
+/lib/themes.dart
 #lib/spotify_parser.dart
-lib/firebase_options.dart
+/lib/firebase_options.dart
 web
 windows
 playlist_data.txt
 linux
 macos
-lib/Authentication.json
+/lib/Authentication.json
 
 # IntelliJ related
 *.iml
@@ -37,7 +37,7 @@ lib/Authentication.json
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
 # is commented out by default.
-#.vscode/
+.vscode/
 
 # Flutter/Dart/Pub related
 **/doc/api/
@@ -48,6 +48,7 @@ lib/Authentication.json
 .pub-cache/
 .pub/
 /build/
+
 
 # Symbolication related
 app.*.symbols

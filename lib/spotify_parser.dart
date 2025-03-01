@@ -8,6 +8,7 @@ import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+//TODO move firebase to backend
 //
 class SpotifyParser extends ChangeNotifier {
   //locals
@@ -15,12 +16,11 @@ class SpotifyParser extends ChangeNotifier {
   String _token = '';
   var _db;
 
-  Future<void> sendRequest(String type, Map<String, String> thisData) async {
+  Future<void> sendRequest(String type, Map<String, dynamic> thisData) async {
     log("Sending request");
     var url = Uri.http(
       '192.168.0.31:8080',
-      '/',
-      thisData,
+      '/Spotify',
     ); //TODO: Change to localhost
     log("Sending request");
     http.Response response;
@@ -30,7 +30,12 @@ class SpotifyParser extends ChangeNotifier {
         response = await http.get(url);
       } else if (type == 'POST') {
         log("Sending post request");
-        response = await http.post(url);
+        response = await http.post(
+          url,
+          headers: {'Content-Type': 'application/json'},
+
+          body: jsonEncode(thisData),
+        );
       } else {
         response = http.Response('Invalid request type', 400);
       }
@@ -68,22 +73,30 @@ class SpotifyParser extends ChangeNotifier {
   }
 
   void connect(String FirebaseID) async {
+    //await SpotifySdk.disconnect();
     try {
-      await SpotifySdk.connectToSpotifyRemote(
-        clientId: "", //please contact me for the client id
-        redirectUrl: "http://localhost:8888/callback",
+      var temp = await SpotifySdk.connectToSpotifyRemote(
+        clientId:
+            "", //please contact me for the client id
+        redirectUrl: "",
       );
+      log('Connected: $temp');
     } catch (e) {
       log('Error: ${parseError(e.toString())}');
     }
 
     // Get the authentication token
-    setToken(
-      await SpotifySdk.getAccessToken(
-        clientId: "", //please contact me for the client id
-        redirectUrl: "http://localhost:8888/callback",
-      ),
-    );
+    try {
+      setToken(
+        await SpotifySdk.getAccessToken(
+          clientId:
+              "", //please contact me for the client id
+          redirectUrl: "",
+        ),
+      );
+    } catch (e) {
+      log('Error: ${parseError(e.toString())}');
+    }
     //firebaseInit();
     //set value in users collection to true for spotify, and add users token
     FirebaseFirestore.instance
@@ -97,13 +110,29 @@ class SpotifyParser extends ChangeNotifier {
 
     log('Token: $_token');
     //connect to backend
-    Map<String, String> thisData = {
+    Map<String, dynamic> thisData = {
       'Spotify': _token.toString(),
       'FirebaseID': FirebaseID,
+      'Options': {
+        'Playlists': true,
+        'Liked Songs': true,
+        'Recently Played': true,
+        'Top Tracks': true,
+        'Top Artists': true,
+        'Followed Artists': true,
+        'Followed Users': true,
+        'Saved Albums': true,
+        'Saved Shows': true,
+        'Saved Episodes': true,
+        'Saved Tracks': true,
+        'Saved Playlists': true,
+        'Saved Podcasts': true,
+      },
     };
-    await sendRequest('POST', thisData);
 
-    //play("spotify:track:7221xIgOnuakPdLqT0F3nP");
+    //TODO implement what the api should do in the backend
+    log('Sending request');
+    await sendRequest('POST', thisData);
   }
 
   void retrivePlaylists() async {
