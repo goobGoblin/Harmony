@@ -9,9 +9,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:flutter_application_1/customThemes.dart'; //TODO
 // import 'package:flutter_application_1/themes.dart';
+import 'LastFM_parser.dart';
 
 //establish spotify connection
 SpotifyParser spotifyConnection = SpotifyParser();
+LastFMParser lastFMConnection = LastFMParser();
 
 Future<String> createFirebaseAccount(
   String email,
@@ -43,9 +45,9 @@ Future<String> createFirebaseAccount(
         'YouTube Music': false,
       },
       'UserCreateTags': [null],
-      'fName': 'NA',
       'lName': 'NA',
       'bio': 'NA',
+      'fName': 'NA',
       'profilePic': 'NA',
       'username': username,
       'userRatings': [null],
@@ -909,6 +911,17 @@ class ConnectedApps extends StatelessWidget {
               //TODO: Add visuals for if an account is connected or not
               child: const Text("Spotify"),
             ), //thisConnection.getConnectedApps()),
+          
+           ElevatedButton(
+              onPressed: () async {
+                // Prompt user to enter Last.fm credentials
+                final username = "user_lastfm"; // Replace with user input
+                final password = "pass_lastfm"; // Replace with secure input handling
+
+                await lastFMConnection.connect(username, password);
+              },
+              child: const Text("Last.fm"),
+            ),
           ],
         ),
       ),
