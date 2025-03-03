@@ -50,11 +50,21 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-   //Contack harrsion for info
+    //Contact harrsion for info
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: 'eecs-582-project-74abe',
+    storageBucket: 'eecs-582-project-74abe.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    //Contack harrsion for info
+    //Contact harrsion for info
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: 'eecs-582-project-74abe',
+    storageBucket: 'eecs-582-project-74abe.firebasestorage.app',
+    iosBundleId: 'com.example.flutterApplication1',
   );
-
 }
