@@ -5,6 +5,8 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+
+
 android {
     namespace = "com.example.flutter_application_1"
     compileSdk = flutter.compileSdkVersion
@@ -39,6 +41,8 @@ android {
             signingConfig = signingConfigs.getByName("debug")
         }
     }
+
+    
 }
 
 flutter {

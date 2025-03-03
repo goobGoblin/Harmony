@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/audioHandler.dart';
 import 'spotify_parser.dart';
 import 'package:animations/animations.dart';
 import 'package:http/http.dart' as http;
@@ -7,11 +8,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'globals.dart' as globals;
+//import 'audioHandler.dart';
 // import 'package:flutter_application_1/customThemes.dart'; //TODO
 // import 'package:flutter_application_1/themes.dart';
 
 //establish spotify connection
 SpotifyParser spotifyConnection = SpotifyParser();
+//create audio handler
+MyAudioHandler audioHandler = MyAudioHandler();
 
 Future<String> createFirebaseAccount(
   String email,
@@ -182,9 +187,14 @@ Future<void> sendRequest(String type, Map<String, String> thisData) async {
 Future<void> main() async {
   //initalize firebase
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  log('Firebase initialized');
-
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    log('Firebase initialized');
+  } catch (e) {
+    log('Error initializing firebase: $e');
+  }
   var myInitRout = '/';
   //check if user is logged in
   if (FirebaseAuth.instance.currentUser == null) {
@@ -194,6 +204,17 @@ Future<void> main() async {
     log('User logged in: ${FirebaseAuth.instance.currentUser?.email}');
     myInitRout = '/home';
   }
+
+  //initialize audio handler
+  // audioHandler = await AudioService.init(
+  //   builder: () => MyAudioHandler(),
+  //   config: const AudioServiceConfig(
+  //     androidNotificationChannelId: 'com.example.flutter_application_1',
+  //     androidNotificationChannelName: 'Audio playback',
+  //     androidNotificationOngoing: true,
+  //     androidStopForegroundOnPause: true,
+  //   ),
+  // );
 
   runApp(
     MaterialApp(
@@ -454,40 +475,98 @@ class HomeRoute extends StatelessWidget {
   }
 }
 
+//cp class
 class CurrentlyPlaying extends StatelessWidget {
   const CurrentlyPlaying({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-        title: Text("Currently Playing"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () {
-              Navigator.pushNamed(context, '/settings');
-            },
-          ),
-        ],
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("TODO"), //thisConnection.getCurrentlyPlaying()),
+    try {
+      log(globals.currentlyPlaying['Images'][0]['url'].toString());
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+          title: Text("Currently Playing"),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () {
+                Navigator.pushNamed(context, '/settings');
+              },
+            ),
           ],
         ),
-      ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     Navigator.pop(context);
-      //   },
-      //   tooltip: 'Back',
-      //   child: const Icon(Icons.arrow_back),
-      // ),
-    );
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image(
+                image: NetworkImage(
+                  globals.currentlyPlaying['Images'][0]['url'],
+                ),
+              ),
+              Text(globals.currentlyPlaying['Name']),
+              Text(globals.currentlyPlaying['Artist'][0]['name']),
+              //TODO: Likely will be apart of the implementaion of the audio handler
+              //But implement dynamic changing of globals.currentlyPlaying when a track is skipped
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.skip_previous),
+                    onPressed: () {
+                      spotifyConnection.skipPrevious();
+                    },
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.pause),
+                    onPressed: () {
+                      spotifyConnection.pause();
+                    },
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.play_arrow),
+                    onPressed: () {
+                      spotifyConnection.resume();
+                    },
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.skip_next),
+                    onPressed: () {
+                      spotifyConnection.skipNext();
+                    },
+                  ),
+                ],
+              ), //thisConnection.getCurrentlyPlaying()),
+            ],
+          ),
+        ),
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () {
+        //     Navigator.pop(context);
+        //   },
+        //   tooltip: 'Back',
+        //   child: const Icon(Icons.arrow_back),
+        // ),
+      );
+    } catch (e) {
+      log("Error: $e");
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+          title: Text("Currently Playing"),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () {
+                Navigator.pushNamed(context, '/settings');
+              },
+            ),
+          ],
+        ),
+        body: Center(child: Text("Nothing is playing")),
+      );
+    }
   }
 }
 
@@ -503,6 +582,7 @@ List<Widget> createListOfPlaylists(
       var newButton = ElevatedButton(
         onPressed: () {
           String temp = thisList[i]["Name"];
+          globals.currentPlaylist = thisList[i]['Tracks'];
           Navigator.push(
             context,
             //create new songs page with name of playlist
@@ -697,6 +777,8 @@ List<Widget> createListOfSongs(
           //             Songs(thisName: temp, thisUri: thisList[i]["uri"]),
           //   ),
           // );
+          globals.currentlyPlaying = thisSong;
+          log(globals.currentlyPlaying.toString());
           spotifyConnection.play(thisSong["URI"]);
         },
         style: ButtonStyle(
@@ -718,6 +800,7 @@ List<Widget> createListOfSongs(
   return thisWidgets;
 }
 
+//Songs Class
 class Songs extends StatelessWidget {
   final String thisName;
   final Map<String, dynamic> tracks;
@@ -908,6 +991,24 @@ class ConnectedApps extends StatelessWidget {
               },
               //TODO: Add visuals for if an account is connected or not
               child: const Text("Spotify"),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                spotifyConnection.connect(
+                  FirebaseAuth.instance.currentUser!.uid,
+                );
+              },
+              //TODO: Add visuals for if an account is connected or not
+              child: const Text("Youtube"),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                spotifyConnection.connect(
+                  FirebaseAuth.instance.currentUser!.uid,
+                );
+              },
+              //TODO: Add visuals for if an account is connected or not
+              child: const Text("Soundcloud"),
             ), //thisConnection.getConnectedApps()),
           ],
         ),

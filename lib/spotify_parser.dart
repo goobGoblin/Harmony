@@ -7,11 +7,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'globals.dart' as globals;
 
 //TODO move firebase to backend
 //
 class SpotifyParser extends ChangeNotifier {
   //locals
+  var _currentlyPlaying = {};
   dynamic _playlists;
   String _token = '';
   var _db;
@@ -46,16 +48,16 @@ class SpotifyParser extends ChangeNotifier {
     }
   }
 
-  void firebaseInit() async {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+  // void firebaseInit() async {
+  //   await Firebase.initializeApp(
+  //     options: DefaultFirebaseOptions.currentPlatform,
+  //   );
 
-    log('Playlist data: $_playlists');
-    log('Firebase initialized');
-    //retrivePlaylists();
-    FirebaseFirestore.instance.collection('Users').add({'Name': 'Test'});
-  }
+  //   log('Playlist data: $_playlists');
+  //   log('Firebase initialized');
+  //   //retrivePlaylists();
+  //   FirebaseFirestore.instance.collection('Users').add({'Name': 'Test'});
+  // }
 
   static String parseError(String error) {
     switch (error) {
@@ -77,8 +79,8 @@ class SpotifyParser extends ChangeNotifier {
     try {
       var temp = await SpotifySdk.connectToSpotifyRemote(
         clientId:
-            "", //please contact me for the client id
-        redirectUrl: "",
+            , //please contact me for the client id
+        redirectUrl: ,
       );
       log('Connected: $temp');
     } catch (e) {
@@ -90,8 +92,8 @@ class SpotifyParser extends ChangeNotifier {
       setToken(
         await SpotifySdk.getAccessToken(
           clientId:
-              "", //please contact me for the client id
-          redirectUrl: "",
+             , //please contact me for the client id
+          redirectUrl: ,
         ),
       );
     } catch (e) {
@@ -194,6 +196,8 @@ class SpotifyParser extends ChangeNotifier {
 
   void skipNext() async {
     SpotifySdk.skipNext();
+    var temp = SpotifySdk.getPlayerState().asStream();
+    log('temp: $temp');
   }
 
   void skipPrevious() async {
@@ -218,5 +222,14 @@ class SpotifyParser extends ChangeNotifier {
 
   void subscribeToCapabilities() {
     SpotifySdk.subscribeCapabilities();
+  }
+
+  //Used for testing will be removed
+  void setCurrentlyPlaying(var data) {
+    _currentlyPlaying = data;
+  }
+
+  dynamic getCurrentlyPlaying() {
+    return _currentlyPlaying;
   }
 }
