@@ -1,0 +1,24 @@
+version: '3.7'
+
+services:
+  development_flutter:
+    container_name: development_flutter
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    privileged: true
+    environment:
+      DISPLAY: $DISPLAY
+    network_mode: host
+    volumes:
+      - home_developer:/home/developer
+      - ./workdir:/home/developer/project
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /etc/localtime:/etc/localtime:ro
+      - /usr/share/icons:/usr/share/icons:ro
+      - /usr/share/fonts:/usr/share/fonts:ro
+      - /dev/kvm:/dev/kvm
+      - /dev/bus/usb:/dev/bus/usb
+
+volumes:
+  home_developer: ~
