@@ -2,9 +2,13 @@
 Application that unifies all of your music streaming services with one interface and application
 ## [Backend Repo](https://github.com/hreed88/Harmony-Backend)
 
-# Sprint 1 Application
+# Sprint 2 Application
+- Click the Thumbnail for full demo
 
-![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExYjhoeGxwNmp2bGdiamx3Z2RtaTZ0MWI1cHFsYXBxeXRvNmg0cG80NyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/g2z1lhDcDC9kkCOsBC/giphy.gif)
+[![Watch the video](https://i9.ytimg.com/vi/vt8k38zFdDc/mq2.jpg?sqp=CNyDlb4G&rs=AOn4CLB7-4yvcmH_JtXIZM_ehbIk8tNC6A&retry=4)](https://youtube.com/shorts/vt8k38zFdDc?feature=share) 
+
+![Alt Text](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ2Z3a2FoZXlhazU0a2V0bTNqcWVob3Z3bXNrM2s3ZGhzeHplbjV2aSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/XcHyzmDqxvELpbCV1J/giphy.gif)![Alt Text](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExbWZuNWhwaTNqNG04OXRocWE0amJhb2g1d2VtZ2QzaDZsNGs5YTh4byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/hhbnnHSjuRwyNUi6Cy/giphy.gif)![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZm05MG8yeDQ2ZWw2MXdqeW4wMWhiaHpueGpvZnYyY2ZwdzhkYzBtOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/r7LFaCkoBcLXSJ4sJe/giphy.gif)
+
 
 # Documentation(Sprint 1)
 <object data="https://github.com/goobGoblin/Harmony/tree/main/docs/Agile Documentation.pdf" type="application/pdf" width="700px" height="700px">
