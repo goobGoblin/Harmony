@@ -1,7 +1,7 @@
 
 FROM ubuntu:22.04
 
-#Install java jdk 17
+#Install java jdk 8
 RUN apt-get update && \
 	apt-get install -y openjdk-8-jdk openjdk-8-jre && \
 	apt-get install -y ant && \
@@ -177,3 +177,5 @@ RUN cat /usr/lib/git-core/git-sh-prompt > .bash_git
 # Check flutter
 RUN flutter doctor --android-licenses
 RUN flutter doctor
+
+ENTRYPOINT git config --global --add safe.directory /opt/flutter && flutter emulators --create [--name flutter_emulator] && flutter emulators --launch flutter_emulator && cd project && flutter clean && echo "Please wait for emulator to startup (Past the G screen). Before running "flutter run"" && /bin/bash 
