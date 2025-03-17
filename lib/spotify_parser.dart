@@ -90,7 +90,7 @@ class SpotifyParser extends ChangeNotifier {
     // Get the authentication token
     try {
       setToken(
-        SpotifySdk.getAccessToken(
+        await SpotifySdk.getAccessToken(
           clientId:
              , //please contact me for the client id
           redirectUrl: ,
