@@ -11,6 +11,12 @@ Application that unifies all of your music streaming services with one interface
   [![Watch the video](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgUuEAqofMyGsPNkrzu5z1ZClxWrnoA2Lhfg&s)](https://youtube.com/shorts/yiSObtaE4_A?feature=share) 
 
   ![Alt Text](https://drive.google.com/uc?id=1ifnWtoUFT6l9LHNNJQkTMhv0tqt-CDqY)
+
+
+  ### Flutter & Docker
+  - Harmony running on docker container
+ 
+  ![Alt Text](https://drive.google.com/uc?id=1Ia8aCp3Vngtgf13HnzglHYUqIFD7QUgm)
   
 
 
