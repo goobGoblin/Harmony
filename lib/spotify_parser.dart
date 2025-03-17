@@ -77,7 +77,7 @@ class SpotifyParser extends ChangeNotifier {
   void connect(String FirebaseID) async {
     //await SpotifySdk.disconnect();
     try {
-      var temp = await SpotifySdk.connectToSpotifyRemote(
+      var temp = SpotifySdk.connectToSpotifyRemote(
         clientId:
             , //please contact me for the client id
         redirectUrl: ,
