@@ -3,15 +3,12 @@ import 'package:spotify_sdk/spotify_sdk.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:developer';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'globals.dart' as globals;
 
 //TODO move firebase to backend
 //
-class SpotifyParser extends ChangeNotifier {
+class SpotifyAPI extends ChangeNotifier {
   //locals
   var _currentlyPlaying = {};
   dynamic _playlists;
@@ -74,13 +71,26 @@ class SpotifyParser extends ChangeNotifier {
     }
   }
 
+  void reconnect() async {
+    try {
+      var temp = SpotifySdk.connectToSpotifyRemote(
+        clientId:
+            "", //please contact me for the client id
+        redirectUrl: "http://localhost:8888/callback",
+      );
+      log('Connected: $temp');
+    } catch (e) {
+      log('Error: ${parseError(e.toString())}');
+    }
+  }
+
   void connect(String FirebaseID) async {
     //await SpotifySdk.disconnect();
     try {
       var temp = SpotifySdk.connectToSpotifyRemote(
         clientId:
-            , //please contact me for the client id
-        redirectUrl: ,
+            "", //please contact me for the client id
+        redirectUrl: "http://localhost:8888/callback",
       );
       log('Connected: $temp');
     } catch (e) {
@@ -90,10 +100,10 @@ class SpotifyParser extends ChangeNotifier {
     // Get the authentication token
     try {
       setToken(
-        SpotifySdk.getAccessToken(
+        await SpotifySdk.getAccessToken(
           clientId:
-             , //please contact me for the client id
-          redirectUrl: ,
+              "ed7c834dad2d41bba8f3642c7ed07350", //please contact me for the client id
+          redirectUrl: "http://localhost:8888/callback",
         ),
       );
     } catch (e) {

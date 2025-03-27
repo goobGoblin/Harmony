@@ -5,8 +5,7 @@ import 'package:flutter_application_1/themes.dart';
 class _CustomTheme extends InheritedWidget {
   final CustomThemeState data;
 
-  _CustomTheme({required this.data, Key? key, required Widget child})
-    : super(key: key, child: child);
+  const _CustomTheme({required this.data, super.key, required super.child});
 
   @override
   bool updateShouldNotify(_CustomTheme oldWidget) {
@@ -18,8 +17,7 @@ class CustomTheme extends StatefulWidget {
   final Widget child;
   final bool isDark;
 
-  const CustomTheme({required this.child, required this.isDark, Key? key})
-    : super(key: key);
+  const CustomTheme({required this.child, required this.isDark, super.key});
 
   @override
   CustomThemeState createState() => CustomThemeState();
