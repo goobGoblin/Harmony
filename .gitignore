@@ -27,6 +27,7 @@ playlist_data.txt
 linux
 macos
 /lib/Authentication.json
+/functions/lastfm_test.json
 
 # IntelliJ related
 *.iml
