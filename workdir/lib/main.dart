@@ -1,5 +1,8 @@
 import 'package:http/http.dart' as http;
 import 'pages/pages.dart';
+//import 'package:webview_flutter/webview_flutter.dart';
+import 'pages/web_view_container.dart';
+
 //import 'audioHandler.dart';
 // import 'package:flutter_application_1/customThemes.dart'; //TODO
 // import 'package:flutter_application_1/themes.dart';
@@ -104,7 +107,19 @@ Future<void> main() async {
         ),
       ),
       //handle routes(aka pages)
-      initialRoute: myInitRout, //default route
+      initialRoute: myInitRout,
+      //for navigation to webview
+      onGenerateRoute: (settings) {
+        // Check for routes that expect a URL parameter
+        if (settings.name == '/webViewContainer') {
+          final String url = settings.arguments as String;
+          return MaterialPageRoute(
+            builder: (context) => WebViewExample(url: url), // Pass URL here
+          );
+        }
+        return null; // Return null for unknown routes
+      },
+      //default route
       routes: {
         '/signUp': (context) => const SignUpRoute(),
         '/signIn': (context) => const SignInRoute(),
@@ -126,8 +141,3 @@ Future<void> main() async {
 }
 
 //used for anything that needs to be a list of widgets
-
-
-
-
-

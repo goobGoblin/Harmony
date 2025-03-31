@@ -61,12 +61,15 @@ class _ConnectedApps extends State<ConnectedApps> {
             ),
             ElevatedButton(
               onPressed: () async {
-                spotifyConnection.connect(
-                  FirebaseAuth.instance.currentUser!.uid,
+                // Navigate to SoundCloud signup page dynamically
+                Navigator.pushNamed(
+                  context,
+                  '/webViewContainer',
+                  arguments:
+                      'https://soundcloud.com/signin', // Dynamic URL for SoundCloud
                 );
               },
-              //TODO: Add visuals for if an account is connected or not
-              child: const Text("Soundcloud"),
+              child: const Text("SoundCloud"),
             ), //thisConnection.getConnectedApps()),
 
             ElevatedButton(
