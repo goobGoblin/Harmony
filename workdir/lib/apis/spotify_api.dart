@@ -3,15 +3,13 @@ import 'package:spotify_sdk/spotify_sdk.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:developer';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'globals.dart' as globals;
+import 'package:cloud_functions/cloud_functions.dart';
 
 //TODO move firebase to backend
 //
-class SpotifyParser extends ChangeNotifier {
+class SpotifyAPI extends ChangeNotifier {
   //locals
   var _currentlyPlaying = {};
   dynamic _playlists;
@@ -19,32 +17,38 @@ class SpotifyParser extends ChangeNotifier {
   var _db;
 
   Future<void> sendRequest(String type, Map<String, dynamic> thisData) async {
-    log("Sending request");
-    var url = Uri.http(
-      '192.168.0.31:8080',
-      '/Spotify',
-    ); //TODO: Change to localhost
-    log("Sending request");
-    http.Response response;
+    //   log("Sending request");
+    //   var url = Uri.https('127.0.0.1:5001'); //TODO: Change to localhost
+    //   log("Sending request");
+    //   http.Response response;
 
+    //   try {
+    //     if (type == 'GET') {
+    //       response = await http.get(url);
+    //     } else if (type == 'POST') {
+    //       log("Sending post request");
+    //       response = await http.post(
+    //         url,
+    //         headers: {'Content-Type': 'application/json'},
+
+    //         body: jsonEncode(thisData),
+    //       );
+    //     } else {
+    //       response = http.Response('Invalid request type', 400);
+    //     }
+
+    //     log("Response status: ${response.statusCode}");
+    //   } catch (e) {
+    //     log("Error: $e");
+    //   }
+    // }
     try {
-      if (type == 'GET') {
-        response = await http.get(url);
-      } else if (type == 'POST') {
-        log("Sending post request");
-        response = await http.post(
-          url,
-          headers: {'Content-Type': 'application/json'},
-
-          body: jsonEncode(thisData),
-        );
-      } else {
-        response = http.Response('Invalid request type', 400);
-      }
-
-      log("Response status: ${response.statusCode}");
+      FirebaseFunctions functions = FirebaseFunctions.instance;
+      HttpsCallable callable = functions.httpsCallable('spotify_api');
+      final results = await callable.call(jsonEncode(thisData));
+      log('Results: $results');
     } catch (e) {
-      log("Error: $e");
+      log('Error: $e');
     }
   }
 
@@ -74,13 +78,26 @@ class SpotifyParser extends ChangeNotifier {
     }
   }
 
+  void reconnect() async {
+    try {
+      var temp = SpotifySdk.connectToSpotifyRemote(
+        clientId:
+            "", //please contact me for the client id
+        redirectUrl: "http://localhost:8888/callback",
+      );
+      log('Connected: $temp');
+    } catch (e) {
+      log('Error: ${parseError(e.toString())}');
+    }
+  }
+
   void connect(String FirebaseID) async {
     //await SpotifySdk.disconnect();
     try {
       var temp = SpotifySdk.connectToSpotifyRemote(
         clientId:
-            , //please contact me for the client id
-        redirectUrl: ,
+            "", //please contact me for the client id
+        redirectUrl: "http://localhost:8888/callback",
       );
       log('Connected: $temp');
     } catch (e) {
@@ -92,8 +109,8 @@ class SpotifyParser extends ChangeNotifier {
       setToken(
         await SpotifySdk.getAccessToken(
           clientId:
-             , //please contact me for the client id
-          redirectUrl: ,
+              "", //please contact me for the client id
+          redirectUrl: "http://localhost:8888/callback",
         ),
       );
     } catch (e) {
