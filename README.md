@@ -1,6 +1,13 @@
 # Harmony
 Application that unifies all of your music streaming services with one interface and application
-## [Backend Repo](https://github.com/hreed88/Harmony-Backend)
+## ~~[Backend Repo](https://github.com/hreed88/Harmony-Backend)~~ - Backend is depricated
+
+# Sprint 4
+- Implemented firebase functions for backend functionality
+- Refactored files for better readability and modularity
+- Continued work with figma designs
+- Began testing with iOS devices
+
 
 # Sprint 3
 - Added docker files for easier development among the group
