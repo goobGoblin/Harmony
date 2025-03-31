@@ -19,11 +19,10 @@
       }
     }
   },
-  "functions": {
+   "functions": {
     "source": "functions",
-    "codebase": "default",
     "predeploy": [
-      "cd \"$RESOURCE_DIR\" && pip install -r requirements.txt"
+      "python3 -m venv functions/venv && functions/venv/bin/pip install -r functions/requirements.txt"
     ],
     "ignore": [
       "venv",
