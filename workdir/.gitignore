@@ -16,6 +16,7 @@ migrate_working_dir/
 /android/app/debug
 /android/app/profile
 /android/app/release
+/android/app/google-services.json
 #any other relevant files
 /lib/customThemes.dart
 /lib/themes.dart

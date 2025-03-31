@@ -42,6 +42,7 @@ dependencies:
   firebase_auth: ^5.5.0
   just_audio: ^0.9.46
   cloud_functions: ^5.3.4
+  webview_flutter: ^4.2.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

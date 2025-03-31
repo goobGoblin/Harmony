@@ -45,5 +45,13 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+    <dict>
+          <key>NSAllowsArbitraryLoads</key><true/>
+    </dict>
+    <key>NSCameraUsageDescription</key>
+    <string>App needs camera access</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>App needs microphone access</string>
 </dict>
 </plist>
