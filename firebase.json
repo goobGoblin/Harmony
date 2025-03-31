@@ -19,17 +19,25 @@
       }
     }
   },
-  "functions": [
-    {
-      "source": "functions",
-      "codebase": "default",
-      "ignore": [
-        "venv",
-        ".git",
-        "firebase-debug.log",
-        "firebase-debug.*.log",
-        "*.local"
-      ]
+  "functions": {
+    "source": "functions",
+    "codebase": "default",
+    "predeploy": [
+      "cd \"$RESOURCE_DIR\" && pip install -r requirements.txt"
+    ],
+    "ignore": [
+      "venv",
+      ".git",
+      "firebase-debug.log",
+      "firebase-debug.*.log"
+    ]
+  },
+  "emulators": {
+    "functions": {
+      "port": 5001
+    },
+    "ui": {
+      "enabled": true
     }
-  ]
+  }
 }
