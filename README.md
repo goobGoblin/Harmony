@@ -7,6 +7,7 @@ Application that unifies all of your music streaming services with one interface
 - Refactored files for better readability and modularity
 - Continued work with figma designs
 - Began testing with iOS devices
+- Player now dynamically updates song artwork, name, and artist
 
 
 # Sprint 3
