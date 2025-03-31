@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 
 //TODO move firebase to backend
 //
@@ -16,32 +17,38 @@ class SpotifyAPI extends ChangeNotifier {
   var _db;
 
   Future<void> sendRequest(String type, Map<String, dynamic> thisData) async {
-    log("Sending request");
-    var url = Uri.http(
-      '192.168.0.31:8080',
-      '/Spotify',
-    ); //TODO: Change to localhost
-    log("Sending request");
-    http.Response response;
+    //   log("Sending request");
+    //   var url = Uri.https('127.0.0.1:5001'); //TODO: Change to localhost
+    //   log("Sending request");
+    //   http.Response response;
 
+    //   try {
+    //     if (type == 'GET') {
+    //       response = await http.get(url);
+    //     } else if (type == 'POST') {
+    //       log("Sending post request");
+    //       response = await http.post(
+    //         url,
+    //         headers: {'Content-Type': 'application/json'},
+
+    //         body: jsonEncode(thisData),
+    //       );
+    //     } else {
+    //       response = http.Response('Invalid request type', 400);
+    //     }
+
+    //     log("Response status: ${response.statusCode}");
+    //   } catch (e) {
+    //     log("Error: $e");
+    //   }
+    // }
     try {
-      if (type == 'GET') {
-        response = await http.get(url);
-      } else if (type == 'POST') {
-        log("Sending post request");
-        response = await http.post(
-          url,
-          headers: {'Content-Type': 'application/json'},
-
-          body: jsonEncode(thisData),
-        );
-      } else {
-        response = http.Response('Invalid request type', 400);
-      }
-
-      log("Response status: ${response.statusCode}");
+      FirebaseFunctions functions = FirebaseFunctions.instance;
+      HttpsCallable callable = functions.httpsCallable('spotify_api');
+      final results = await callable.call(jsonEncode(thisData));
+      log('Results: $results');
     } catch (e) {
-      log("Error: $e");
+      log('Error: $e');
     }
   }
 
@@ -102,7 +109,7 @@ class SpotifyAPI extends ChangeNotifier {
       setToken(
         await SpotifySdk.getAccessToken(
           clientId:
-              "ed7c834dad2d41bba8f3642c7ed07350", //please contact me for the client id
+              "", //please contact me for the client id
           redirectUrl: "http://localhost:8888/callback",
         ),
       );

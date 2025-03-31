@@ -54,6 +54,6 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-   
+    
   );
 }
