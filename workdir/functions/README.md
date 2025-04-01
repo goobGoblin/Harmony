@@ -11,3 +11,5 @@ Backend for interacting with [Flutter frontend](https://github.com/goobGoblin/Ha
     - Say no to "File functions/.gitignore already exists. Overwrite?"
     - Say no to "File functions/main.py already exists. Overwrite?"
     - Say yes to install dependencies
+ 
+- (Note if you are having issues with "firebase deploy --only functions" try deleting the /functions/venv folder and repeat these steps) 
