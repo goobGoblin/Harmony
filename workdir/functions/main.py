@@ -9,6 +9,7 @@
 from firebase_functions import https_fn, firestore_fn, options
 from spotipy.oauth2 import SpotifyClientCredentials
 import json
+import os
 import firebase_admin
 from firebase_admin import credentials, firestore, initialize_app
 from lastfm_utils import handle_auth_request, get_user_loved_tracks
@@ -297,4 +298,13 @@ def bandcamp_api(request: https_fn.Request) -> https_fn.Response:
         # if(params['Bandcamp']):
         #     print("Bandcamp")
         #     #TODO implement bandcamp api
+        
+@https_fn.on_call(secrets=["SPOTIFY_CLIENT_ID"])
+def secret_handler(request: https_fn.Request) -> dict:
+    #TODO: handle different secrets using the request object
+    #i.e. use switch statement to determine which secret to return
+    
+    client_id = os.environ.get("SPOTIFY_CLIENT_ID", "")
+    
+    return {"ClientID": client_id}
 #-----------------------------------------------------------------------------------------------
