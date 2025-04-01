@@ -1,26 +1,23 @@
 import hashlib
 import requests
-import logging
-import json
 from flask import jsonify, Request
-import firebase_admin
 from firebase_admin import firestore
 import pylast
 import time
 import os
 
 # Configure logging
-logger = logging.getLogger('lastfm')
-logger.setLevel(logging.INFO)
+# logger = logging.getLogger('lastfm')
+# logger.setLevel(logging.INFO)
 
 # Try to connect to firebase app and print error upon failure
-try:
-    db = firestore.client()
-except Exception as e:
-    logger.error(f"Could not initialize Firestore client: {e}")
-    db = None
+# try:
+#     db = firestore.client()
+# except Exception as e:
+#     logger.error(f"Could not initialize Firestore client: {e}")
+#     db = None
 
-def get_lastfm_credentials():
+def get_lastfm_credentials(db):
     """Retrieve Last.fm API credentials from Firestore."""
     try:
         # Retrieve credentials from the LastFM document in Firestore
@@ -39,7 +36,7 @@ def get_lastfm_credentials():
             
         return api_key, api_secret
     except Exception as e:
-        logger.error(f"Error retrieving Last.fm credentials: {str(e)}")
+        #logger.error(f"Error retrieving Last.fm credentials: {str(e)}")
         raise Exception(f"Error retrieving Last.fm credentials: {str(e)}")
 
 def generate_api_signature(params, secret):
@@ -130,7 +127,7 @@ def get_session_key(token):
     
     return data["session"]["key"]
 
-def authenticate_with_password(username, password, firebase_uid):
+def authenticate_with_password(username, password, firebase_uid, db):
     """
     Authenticate with Last.fm using username and password
     
@@ -214,7 +211,7 @@ def authenticate_with_password(username, password, firebase_uid):
             "error": f"Authentication failed: {str(e)}"
         }
 
-def handle_auth_request(request):
+def handle_auth_request(request, db):
     """
     Handle Last.fm authentication request
     
@@ -228,20 +225,20 @@ def handle_auth_request(request):
         if request.method == 'GET':
             # Generate auth URL and redirect user
             auth_url = get_auth_url()
-            return jsonify({
-                "success": True,
-                "auth_url": auth_url
-            })
-        
+            # return jsonify({
+            #     "success": True,
+            #     "auth_url": auth_url
+            # })
+            return auth_url
         elif request.method == 'POST':
             data = request.get_json()
             
             if not data:
-                return jsonify({
-                    "success": False,
-                    "error": "Missing request data"
-                }), 400
-                
+                # return jsonify({
+                #     "success": False,
+                #     "error": "Missing request data"
+                # }), 400
+                return "error"
             # Check which authentication method to use
             if 'username' in data and 'password' in data and 'firebase_uid' in data:
                 # Username/password authentication
@@ -252,9 +249,11 @@ def handle_auth_request(request):
                 )
                 
                 if result["success"]:
-                    return jsonify(result)
+                    return result
+                    # return jsonify(result)
                 else:
-                    return jsonify(result), 400
+                    return "error"
+                    # return jsonify(result), 400
                     
             elif 'token' in data and 'firebase_uid' in data:
                 # OAuth token authentication
@@ -273,29 +272,33 @@ def handle_auth_request(request):
                         }
                     }, merge=True)
                     
-                    return jsonify({
-                        "success": True,
-                        "message": "Last.fm account linked successfully"
-                    })
+                    # return jsonify({
+                    #     "success": True,
+                    #     "message": "Last.fm account linked successfully"
+                    # })
+                    return "success"
                 else:
-                    return jsonify({
-                        "success": False,
-                        "error": "Firestore database connection not available"
-                    }), 500
+                    # return jsonify({
+                    #     "success": False,
+                    #     "error": "Firestore database connection not available"
+                    # }), 500\
+                    return "error"
             else:
-                return jsonify({
-                    "success": False,
-                    "error": "Missing required fields (either token+firebase_uid or username+password+firebase_uid)"
-                }), 400
+                # return jsonify({
+                #     "success": False,
+                #     "error": "Missing required fields (either token+firebase_uid or username+password+firebase_uid)"
+                # }), 400
+                return "error"
                 
     except Exception as e:
         logger.error(f"Error handling Last.fm auth request: {str(e)}")
-        return jsonify({
-            "success": False,
-            "error": str(e)
-        }), 500
+        # return jsonify({
+        #     "success": False,
+        #     "error": str(e)
+        # }), 500
+        return "error"
 
-def get_user_loved_tracks(firebase_uid):
+def get_user_loved_tracks(firebase_uid, db):
     """
     Get loved tracks for a user from Last.fm
     

@@ -11,14 +11,14 @@ from spotipy.oauth2 import SpotifyClientCredentials
 import json
 import firebase_admin
 from firebase_admin import credentials, firestore, initialize_app
-from lastfm import handle_auth_request, get_user_loved_tracks
-from flask import jsonify
+from lastfm_utils import handle_auth_request, get_user_loved_tracks
+# from flask import jsonify
 import google.cloud.firestore
 import spotipy
 import soundcloud_utils
 import ytmusicapi_utils
 import import_utils
-import lastfm
+# import lastfm
 
 authFile = open("auth.json", "r")
 
@@ -201,77 +201,79 @@ def soundcloud_api(request: https_fn.Request) -> https_fn.Response:
 
     
 #     return https_fn.Response("LastFM API not implemented yet.")
-#         # if "error" in result:
-#         #     response.status = 400
+        # if "error" in result:
+        #     response.status = 400
 
-# @https_fn.on_request()
-# def lastfm_auth(request: https_fn.Request) -> https_fn.Response:
-#     """HTTP Cloud Function to authenticate with Last.fm API.
+@https_fn.on_request()
+def lastfm_auth(request: https_fn.Request) -> https_fn.Response:
+    """HTTP Cloud Function to authenticate with Last.fm API.
     
-#     Supports two methods:
-#     1. OAuth flow (GET to get auth URL, POST with token to complete)
-#     2. Direct username/password authentication (POST with username/password)
-#     """
-#     print("temp")
-#     try:
-#        # logger.info(f"Last.fm auth request: {request.method}")
+    Supports two methods:
+    1. OAuth flow (GET to get auth URL, POST with token to complete)
+    2. Direct username/password authentication (POST with username/password)
+    """
+    
+    # print("temp")
+    try:
+       # logger.info(f"Last.fm auth request: {request.method}")
         
-#         # CORS Headers for cross-origin requests
-#         if request.method == 'OPTIONS':
-#             # Handle preflight requests
-#             headers = {
-#                 'Access-Control-Allow-Origin': '*',
-#                 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-#                 'Access-Control-Allow-Headers': 'Content-Type',
-#                 'Access-Control-Max-Age': '3600'
-#             }
-#             return https_fn.Response('', 204, headers)
+        # CORS Headers for cross-origin requests
+        if request.method == 'OPTIONS':
+            # Handle preflight requests
+            headers = {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type',
+                'Access-Control-Max-Age': '3600'
+            }
+            return https_fn.Response('', 204, headers)
             
-#         # Set CORS headers for the main request
-#         headers = {
-#             'Access-Control-Allow-Origin': '*'
-#         }
+        # Set CORS headers for the main request
+        headers = {
+            'Access-Control-Allow-Origin': '*'
+        }
         
-#         # Handle the main request
-#         response = handle_auth_request(request)
+        # Handle the main request
+        response = handle_auth_request(request, db)
         
-#         # If response is a tuple (response, status_code), add headers
-#         if isinstance(response, tuple):
-#             return (response[0], response[1], {**headers, **response[2]} if len(response) > 2 else headers)
+        # If response is a tuple (response, status_code), add headers
+        if isinstance(response, tuple):
+            return (response[0], response[1], {**headers, **response[2]} if len(response) > 2 else headers)
         
-#         # If response is just the response object, add headers
-#         return https_fn.Response(response, 200, headers)
+        # If response is just the response object, add headers
+        return https_fn.Response(response, 200, headers)
         
-#     except Exception as e:
-#         #logger.error(f"Error in lastfm_auth: {e}")
-#         return https_fn.Response("Error in lastfm_auth " + e)
+    except Exception as e:
+        #logger.error(f"Error in lastfm_auth: {e}")
+        return https_fn.Response("Error in lastfm_auth " + e)
+    
 
-# @https_fn.on_request()
-# def lastfm_loved_tracks(request: https_fn.Request) -> https_fn.Response:
-#     """HTTP Cloud Function to get loved tracks from Last.fm."""
-#     print("temp")
-#     try:
-#         # Only accept GET requests
-#         # if request.method != 'GET':
-#         #     return https_fn.Response("Method not allowed(Only GET Requests)")
+@https_fn.on_request()
+def lastfm_loved_tracks(request: https_fn.Request) -> https_fn.Response:
+    """HTTP Cloud Function to get loved tracks from Last.fm."""
+    print("temp")
+    try:
+        # Only accept GET requests
+        # if request.method != 'GET':
+        #     return https_fn.Response("Method not allowed(Only GET Requests)")
             
-#         # Get Firebase UID from request
-#         firebase_uid = request.args.get('uid')
+        # Get Firebase UID from request
+        firebase_uid = request.args.get('uid')
         
-#         if not firebase_uid:
-#             return https_fn.Response("Missing required parameter: uid") 
+        if not firebase_uid:
+            return https_fn.Response("Missing required parameter: uid") 
             
-#         # Get loved tracks for the user
-#         result = get_user_loved_tracks(firebase_uid)
+        # Get loved tracks for the user
+        result = get_user_loved_tracks(firebase_uid, db)
         
-#         if result.get("success", False):
-#             return https_fn.Response(result)
-#         else:
-#             return https_fn.Response(result)
+        if result.get("success", False):
+            return https_fn.Response(result)
+        else:
+            return https_fn.Response(result)
             
-#     except Exception as e:
-#         #logger.error(f"Error in lastfm_loved_tracks: {e}")
-#         return https_fn.Response("Error in lastfm_loved_tracks")
+    except Exception as e:
+        #logger.error(f"Error in lastfm_loved_tracks: {e}")
+        return https_fn.Response("Error in lastfm_loved_tracks")
         
 
 
