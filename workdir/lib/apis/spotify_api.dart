@@ -78,11 +78,31 @@ class SpotifyAPI extends ChangeNotifier {
     }
   }
 
+  Future<Map> getClientID() async {
+    var clientID;
+    try {
+      FirebaseFunctions functions = FirebaseFunctions.instanceFor(
+        region: 'us-central1',
+      );
+      //functions.useFunctionsEmulator('127.0.0.1', 5001);
+      HttpsCallable callable = functions.httpsCallable('secret_handler');
+      final result = await callable.call({"key": "spotify"});
+      clientID = result.data;
+    } catch (e) {
+      log('Error: $e');
+    }
+
+    return clientID;
+  }
+
   void reconnect() async {
+    //grab token from firebase
+    var clientID = getClientID();
+
     try {
       var temp = SpotifySdk.connectToSpotifyRemote(
         clientId:
-            "", //please contact me for the client id
+            (await clientID)["ClientID"], //please contact me for the client id
         redirectUrl: "http://localhost:8888/callback",
       );
       log('Connected: $temp');
@@ -93,10 +113,13 @@ class SpotifyAPI extends ChangeNotifier {
 
   void connect(String FirebaseID) async {
     //await SpotifySdk.disconnect();
+    //get secret token
+    var clientID = getClientID();
+
     try {
       var temp = SpotifySdk.connectToSpotifyRemote(
         clientId:
-            "", //please contact me for the client id
+            (await clientID)["ClientID"], //please contact me for the client id
         redirectUrl: "http://localhost:8888/callback",
       );
       log('Connected: $temp');
@@ -109,7 +132,7 @@ class SpotifyAPI extends ChangeNotifier {
       setToken(
         await SpotifySdk.getAccessToken(
           clientId:
-              "", //please contact me for the client id
+              (await clientID)["ClientID"], //please contact me for the client id
           redirectUrl: "http://localhost:8888/callback",
         ),
       );

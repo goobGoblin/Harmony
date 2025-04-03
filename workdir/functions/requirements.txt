@@ -3,5 +3,5 @@ spotipy
 ytmusicapi
 requests
 lastfm-py
-flask
 pylast
+flask
