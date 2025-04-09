@@ -1,4 +1,7 @@
+
+
 library;
+import 'dependencies.dart';
 
 class Globals {
   dynamic currentlyPlaying = {};
@@ -6,6 +9,7 @@ class Globals {
   List<dynamic>? currentTracks = [];
   int currentIndex = 0;
   bool isPlaying = false;
+  late DocumentSnapshot<Map<String, dynamic>> userDoc;
 }
 
 // dynamic currentlyPlaying = {};

@@ -2,6 +2,7 @@ import 'package:http/http.dart' as http;
 import 'pages/pages.dart';
 //import 'package:webview_flutter/webview_flutter.dart';
 import 'pages/web_view_container.dart';
+import 'pages/dependencies.dart';
 
 //import 'audioHandler.dart';
 // import 'package:flutter_application_1/customThemes.dart'; //TODO
@@ -42,7 +43,7 @@ Future<void> sendRequest(String type, Map<String, String> thisData) async {
 Future<void> main() async {
   //initalize firebase
 
-  var userDoc = null;
+  //var userDoc = null;
 
   WidgetsFlutterBinding.ensureInitialized();
   try {
@@ -61,9 +62,9 @@ Future<void> main() async {
   } else {
     log('User logged in: ${FirebaseAuth.instance.currentUser?.email}');
     myInitRout = '/home';
-    userDoc = await getUserData();
+    globals.userDoc = await getUserData();
 
-    if (userDoc['Linked Accounts']['Spotify'][0]) {
+    if (globals.userDoc['Linked Accounts']['Spotify'][0]) {
       spotifyConnection.reconnect();
     }
   }
