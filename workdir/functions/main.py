@@ -64,6 +64,7 @@ def spotify_api(request: https_fn.Request) -> https_fn.Response:
             userInfo = user.me()
             
             #Check if user wants to import their playlists
+            print(params['Options'])
             if(params['Options']['Playlists'] == True):
                 print("Importing Playlists")
                 
@@ -73,7 +74,7 @@ def spotify_api(request: https_fn.Request) -> https_fn.Response:
                 #used for setting user data
                 userDocRef = db.collection('Users').document(params['FirebaseID'])
                 #used for setting global songs
-                fireBaseDocRef = db.collection('Songs')
+                fireBaseCollectionRef = db.collection('Songs')
                 i = 0
                 for playlist in playlists['items']:
                     if i == 1: #TODO remove this in production
@@ -91,7 +92,7 @@ def spotify_api(request: https_fn.Request) -> https_fn.Response:
                             "LinkedService" : ["Spotify"],
                         }
                         #add to global and playlist songs
-                        songsList.append(import_utils.addSongToDataBase(songDocRef, fireBaseDocRef))
+                        songsList.append(import_utils.addSongToDataBase(songDocRef, fireBaseCollectionRef, "Spotify"))
                         print(songsList)
                     #add to user playlists songs as reference if not songDocRef in userDocRef.get().to_dict():
                     playlistDocRef = {
@@ -106,10 +107,12 @@ def spotify_api(request: https_fn.Request) -> https_fn.Response:
                         
                     }
                     print(playlistDocRef)
-                    import_utils.addPlaylistToDataBase(playlistDocRef, userDocRef)
+                    import_utils.addPlaylistToDataBase(playlistDocRef, userDocRef, "Spotify")
                     i += 1
                     
                 return https_fn.Response("Playlists imported successfully!")
+        
+        return https_fn.Response("Nothing to import")
 
 #----------------------------------------------------------------------------------------------
 #TODO Update this to handle firebase function requests
