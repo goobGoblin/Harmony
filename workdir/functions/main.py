@@ -77,7 +77,7 @@ def spotify_api(request: https_fn.Request) -> https_fn.Response:
                 fireBaseCollectionRef = db.collection('Songs')
                 i = 0
                 for playlist in playlists['items']:
-                    if i == 1: #TODO remove this in production
+                    if i == 7: #TODO remove this in production
                         break
                     thisSong = sp.user_playlist_tracks(userInfo['id'], playlist['id'])
                     songsList = []

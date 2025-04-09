@@ -103,30 +103,30 @@ def playlistInDatabase(doc1, firebaseDocRef: firestore.DocumentReference):
 #here we pass a document reference because of the way our database is structured
 def addPlaylistToDataBase(thisDict: dict, userDocRef: firestore.DocumentReference, addedFrom: str):
     result = None
-    try:
-        if(validate_playlist(thisDict)):
-            #isInDatabase will be a list with the true or false if the document exists or not
-            isInDatabase = playlistInDatabase(thisDict, userDocRef)
-            
-            print("isInDatabase", isInDatabase)
-            
-            if(isInDatabase[0] == False):
-                        result = userDocRef.update({
-                            "playlists" : firestore.ArrayUnion([thisDict])
-                        })
-            else:
-                #is in database so update linked service
-                #update linked service
-                isInDatabase[1].update({
-                    "LinkedServices" : firestore.ArrayUnion([addedFrom])
-                })
-                result = isInDatabase[1]
+    # try:
+    if(validate_playlist(thisDict)):
+        #isInDatabase will be a list with the true or false if the document exists or not
+        isInDatabase = playlistInDatabase(thisDict, userDocRef)
+        
+        print("isInDatabase", isInDatabase)
+        
+        if(isInDatabase[0] == False):
+                    result = userDocRef.update({
+                        "playlists" : firestore.ArrayUnion([thisDict])
+                    })
+        else:
+            #is in database so update linked service
+            #update linked service
+            isInDatabase[1].update({
+                "LinkedServices" : firestore.ArrayUnion([addedFrom])
+            })
+            result = isInDatabase[1]
                 
                 
-    except AssertionError as e:
-        print("Assertion error", e)
-    except Exception as e:
-        print("Playlist exception:",e, "line", e.__traceback__.tb_lineno)
+    # except AssertionError as e:
+    #     print("Assertion error", e)
+    # except Exception as e:
+    #     print("Playlist exception:",e, "line", e.__traceback__.tb_lineno)
     print(result) 
     return result
         
@@ -180,7 +180,7 @@ def songInDatabase(doc1, firebaseCollectionRef: firestore.DocumentReference):
     
     #firebaseDocRef is the document reference so now we must build our query
     
-    dbQuerey = None
+    dbQuerey = []
     
     if(doc1.get("Name") is not None):
         if(doc1.get("Album") is not None):
@@ -203,11 +203,9 @@ def songInDatabase(doc1, firebaseCollectionRef: firestore.DocumentReference):
     #         if doc1 == doc2.to_dict():
     #             print("Document already exists")
     #             return [True, doc2]
-    
-    #found song in database
-    print("dbQuerey", dbQuerey[0])
-    
-    if(dbQuerey is not None):
+
+    print("dbQuerey", dbQuerey)
+    if(len(dbQuerey) != 0):
         return [True, dbQuerey[0]]
             
 
@@ -238,6 +236,6 @@ def addSongToDataBase(thisDict: dict, fireBaseCollectionRef: firestore.DocumentR
         print("Assertion Error:", e)
     except Exception as e:
         print("Song exception:", e, "line", e.__traceback__.tb_lineno)
-  
+    print(result)
     return result
 #---------------------------------------------------------------------------------------------
