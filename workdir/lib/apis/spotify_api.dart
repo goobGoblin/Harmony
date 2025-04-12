@@ -111,7 +111,7 @@ class SpotifyAPI extends ChangeNotifier {
     }
   }
 
-  void connect(String FirebaseID) async {
+  void connect(String FirebaseID, Map<String, bool> options) async {
     //await SpotifySdk.disconnect();
     //get secret token
     var clientID = getClientID();
@@ -155,21 +155,7 @@ class SpotifyAPI extends ChangeNotifier {
     Map<String, dynamic> thisData = {
       'Spotify': _token.toString(),
       'FirebaseID': FirebaseID,
-      'Options': {
-        'Playlists': true,
-        'Liked Songs': true,
-        'Recently Played': true,
-        'Top Tracks': true,
-        'Top Artists': true,
-        'Followed Artists': true,
-        'Followed Users': true,
-        'Saved Albums': true,
-        'Saved Shows': true,
-        'Saved Episodes': true,
-        'Saved Tracks': true,
-        'Saved Playlists': true,
-        'Saved Podcasts': true,
-      },
+      'Options': options,
     };
 
     //TODO implement what the api should do in the backend

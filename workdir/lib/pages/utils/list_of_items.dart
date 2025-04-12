@@ -1,5 +1,6 @@
 import '../dependencies.dart';
 import '../pages.dart';
+import 'connectedImages.dart';
 
 List<Widget> createListOfSongs(
   List<dynamic>? collection,
@@ -24,6 +25,9 @@ List<Widget> createListOfSongs(
           );
         },
         style: ButtonStyle(
+          padding: WidgetStateProperty.all(
+            const EdgeInsets.symmetric(horizontal: 12),
+          ),
           shape: WidgetStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(18.0),
@@ -31,7 +35,10 @@ List<Widget> createListOfSongs(
             ),
           ),
         ),
-        child: Text(thisSong["Name"]),
+        child: Row(
+          mainAxisSize: MainAxisSize.min, // so the button wraps content tightly
+          children: getConnectedImages(thisSong),
+        ), //Text(thisSong["Name"]),
       );
       //add the new button to the list
       thisWidgets.add(newButton);

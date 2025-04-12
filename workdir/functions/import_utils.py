@@ -1,4 +1,7 @@
 from firebase_admin import credentials, firestore
+from google.cloud.firestore_v1.base_query import FieldFilter
+
+#TODO build a cache to store recent songs added or used as they will 'Likely' be used again
 
 #----------------------------------------------------------------------------------------------
 #Note to get list of songs first call addSongToDataBase it will return the document reference to the song
@@ -64,44 +67,66 @@ def validate_playlist(thisDict: dict):
 #     results = query.get()
 
 
-def inDatabase(doc1, dbQuerey):
+def playlistInDatabase(doc1, firebaseDocRef: firestore.DocumentReference):
     
-    if(isinstance(dbQuerey, firestore.DocumentSnapshot)):
-        #case when there is a document snapshot
-        for doc2 in dbQuerey.to_dict()["playlists"]:
-            if doc1 == doc2:
-                print("Document already exists")
-                return [True, doc2]
-    else:
-    #case when there is a collection
-        for doc2 in dbQuerey:
-            if doc1 == doc2.to_dict():
-                print("Document already exists")
-                return [True, doc2]
+    #firebaseDocRef is the document reference so now we must build our query
+            #compound query for name and album
+            #since we have a document reference already we can grab the data from it instead of querying it
+            #dbQuerey = firebaseDocRef.where(filter=FieldFilter("playlists", "array_contains", {'Name' : doc1.get("Name")})).limit(1).get()
+    
+    # if(isinstance(dbQuerey, firestore.DocumentSnapshot)):
+    #     #case when there is a document snapshot
+    
+    print("firebaseDocRef", firebaseDocRef.get().to_dict())
+    
+    for doc2 in firebaseDocRef.get().to_dict()["playlists"]:
+        if(doc2 == None):
+            continue
+        if doc1["Name"] == doc2["Name"] and doc1["Owner"] == doc2["Owner"]:
+            print("Document already exists")
+            return [True, doc2]
+    # else:
+    # #case when there is a collection
+    #     for doc2 in dbQuerey:
+    #         if doc1 == doc2.to_dict():
+    #             print("Document already exists")
+    #             return [True, doc2]
+
+            
+
             
             
     return [False, None]
 #----------------------------------------------------------------------------------------------
 
-#note userDocRef in this instance will likely be the user document reference
-#If it is trying to grab a collection this will be different
-def addPlaylistToDataBase(thisDict: dict, userDocRef: firestore.DocumentReference):
+
+#here we pass a document reference because of the way our database is structured
+def addPlaylistToDataBase(thisDict: dict, userDocRef: firestore.DocumentReference, addedFrom: str):
     result = None
-    try:
-        if(validate_playlist(thisDict)):
-            isInDatabase = inDatabase(thisDict, userDocRef.get())
-            if(not(isInDatabase[0])):
-                        result = userDocRef.update({
-                            "playlists" : firestore.ArrayUnion([thisDict])
-                        })
-            else:
-                result = isInDatabase[1]
+    # try:
+    if(validate_playlist(thisDict)):
+        #isInDatabase will be a list with the true or false if the document exists or not
+        isInDatabase = playlistInDatabase(thisDict, userDocRef)
+        
+        print("isInDatabase", isInDatabase)
+        
+        if(isInDatabase[0] == False):
+                    result = userDocRef.update({
+                        "playlists" : firestore.ArrayUnion([thisDict])
+                    })
+        else:
+            #is in database so update linked service
+            #update linked service
+            isInDatabase[1].update({
+                "LinkedServices" : firestore.ArrayUnion([addedFrom])
+            })
+            result = isInDatabase[1]
                 
                 
-    except AssertionError as e:
-        print("Assertion error", e)
-    except Exception as e:
-        print("Playlist exception:",e, "line", e.__traceback__.tb_lineno)
+    # except AssertionError as e:
+    #     print("Assertion error", e)
+    # except Exception as e:
+    #     print("Playlist exception:",e, "line", e.__traceback__.tb_lineno)
     print(result) 
     return result
         
@@ -150,27 +175,67 @@ def validate_song(thisDict: dict):
     return True
 
 
+#here we use a collection reference so we can query the database for the song
+def songInDatabase(doc1, firebaseCollectionRef: firestore.DocumentReference):
+    
+    #firebaseDocRef is the document reference so now we must build our query
+    
+    dbQuerey = []
+    
+    if(doc1.get("Name") is not None):
+        if(doc1.get("Album") is not None):
+            #compound query for name and album
+            dbQuerey = firebaseCollectionRef.where(filter=FieldFilter("Name", "==", doc1.get("Name"))).where(filter=FieldFilter("Album", "==", doc1.get("Album"))).limit(1).get()
+        else:
+            #query for just name
+            dbQuerey = firebaseCollectionRef.where(filter=FieldFilter("Name", "==", doc1.get("Name"))).limit(1).get()
+
+            
+    # if(isinstance(dbQuerey, firestore.DocumentSnapshot)):
+    #     #case when there is a document snapshot
+    #     for doc2 in dbQuerey.to_dict()["playlists"]:
+    #         if doc1 == doc2:
+    #             print("Document already exists")
+    #             return [True, doc2]
+    # else:
+    # #case when there is a collection
+    #     for doc2 in dbQuerey:
+    #         if doc1 == doc2.to_dict():
+    #             print("Document already exists")
+    #             return [True, doc2]
+
+    print("dbQuerey", dbQuerey)
+    if(len(dbQuerey) != 0):
+        return [True, dbQuerey[0]]
+            
+
+            
+            
+    return [False, None]
+#----------------------------------------------------------------------------------------------
+
 #TODO implement Album insertion form as well
 #TODO implement Artist insertion form as well
-def addSongToDataBase(thisDict: dict, fireBaseDocRef: firestore.DocumentReference):
+def addSongToDataBase(thisDict: dict, fireBaseCollectionRef: firestore.DocumentReference, addedFrom: str):
     
     result = None
     
     try:
         if(validate_song(thisDict)):
-            isInDatabase = inDatabase(thisDict, fireBaseDocRef.get())
+            #isInDatabase will be a list with the true or false if the document exists or not
+            isInDatabase = songInDatabase(thisDict, fireBaseCollectionRef)
             if(not(isInDatabase[0])):
-                result = fireBaseDocRef.add(thisDict)
+                result = fireBaseCollectionRef.add(thisDict)
             else:
-                #update linked service
+                #is in database so update linked service
                 isInDatabase[1].to_dict().update({
-                    "LinkedService" : firestore.ArrayUnion(["Spotify"])
+                    "LinkedService" : firestore.ArrayUnion([addedFrom])
                 })
                 result = isInDatabase[1].reference
     except AssertionError as e:
         print("Assertion Error:", e)
     except Exception as e:
         print("Song exception:", e, "line", e.__traceback__.tb_lineno)
-  
+    print(result)
     return result
 #---------------------------------------------------------------------------------------------
