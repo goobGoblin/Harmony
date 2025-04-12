@@ -2,6 +2,11 @@
 Application that unifies all of your music streaming services with one interface and application
 ## ~~[Backend Repo](https://github.com/hreed88/Harmony-Backend)~~ - Backend is depricated
 
+# Sprint 5
+- SHA1 key importing
+  - Get debug.keystore
+  - Replace file located in C:/users/"Your name"/.android
+
 # Sprint 4
 - Implemented firebase functions for backend functionality
 - Refactored files for better readability and modularity
