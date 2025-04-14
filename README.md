@@ -3,6 +3,15 @@ Application that unifies all of your music streaming services with one interface
 ## ~~[Backend Repo](https://github.com/hreed88/Harmony-Backend)~~ - Backend is depricated
 
 # Sprint 5
+- Added images to each song that displays where the song was linked from
+  ![Alt Text](https://drive.google.com/uc?id=1o1Xz-Lh3FlEI630dax45pq28Y4iq9ECs)
+- Added preferences for what the user wants to import on account connection
+  ![Alt Text](https://drive.google.com/uc?id=1o1vy6i_BxwpkutUKtS0eR3p4jjzzL9j0)
+- Implemented bottom bar player
+  ![Alt Text](https://drive.google.com/uc?id=1oGJiETOtaB95ww0iZbatfncyyTpXBSxC)
+
+- Updated firebase queries so that they are less cumbersome.
+  
 - SHA1 key importing
   - Get debug.keystore
   - Replace file located in C:/users/"Your name"/.android
