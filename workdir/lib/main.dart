@@ -122,19 +122,22 @@ Future<void> main() async {
       },
       //default route
       routes: {
-        '/signUp': (context) => const SignUpRoute(),
-        '/signIn': (context) => const SignInRoute(),
-        '/home': (context) => const HomeRoute(),
-        '/currentlyPlaying': (context) => const CurrentlyPlaying(),
-        '/playlists': (context) => const Playlists(),
-        '/albums': (context) => const Albums(),
-        '/artists': (context) => const Artists(),
-        '/songs': (context) => const Songs(thisName: "Songs", tracks: {}),
-        '/downloads': (context) => const Downloads(),
-        '/settings': (context) => const SettingsRoute(),
-        '/connectedApps': (context) => const ConnectedApps(),
-        '/myAccount': (context) => const MyAccount(),
-        '/preferences': (context) => const Preferences(),
+        '/signUp': (context) => MainLayout(child: const SignUpRoute()),
+        '/signIn': (context) => MainLayout(child: const SignInRoute()),
+        '/home': (context) => MainLayout(child: const HomeRoute()),
+        '/currentlyPlaying':
+            (context) => MainLayout(child: const CurrentlyPlaying()),
+        '/playlists': (context) => MainLayout(child: const Playlists()),
+        '/albums': (context) => MainLayout(child: const Albums()),
+        '/artists': (context) => MainLayout(child: const Artists()),
+        '/songs':
+            (context) =>
+                MainLayout(child: const Songs(thisName: "Songs", tracks: {})),
+        '/downloads': (context) => MainLayout(child: const Downloads()),
+        '/settings': (context) => MainLayout(child: const SettingsRoute()),
+        '/connectedApps': (context) => MainLayout(child: const ConnectedApps()),
+        '/myAccount': (context) => MainLayout(child: const MyAccount()),
+        '/preferences': (context) => MainLayout(child: const Preferences()),
       },
     ),
   );

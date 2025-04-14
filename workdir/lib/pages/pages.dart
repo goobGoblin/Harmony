@@ -15,3 +15,4 @@ export 'settings_page.dart';
 export 'connected_apps.dart';
 export 'account.dart';
 export 'preferences.dart';
+export 'mainLayout.dart';

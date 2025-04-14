@@ -26,6 +26,7 @@ class Albums extends StatelessWidget {
           ],
         ),
       ),
+      bottomSheet: globals.bottomPlayer,
       // floatingActionButton: FloatingActionButton(
       //   onPressed: () {
       //     Navigator.pop(context);
