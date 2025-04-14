@@ -4,6 +4,7 @@ export 'sign_up.dart';
 export 'sign_in.dart';
 export 'dependencies.dart';
 export 'home.dart';
+export 'home2.dart';
 export 'currently_playing.dart';
 export 'globals.dart';
 export 'songs.dart';

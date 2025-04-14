@@ -124,7 +124,7 @@ Future<void> main() async {
       routes: {
         '/signUp': (context) => MainLayout(child: const SignUpRoute()),
         '/signIn': (context) => MainLayout(child: const SignInRoute()),
-        '/home': (context) => MainLayout(child: const HomeRoute()),
+        '/home': (context) => MainLayout(child: const Home2Route()),
         '/currentlyPlaying':
             (context) => MainLayout(child: const CurrentlyPlaying()),
         '/playlists': (context) => MainLayout(child: const Playlists()),
