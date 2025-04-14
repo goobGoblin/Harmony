@@ -1,6 +1,6 @@
 # Harmony
 Application that unifies all of your music streaming services with one interface and application
-## ~~[Backend Repo](https://github.com/hreed88/Harmony-Backend)~~ - Backend is depricated
+## ~~[Backend Repo](https://github.com/hreed88/Harmony-Backend)~~ - Backend is deprecated
 
 # Sprint 5
 
