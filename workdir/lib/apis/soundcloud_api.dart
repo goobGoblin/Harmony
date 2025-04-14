@@ -7,8 +7,8 @@ import 'dart:io' show Platform;
 
 class SoundCloudAPI {
   // SoundCloud application credentials
-  final String clientId = "OSdXQyP2ohfdFQLSeCEgv8GKzFQkHpFz";
-  final String clientSecret = "orN1VWJLOkjlMyTZ4UanB66i7kXUVTqU";
+  final String clientId = "";
+  final String clientSecret = "";
 
   final String redirectUri = Platform.isAndroid || Platform.isIOS
   ? 'myapp://soundcloud/callback'
