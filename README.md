@@ -4,11 +4,11 @@ Application that unifies all of your music streaming services with one interface
 
 # Sprint 5
 - Added images to each song that displays where the song was linked from
-  ![Alt Text](https://drive.google.com/uc?id=1o1Xz-Lh3FlEI630dax45pq28Y4iq9ECs)
+- <img src="https://drive.google.com/uc?id=1o1Xz-Lh3FlEI630dax45pq28Y4iq9ECs" width=270>
 - Added preferences for what the user wants to import on account connection
-  ![Alt Text](https://drive.google.com/uc?id=1o1vy6i_BxwpkutUKtS0eR3p4jjzzL9j0)
+- <img src="https://drive.google.com/uc?id=1o1vy6i_BxwpkutUKtS0eR3p4jjzzL9j0" width=270>
 - Implemented bottom bar player
-  ![Alt Text](https://drive.google.com/uc?id=1oGJiETOtaB95ww0iZbatfncyyTpXBSxC)
+- <img src="https://drive.google.com/uc?id=1oGJiETOtaB95ww0iZbatfncyyTpXBSxC" width=270>
 
 - Updated firebase queries so that they are less cumbersome.
   
