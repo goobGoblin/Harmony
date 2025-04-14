@@ -11,6 +11,8 @@ class CurrentlyPlaying extends StatefulWidget {
 class _CurrentlyPlaying extends State<CurrentlyPlaying> {
   //_CurrentlyPlaying({super.key});
   String _imageSource = '';
+  final globals = Provider.of<Globals>(context);
+
 
   @override
   void initState() {
@@ -92,12 +94,14 @@ class _CurrentlyPlaying extends State<CurrentlyPlaying> {
                   IconButton(
                     icon: const Icon(Icons.pause),
                     onPressed: () {
+                      globals.isPlaying = false;
                       spotifyConnection.pause();
                     },
                   ),
                   IconButton(
                     icon: const Icon(Icons.play_arrow),
                     onPressed: () {
+                      globals.isPlaying = true;
                       spotifyConnection.resume();
                     },
                   ),

@@ -11,15 +11,12 @@ class MyAudioHandler {
   final _player = AudioPlayer();
 
   // The most common callbacks:
-  Future<void> play(
-    String thisUri,
-    String source,
-    SpotifyAPI thisParser,
-  ) async {
+  Future<void> play(String thisUri, String source, var thisParser) async {
     try {
       switch (source) {
         case "Spotify":
           thisParser.play(thisUri);
+
           break;
         case "Soundcloud":
           await thisParser.sendRequest("POST", {
@@ -56,7 +53,22 @@ class MyAudioHandler {
     }
   }
 
-  Future<void> pause() => _player.pause();
+  Future<void> pause(var thisParser) async {
+    try {
+      thisParser.pause();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> resume(var thisParser) async {
+    try {
+      thisParser.resume();
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future<void> stop() => _player.stop();
   Future<void> seek(Duration position) => _player.seek(position);
   Future<void> skipToQueueItem(int i) => _player.seek(Duration.zero);

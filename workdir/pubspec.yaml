@@ -43,6 +43,8 @@ dependencies:
   just_audio: ^0.9.46
   cloud_functions: ^5.3.4
   webview_flutter: ^4.2.2
+  #bottom_navbar_player: ^0.1.0
+  provider: ^6.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

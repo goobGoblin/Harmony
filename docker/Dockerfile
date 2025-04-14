@@ -178,4 +178,13 @@ RUN cat /usr/lib/git-core/git-sh-prompt > .bash_git
 RUN flutter doctor --android-licenses
 RUN flutter doctor
 
+USER root
+
+RUN apt update
+RUN apt remove openjdk-8-jdk openjdk-8-jre -y
+RUN apt-get install openjdk-17-jdk openjdk-17-jre -y
+
+ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk-amd64/
+RUN export JAVA_HOME
+
 ENTRYPOINT git config --global --add safe.directory /opt/flutter && flutter emulators --create [--name flutter_emulator] && flutter emulators --launch flutter_emulator && cd project && flutter clean && echo "Please wait for emulator to startup (Past the G screen). Before running "flutter run"" && /bin/bash 

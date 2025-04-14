@@ -1,5 +1,8 @@
 import '../dependencies.dart';
 
+//used to add columns of images along with the name of songs
+//in the for loop add the same things for other linked services
+
 List<Widget> getConnectedImages(Map<String, dynamic> thisSong) {
   List<Widget> connectedImages = [
     Flexible(

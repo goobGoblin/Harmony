@@ -17,12 +17,14 @@ List<Widget> createListOfSongs(
         onPressed: () {
           globals.currentlyPlaying = thisSong;
           globals.currentIndex = i;
+          globals.isPlaying = true;
           log(globals.currentlyPlaying.toString(), name: 'Currently Playing');
           audioHandler.play(
             thisSong["URI"],
             thisSong["LinkedService"][0],
             spotifyConnection,
           );
+          globals.updateBottomPlayer();
         },
         style: ButtonStyle(
           padding: WidgetStateProperty.all(
@@ -36,9 +38,11 @@ List<Widget> createListOfSongs(
           ),
         ),
         child: Row(
-          mainAxisSize: MainAxisSize.min, // so the button wraps content tightly
+          mainAxisSize: MainAxisSize.min,
+          //use getConnected images to dynamically add images based on the songs
+          //linked services
           children: getConnectedImages(thisSong),
-        ), //Text(thisSong["Name"]),
+        ),
       );
       //add the new button to the list
       thisWidgets.add(newButton);
