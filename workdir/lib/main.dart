@@ -4,7 +4,6 @@ import 'pages/pages.dart';
 import 'pages/web_view_container.dart';
 import 'pages/dependencies.dart';
 
-
 //import 'audioHandler.dart';
 // import 'package:flutter_application_1/customThemes.dart'; //TODO
 // import 'package:flutter_application_1/themes.dart';
@@ -82,68 +81,64 @@ Future<void> main() async {
   // );
 
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => Globals(),
-      child: MaterialApp(
-        theme: ThemeData(
-          useMaterial3: true,
-          brightness: Brightness.light,
-          primaryColor: Colors.white,
-          scaffoldBackgroundColor: Colors.white,
-          appBarTheme: AppBarTheme(
-            backgroundColor: const Color.fromARGB(176, 27, 62, 180),
-            elevation: 5,
-            iconTheme: IconThemeData(color: Colors.black),
-          ),
-          bottomNavigationBarTheme: BottomNavigationBarThemeData(
-            backgroundColor: Colors.white,
-            selectedItemColor: Colors.black,
-            unselectedItemColor: Colors.grey,
-          ),
-          buttonTheme: ButtonThemeData(
-            buttonColor: const Color.fromARGB(255, 255, 255, 255),
-          ),
-          pageTransitionsTheme: PageTransitionsTheme(
-            builders: {
-              TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-              TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-            },
-          ),
+    MaterialApp(
+      theme: ThemeData(
+        useMaterial3: true,
+        brightness: Brightness.light,
+        primaryColor: Colors.white,
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: AppBarTheme(
+          backgroundColor: const Color.fromARGB(176, 27, 62, 180),
+          elevation: 5,
+          iconTheme: IconThemeData(color: Colors.black),
         ),
-        //handle routes(aka pages)
-        initialRoute: myInitRout,
-        //for navigation to webview
-        onGenerateRoute: (settings) {
-          // Check for routes that expect a URL parameter
-          if (settings.name == '/webViewContainer') {
-            final String url = settings.arguments as String;
-            return MaterialPageRoute(
-              builder: (context) => WebViewExample(url: url), // Pass URL here
-            );
-          }
-          return null; // Return null for unknown routes
-        },
-        //default route
-        routes: {
-          '/signUp': (context) => MainLayout(child: const SignUpRoute()),
-          '/signIn': (context) => MainLayout(child: const SignInRoute()),
-          '/home': (context) => MainLayout(child: const HomeRoute()),
-          '/currentlyPlaying':
-              (context) => MainLayout(child: const CurrentlyPlaying()),
-          '/playlists': (context) => MainLayout(child: const Playlists()),
-          '/albums': (context) => MainLayout(child: const Albums()),
-          '/artists': (context) => MainLayout(child: const Artists()),
-          '/songs':
-              (context) =>
-                  MainLayout(child: const Songs(thisName: "Songs", tracks: {})),
-          '/downloads': (context) => MainLayout(child: const Downloads()),
-          '/settings': (context) => MainLayout(child: const SettingsRoute()),
-          '/connectedApps':
-              (context) => MainLayout(child: const ConnectedApps()),
-          '/myAccount': (context) => MainLayout(child: const MyAccount()),
-          '/preferences': (context) => MainLayout(child: const Preferences()),
-        },
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          backgroundColor: Colors.white,
+          selectedItemColor: Colors.black,
+          unselectedItemColor: Colors.grey,
+        ),
+        buttonTheme: ButtonThemeData(
+          buttonColor: const Color.fromARGB(255, 255, 255, 255),
+        ),
+        pageTransitionsTheme: PageTransitionsTheme(
+          builders: {
+            TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          },
+        ),
       ),
+      //handle routes(aka pages)
+      initialRoute: myInitRout,
+      //for navigation to webview
+      onGenerateRoute: (settings) {
+        // Check for routes that expect a URL parameter
+        if (settings.name == '/webViewContainer') {
+          final String url = settings.arguments as String;
+          return MaterialPageRoute(
+            builder: (context) => WebViewExample(url: url), // Pass URL here
+          );
+        }
+        return null; // Return null for unknown routes
+      },
+      //default route
+      routes: {
+        '/signUp': (context) => MainLayout(child: const SignUpRoute()),
+        '/signIn': (context) => MainLayout(child: const SignInRoute()),
+        '/home': (context) => MainLayout(child: const HomeRoute()),
+        '/currentlyPlaying':
+            (context) => MainLayout(child: const CurrentlyPlaying()),
+        '/playlists': (context) => MainLayout(child: const Playlists()),
+        '/albums': (context) => MainLayout(child: const Albums()),
+        '/artists': (context) => MainLayout(child: const Artists()),
+        '/songs':
+            (context) =>
+                MainLayout(child: const Songs(thisName: "Songs", tracks: {})),
+        '/downloads': (context) => MainLayout(child: const Downloads()),
+        '/settings': (context) => MainLayout(child: const SettingsRoute()),
+        '/connectedApps': (context) => MainLayout(child: const ConnectedApps()),
+        '/myAccount': (context) => MainLayout(child: const MyAccount()),
+        '/preferences': (context) => MainLayout(child: const Preferences()),
+      },
     ),
   );
   //thisConnection.connect(); //Useful to turn off when working on UI

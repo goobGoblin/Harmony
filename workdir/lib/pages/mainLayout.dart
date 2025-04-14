@@ -18,20 +18,13 @@ class _MainLayout extends State<MainLayout> {
 
   @override
   Widget build(BuildContext context) {
-    // Access Globals here
-    final globals = Provider.of<Globals>(context);
-
     return Scaffold(
-      appBar: AppBar(title: Text('Player App')),
-      body: Column(
+      body: Stack(
         children: [
-          Text(
-            'Current Index: ${globals.currentIndex}',
-          ), // Example usage of globals
-          globals.bottomPlayer, // Display the bottom player
+          widget.child,
+          Align(alignment: Alignment.bottomCenter, child: globals.bottomPlayer),
         ],
       ),
-      bottomSheet: globals.bottomPlayer, // Access bottomPlayer in bottomSheet
     );
   }
 }

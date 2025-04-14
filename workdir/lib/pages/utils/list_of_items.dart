@@ -70,8 +70,9 @@ List<Widget> createListOfPlaylists(
             //create new songs page with name of playlist
             MaterialPageRoute(
               builder:
-                  (context) =>
-                      Songs(thisName: temp, tracks: thisList[i]['Tracks']),
+                  (context) => MainLayout(
+                    child: Songs(thisName: temp, tracks: thisList[i]['Tracks']),
+                  ),
             ),
           );
         },

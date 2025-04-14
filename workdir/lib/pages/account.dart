@@ -33,8 +33,6 @@ class _MyAccount extends State<MyAccount> {
   @override
   Widget build(BuildContext context) {
     final TextEditingController _textController = TextEditingController();
-    final globals = Provider.of<Globals>(context);
-
 
     return Scaffold(
       appBar: AppBar(

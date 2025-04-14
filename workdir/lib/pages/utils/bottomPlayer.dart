@@ -44,45 +44,51 @@ class _BottomPlayer extends State<BottomPlayer> {
               Text(
                 globals.currentlyPlaying['Name'],
                 style: TextStyle(color: Colors.white),
+                softWrap: true,
+                overflow: TextOverflow.ellipsis,
               ),
               SizedBox(height: 5),
               Text(
                 globals.currentlyPlaying['Artist'][0]['name'],
                 style: TextStyle(color: Colors.white),
+                softWrap: true,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
-          IconButton(
-            icon: Icon(Icons.play_arrow),
-            onPressed: () {
-              //play song
+          Flexible(
+            child: IconButton(
+              icon: Icon(Icons.play_arrow),
 
-              if (globals.isPlaying == true) {
-                audioHandler.pause(spotifyConnection);
-                setState(() {
-                  globals.isPlaying = false;
-                  globals.isPaused = true;
-                });
-                return;
-              }
-              if (globals.isPaused == true) {
-                audioHandler.resume(spotifyConnection);
+              onPressed: () {
+                //play song
+                if (globals.isPlaying == true) {
+                  audioHandler.pause(spotifyConnection);
+                  setState(() {
+                    globals.isPlaying = false;
+                    globals.isPaused = true;
+                  });
+                  return;
+                }
+                if (globals.isPaused == true) {
+                  audioHandler.resume(spotifyConnection);
+                  setState(() {
+                    globals.isPlaying = true;
+                    globals.isPaused = false;
+                  });
+                  return;
+                }
+                audioHandler.play(
+                  globals.currentlyPlaying["URI"],
+                  globals.currentlyPlaying["LinkedService"][0],
+                  spotifyConnection,
+                );
                 setState(() {
                   globals.isPlaying = true;
                   globals.isPaused = false;
                 });
-                return;
-              }
-              audioHandler.play(
-                globals.currentlyPlaying["URI"],
-                globals.currentlyPlaying["LinkedService"][0],
-                spotifyConnection,
-              );
-              setState(() {
-                globals.isPlaying = true;
-                globals.isPaused = false;
-              });
-            },
+              },
+            ),
           ),
         ],
       ),

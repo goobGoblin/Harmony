@@ -11,8 +11,6 @@ class CurrentlyPlaying extends StatefulWidget {
 class _CurrentlyPlaying extends State<CurrentlyPlaying> {
   //_CurrentlyPlaying({super.key});
   String _imageSource = '';
-  final globals = Provider.of<Globals>(context);
-
 
   @override
   void initState() {
@@ -72,60 +70,68 @@ class _CurrentlyPlaying extends State<CurrentlyPlaying> {
                   IconButton(
                     icon: const Icon(Icons.skip_previous),
                     onPressed: () {
-                      if (globals.currentIndex > 0) {
-                        globals.currentIndex--;
-                      } else {
-                        globals.currentIndex =
-                            globals.currentTracks!.length - 1;
-                      }
-                      globals.currentlyPlaying =
-                          globals.currentTracks![globals.currentIndex];
+                      setState(() {
+                        if (globals.currentIndex > 0) {
+                          globals.currentIndex--;
+                        } else {
+                          globals.currentIndex =
+                              globals.currentTracks!.length - 1;
+                        }
+                        globals.currentlyPlaying =
+                            globals.currentTracks![globals.currentIndex];
 
-                      updateImage();
+                        updateImage();
 
-                      //pass in the source and api to play the song
-                      audioHandler.play(
-                        globals.currentlyPlaying["URI"],
-                        globals.currentlyPlaying["LinkedService"][0],
-                        spotifyConnection,
-                      );
+                        //pass in the source and api to play the song
+                        audioHandler.play(
+                          globals.currentlyPlaying["URI"],
+                          globals.currentlyPlaying["LinkedService"][0],
+                          spotifyConnection,
+                        );
+                      });
                     },
                   ),
                   IconButton(
                     icon: const Icon(Icons.pause),
                     onPressed: () {
-                      globals.isPlaying = false;
-                      spotifyConnection.pause();
+                      setState(() {
+                        globals.isPlaying = false;
+                        spotifyConnection.pause();
+                      });
                     },
                   ),
                   IconButton(
                     icon: const Icon(Icons.play_arrow),
                     onPressed: () {
-                      globals.isPlaying = true;
-                      spotifyConnection.resume();
+                      setState(() {
+                        globals.isPlaying = true;
+                        spotifyConnection.resume();
+                      });
                     },
                   ),
                   IconButton(
                     icon: const Icon(Icons.skip_next),
                     onPressed: () {
                       //wrap arround
-                      if (globals.currentIndex <
-                          globals.currentTracks!.length - 1) {
-                        globals.currentIndex++;
-                      } else {
-                        globals.currentIndex = 0;
-                      }
+                      setState(() {
+                        if (globals.currentIndex <
+                            globals.currentTracks!.length - 1) {
+                          globals.currentIndex++;
+                        } else {
+                          globals.currentIndex = 0;
+                        }
 
-                      globals.currentlyPlaying =
-                          globals.currentTracks![globals.currentIndex];
+                        globals.currentlyPlaying =
+                            globals.currentTracks![globals.currentIndex];
 
-                      updateImage();
-                      //pass in the source and api to play the song
-                      audioHandler.play(
-                        globals.currentlyPlaying["URI"],
-                        globals.currentlyPlaying["LinkedService"][0],
-                        spotifyConnection,
-                      );
+                        updateImage();
+                        //pass in the source and api to play the song
+                        audioHandler.play(
+                          globals.currentlyPlaying["URI"],
+                          globals.currentlyPlaying["LinkedService"][0],
+                          spotifyConnection,
+                        );
+                      });
                     },
                   ),
                 ],
