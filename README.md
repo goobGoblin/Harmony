@@ -1,11 +1,36 @@
 # Harmony
 Application that unifies all of your music streaming services with one interface and application
-## [Backend Repo](https://github.com/hreed88/Harmony-Backend)
+## ~~[Backend Repo](https://github.com/hreed88/Harmony-Backend)~~ - Backend is depricated
+
+# Sprint 5
+- SHA1 key importing
+  - Get debug.keystore
+  - Replace file located in C:/users/"Your name"/.android
+
+# Sprint 4
+- Implemented firebase functions for backend functionality
+- Refactored files for better readability and modularity
+- Continued work with figma designs
+- Began testing with iOS devices
+- Player now dynamically updates song artwork, name, and artist
+
 
 # Sprint 3
 - Added docker files for easier development among the group
-- Created figma designs for UI elements located [here](/ "here")
-  ### Figma Example 
+- Created figma designs for UI elements located [here](https://www.figma.com/design/n5rjdga4WZAQx89wpn3wYk/Harmony?node-id=0-1&p=f "figma")
+  ### Figma Example
+  - Click the Thumbnail for full demo
+ 
+  [![Watch the video](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgUuEAqofMyGsPNkrzu5z1ZClxWrnoA2Lhfg&s)](https://youtube.com/shorts/yiSObtaE4_A?feature=share) 
+
+  ![Alt Text](https://drive.google.com/uc?id=1ifnWtoUFT6l9LHNNJQkTMhv0tqt-CDqY)
+
+
+  ### Flutter & Docker
+  - Harmony running on docker container
+ 
+  ![Alt Text](https://drive.google.com/uc?id=1Ia8aCp3Vngtgf13HnzglHYUqIFD7QUgm)
+  
 
 
 # Sprint 2 Application
