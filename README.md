@@ -3,6 +3,20 @@ Application that unifies all of your music streaming services with one interface
 ## ~~[Backend Repo](https://github.com/hreed88/Harmony-Backend)~~ - Backend is depricated
 
 # Sprint 5
+
+- Figma updates
+<br><img src="https://drive.google.com/uc?id=1dEP2syLzEQbLPKcmAHpYVwJZtI_JDrzp" width=270><img src="https://drive.google.com/uc?id=1DmbynJroiMuZuJAj8lOorhTHcrIbOOy7" width=270><img src="https://drive.google.com/uc?id=1xrMSWCiV4oeHrLXPaxrK17kZ6t3v2Kc-" width=270><img src="https://drive.google.com/uc?id=12eaGnr4itkfGAKe8OVzICIjxWXNBNX2z" width=270><img src="https://drive.google.com/uc?id=1-kwq1x8n2kJPBF9zaNE7fkwxHvsxuVQd" width=270>
+
+
+- Added images to each song that displays where the song was linked from
+- <img src="https://drive.google.com/uc?id=1o1Xz-Lh3FlEI630dax45pq28Y4iq9ECs" width=270>
+- Added preferences for what the user wants to import on account connection
+- <img src="https://drive.google.com/uc?id=1o1vy6i_BxwpkutUKtS0eR3p4jjzzL9j0" width=270>
+- Implemented bottom bar player
+- <img src="https://drive.google.com/uc?id=1oGJiETOtaB95ww0iZbatfncyyTpXBSxC" width=270>
+
+- Updated firebase queries so that they are less cumbersome.
+  
 - SHA1 key importing
   - Get debug.keystore
   - Replace file located in C:/users/"Your name"/.android
