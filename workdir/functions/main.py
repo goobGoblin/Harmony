@@ -17,7 +17,7 @@ from lastfm_utils import handle_auth_request, get_user_loved_tracks
 import google.cloud.firestore
 import spotipy
 import soundcloud_utils
-import ytmusicapi_utils
+import youtube_utils
 import import_utils
 # import lastfm
 
@@ -119,42 +119,26 @@ def spotify_api(request: https_fn.Request) -> https_fn.Response:
 #TODO Note: Youtube must be implemented in flutter frontend
 @https_fn.on_request()#("/Youtube", method=["POST"])
 def youtube_api(request: https_fn.Request) -> https_fn.Response:
+    """Handles YouTube Data API interaction and playlist import."""
     try:
-        params = json.loads(request.body.read())  # Handle incoming params
+        params = json.loads(request.body.read())
     except:
-        params = request.query.decode()
+        return https_fn.Response("Error reading request body")
 
-    if "Youtube" in params and "FirebaseID" in params:
-        print("YouTube Music Integration")
+    if "YouTube" in params and "FirebaseID" in params:
+        print("YouTube Integration")
 
-        access_token = params["Youtube"]
+        access_token = params["YouTube"]
         firebase_id = params["FirebaseID"]
 
-        # Initialize YTMusic with credentials
-        ytmusic = ytmusicapi_utils.get_ytmusic_credentials(access_token)
+        result = youtube_utils.import_youtube_playlists(access_token, firebase_id, db)
 
-        if not ytmusic:
-            #response.status = 400
-            return {"error": "Failed to authenticate with YouTube Music API"}
+        if "error" in result:
+            return https_fn.Response(json.dumps(result), status=400)
 
-        # Fetch user info and playlists
-        user_info = ytmusicapi_utils.get_user_info(ytmusic)
-        if not user_info:
-            #response.status = 400
-            return {"error": "Failed to retrieve user data"}
+        return https_fn.Response(json.dumps(result), status=200)
 
-        playlists = ytmusicapi_utils.get_user_playlists(ytmusic)
-        if not playlists:
-            #response.status = 400
-            return {"error": "Failed to retrieve user playlists"}
-
-        # Process playlists and store in Firebase
-        result = ytmusicapi_utils.import_youtube_playlists_to_firestore(playlists, firebase_id, db)
-
-        return {"message": "Playlists imported successfully", "data": result}
-    else:
-        #response.status = 400
-        return {"error": "Invalid request"}
+    return https_fn.Response(json.dumps({"error": "Invalid request"}), status=400)
 
 #----------------------------------------------------------------------------------------------
 #TODO Update this to handle firebase function requests
