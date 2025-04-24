@@ -127,8 +127,7 @@ Future<void> main() async {
         '/signUp': (context) => MainLayout(child: const SignUpRoute()),
         '/signIn': (context) => MainLayout(child: const SignInRoute()),
         '/home': (context) => MainLayout(child: const HomeRoute()),
-        '/currentlyPlaying':
-            (context) => MainLayout(child: const CurrentlyPlaying()),
+        '/currentlyPlaying': (context) => CurrentlyPlaying(),
         '/playlists': (context) => MainLayout(child: const Playlists()),
         '/albums': (context) => MainLayout(child: Albums(albums: (userAlbums))),
         '/artists': (context) => MainLayout(child: const Artists()),

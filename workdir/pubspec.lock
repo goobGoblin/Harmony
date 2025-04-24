@@ -33,6 +33,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.25"
+  auto_scroll_text:
+    dependency: "direct main"
+    description:
+      name: auto_scroll_text
+      sha256: "8de28056f844f24f13771606417ffa109397f75a66440fe60ec2d38c133e16dc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.7"
   boolean_selector:
     dependency: transitive
     description:
@@ -145,6 +153,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
+  fading_edge_scrollview:
+    dependency: transitive
+    description:
+      name: fading_edge_scrollview
+      sha256: "1f84fe3ea8e251d00d5735e27502a6a250e4aa3d3b330d3fdcb475af741464ef"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.1"
   fake_async:
     dependency: transitive
     description:
@@ -336,6 +352,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.5.0"
+  marquee:
+    dependency: "direct main"
+    description:
+      name: marquee
+      sha256: a87e7e80c5d21434f90ad92add9f820cf68be374b226404fe881d2bba7be0862
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.0"
   matcher:
     dependency: transitive
     description:

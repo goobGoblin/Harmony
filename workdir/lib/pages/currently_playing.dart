@@ -36,6 +36,7 @@ class _CurrentlyPlaying extends State<CurrentlyPlaying> {
 
   @override
   Widget build(BuildContext context) {
+
     try {
       //log(globals.currentlyPlaying['Images'][0]['url'].toString());
       return Scaffold(
@@ -89,6 +90,7 @@ class _CurrentlyPlaying extends State<CurrentlyPlaying> {
                           spotifyConnection,
                         );
                       });
+                      globals.updateBottomPlayer();
                     },
                   ),
                   IconButton(
@@ -132,6 +134,7 @@ class _CurrentlyPlaying extends State<CurrentlyPlaying> {
                           spotifyConnection,
                         );
                       });
+                      globals.updateBottomPlayer();
                     },
                   ),
                 ],

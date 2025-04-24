@@ -11,6 +11,7 @@ class Globals {
   int currentIndex = 0;
   bool isPlaying = false;
   bool isPaused = false;
+  bool bottomPlayerVisible = true;
   late DocumentSnapshot<Map<String, dynamic>> userDoc;
   ValueNotifier<Widget> bottomPlayerListener = ValueNotifier(
     const BottomPlayer(),
