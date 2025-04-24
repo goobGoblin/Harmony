@@ -139,3 +139,37 @@ Future<List<dynamic>> getGlobalSongData(Map<String, dynamic> tracks) async {
 
   return results;
 }
+
+Future<List<dynamic>> getGlobalAlbumData(List<dynamic> albums) async {
+  //store result of each occurence
+  var results = [];
+
+  log(albums.toString());
+
+  //when there are no tracks passed assume the request wants all songs
+  if (albums.length < 1) {
+    log('No albums passed');
+    var docSnapshot =
+        await FirebaseFirestore.instance.collection('Playlists').get();
+    return docSnapshot.docs;
+  }
+
+  log('Albums passed');
+  for (var thisRef in albums) {
+    if (thisRef == null) {
+      continue;
+    }
+    var docSnapshot =
+        await FirebaseFirestore.instance
+            .collection('Albums')
+            .doc(thisRef.id)
+            .get();
+
+    var temp = docSnapshot.data();
+    log('Document exists $temp');
+    results.add(temp);
+  }
+  log(results.toString());
+
+  return results;
+}

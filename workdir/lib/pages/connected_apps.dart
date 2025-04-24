@@ -31,7 +31,7 @@ class _ConnectedApps extends State<ConnectedApps> {
                   'Top Artists': true,
                   'Followed Artists': true,
                   'Followed Users': true,
-                  'Saved Albums': true,
+                  'Albums': true,
                   'Saved Podcasts': true,
                 };
 
@@ -111,11 +111,11 @@ class _ConnectedApps extends State<ConnectedApps> {
                                 },
                               ),
                               CheckboxListTile(
-                                title: Text("Saved Albums"),
-                                value: options["Saved Albums"],
+                                title: Text("Albums"),
+                                value: options["Albums"],
                                 onChanged: (bool? value) {
                                   setState(() {
-                                    options["Saved Albums"] = value!;
+                                    options["Albums"] = value!;
                                   });
                                 },
                               ),
@@ -163,7 +163,8 @@ class _ConnectedApps extends State<ConnectedApps> {
             ElevatedButton(
               onPressed: () async {
                 spotifyConnection.connect(
-                  FirebaseAuth.instance.currentUser!.uid, {'temp': true},
+                  FirebaseAuth.instance.currentUser!.uid,
+                  {'temp': true},
                 );
               },
               //TODO: Add visuals for if an account is connected or not

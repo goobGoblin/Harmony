@@ -80,6 +80,8 @@ Future<void> main() async {
   //   ),
   // );
 
+  var userAlbums = globals.userDoc['albums'];
+
   runApp(
     MaterialApp(
       theme: ThemeData(
@@ -128,7 +130,7 @@ Future<void> main() async {
         '/currentlyPlaying':
             (context) => MainLayout(child: const CurrentlyPlaying()),
         '/playlists': (context) => MainLayout(child: const Playlists()),
-        '/albums': (context) => MainLayout(child: const Albums()),
+        '/albums': (context) => MainLayout(child: Albums(albums: (userAlbums))),
         '/artists': (context) => MainLayout(child: const Artists()),
         '/songs':
             (context) =>

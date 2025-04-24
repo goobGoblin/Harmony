@@ -121,6 +121,7 @@ class SpotifyAPI extends ChangeNotifier {
         clientId:
             (await clientID)["ClientID"], //please contact me for the client id
         redirectUrl: "http://localhost:8888/callback",
+        scope: "user-library-read ,app-remote-control, user-read-playback-state, user-modify-playback-state, user-read-currently-playing, playlist-read-private, playlist-read-collaborative",
       );
       log('Connected: $temp');
     } catch (e) {
@@ -134,6 +135,7 @@ class SpotifyAPI extends ChangeNotifier {
           clientId:
               (await clientID)["ClientID"], //please contact me for the client id
           redirectUrl: "http://localhost:8888/callback",
+          scope: "user-library-read ,app-remote-control, user-read-playback-state, user-modify-playback-state, user-read-currently-playing, playlist-read-private, playlist-read-collaborative",
         ),
       );
     } catch (e) {

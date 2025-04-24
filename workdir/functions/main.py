@@ -18,6 +18,7 @@ import google.cloud.firestore
 import spotipy
 import soundcloud_utils
 import ytmusicapi_utils
+import spotify_utils as su
 import import_utils
 # import lastfm
 
@@ -51,7 +52,7 @@ def spotify_api(request: https_fn.Request) -> https_fn.Response:
             #TODO implement albums 
             #TODO Finish playlist implementation
             #TODO implement user data
-           
+            thisResponse = ""
             #global connection
             sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id=authFile["Spotify"]["client_id"],
                                                             client_secret=authFile["Spotify"]["client_secret"],))
@@ -65,54 +66,23 @@ def spotify_api(request: https_fn.Request) -> https_fn.Response:
             
             #Check if user wants to import their playlists
             print(params['Options'])
+            print(params['Options']['Albums'])
             if(params['Options']['Playlists'] == True):
                 print("Importing Playlists")
-                
-                #get user playlists
-                playlists = user.user_playlists(userInfo['id'])
-                
-                #used for setting user data
-                userDocRef = db.collection('Users').document(params['FirebaseID'])
-                #used for setting global songs
-                fireBaseCollectionRef = db.collection('Songs')
-                i = 0
-                for playlist in playlists['items']:
-                    if i == 7: #TODO remove this in production
-                        break
-                    thisSong = sp.user_playlist_tracks(userInfo['id'], playlist['id'])
-                    songsList = []
-                    for song in thisSong['items']:
-                        song.setdefault(None)
-                        songDocRef = {
-                            'Name' : song['track']['name'],
-                            'Artist' : song['track']['artists'],
-                            'Album' : song['track']['album']['name'],
-                            'Images' : song.get("track").get("album").get("images"),
-                            'URI' : song['track']['uri'],
-                            "LinkedService" : ["Spotify"],
-                        }
-                        #add to global and playlist songs
-                        songsList.append(import_utils.addSongToDataBase(songDocRef, fireBaseCollectionRef, "Spotify"))
-                        print(songsList)
-                    #add to user playlists songs as reference if not songDocRef in userDocRef.get().to_dict():
-                    playlistDocRef = {
-                        'Name' : playlist['name'],
-                        'Tracks' : {"Tracklist": songsList, "Number of Tracks": len(songsList)},
-                        'LinkedServices' : ['Spotify'],
-                        'Description' : playlist['description'],
-                        'Images' : playlist.get("images"),
-                        'URI' : playlist['uri'],
-                        'ExternalURL' : playlist['external_urls']['spotify'],
-                        'Owner' : playlist['owner'],
-                        
-                    }
-                    print(playlistDocRef)
-                    import_utils.addPlaylistToDataBase(playlistDocRef, userDocRef, "Spotify")
-                    i += 1
-                    
-                return https_fn.Response("Playlists imported successfully!")
+                try:    
+                    su.importPlaylists(user, userInfo, db, params, sp)
+                    thisResponse = thisResponse + "Playlists imported successfully!"
+                except Exception as e:
+                    print(f"Playlists import failed!{e}")          
+                    return https_fn.Response("Playlists import failed!")
+            
+            #Check if user wants to import their albums
+            if(params['Options']['Albums'] == True):
+                print("Importing Albums")
+                su.importAlbums(user, db, params)
+                thisResponse = thisResponse + "Albums imported successfully!"
         
-        return https_fn.Response("Nothing to import")
+        return https_fn.Response(thisResponse)
 
 #----------------------------------------------------------------------------------------------
 #TODO Update this to handle firebase function requests

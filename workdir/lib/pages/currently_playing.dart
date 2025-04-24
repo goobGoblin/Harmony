@@ -28,7 +28,7 @@ class _CurrentlyPlaying extends State<CurrentlyPlaying> {
         _imageSource = globals.currentlyPlaying['Images'][0]['url'];
       } catch (e) {
         _imageSource =
-            'https://www.google.com/url?sa=i&url=https%3A%2F%2Fpngtree.com%2Fso%2Fsong&psig=AOvVaw2iBqxHDnsRCORTSw2voIp0&ust=1743129212552000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCJjQur6cqYwDFQAAAAAdAAAAABAE';
+            'https://w7.pngwing.com/pngs/800/189/png-transparent-multimedia-music-play-player-song-video-multimedia-controls-solid-icon.png';
         log("Image not available: $e");
       }
     });
