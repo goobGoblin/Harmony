@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dependencies.dart';
-import 'package:flutter_application_1/theme/app_colors.dart';
+import 'package:flutter_application_1/theme/theme.dart';
 import 'dart:ui' as ui;
 import 'package:flutter_application_1/widgets/widgets.dart'; 
 import 'package:flutter_application_1/constants/constants.dart'; 
@@ -72,7 +72,12 @@ class _Home2RouteState extends State<Home2Route> {
                                 opacity: 0.7,
                               ),
                             ),
-                              child: Center(child: Text('1')),
+                              child: Center(
+                                child: Text(
+                                  '1',
+                                  style: AppFontStyles.title,
+                                ),
+                              ),
                             ),
                           ),
                           

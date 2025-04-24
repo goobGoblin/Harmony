@@ -42,7 +42,7 @@ class _SidebarState extends State<Sidebar> {
                 width: sidebarWidth,
                 height: sidebarHeight,
                 decoration: ShapeDecoration(
-                  color: AppColors.primary.withOpacity(0.8),
+                  color: AppColors.primary.withOpacity(0.6),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),

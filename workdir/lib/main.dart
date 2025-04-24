@@ -3,7 +3,7 @@ import 'pages/pages.dart';
 //import 'package:webview_flutter/webview_flutter.dart';
 import 'pages/web_view_container.dart';
 import 'pages/dependencies.dart';
-import 'package:flutter_application_1/theme/app_colors.dart';
+import 'package:flutter_application_1/theme/theme.dart';
 //import 'audioHandler.dart';
 // import 'package:flutter_application_1/customThemes.dart'; //TODO
 // import 'package:flutter_application_1/themes.dart';
