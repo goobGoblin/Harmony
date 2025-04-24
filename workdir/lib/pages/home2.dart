@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'dependencies.dart';
 import 'package:flutter_application_1/theme/app_colors.dart';
 import 'dart:ui' as ui;
-import 'package:flutter_application_1/widgets/widgets.dart'; // Import your widgets
+import 'package:flutter_application_1/widgets/widgets.dart'; 
+import 'package:flutter_application_1/constants/constants.dart'; 
 
-const double goldenRatio = 1.618033988749895;
-const double inverseGoldenRatio = 0.618033988749895;
 
 class Home2Route extends StatefulWidget {  // Changed to StatefulWidget
   const Home2Route({super.key});
@@ -22,31 +21,10 @@ class _Home2RouteState extends State<Home2Route> {
   Widget build(BuildContext context) {
     // Get the screen size
     final screenSize = MediaQuery.of(context).size;
-
-    // Calculate the container dimensions with the golden ratio
-    final topContainerWidth = screenSize.width;
-    final topContainerHeight = screenSize.width / goldenRatio;
     
-    // Define the sizes of the subcontainers according to the golden ratio
-    // Largest subcontainer aligned to the the top left of the top container 
-    final gr_top1 = screenSize.width / goldenRatio;
-    // Subcontainer aligned to the top right of the top container
-    final gr_top2 = gr_top1 / goldenRatio;
-    // Subcontainer aligned to the bottom left of the top container 
-    final gr_top3 = gr_top2 / goldenRatio;
-    // Small subcontainer aligned near the bottom middle of the top container 
-    final gr_top4 = gr_top3 / goldenRatio;
-    // Smallest subcontainers aligned above the botttom middle small container
-    final gr_top5 = gr_top4 / goldenRatio; 
+    // Get dimensions using the helper method
+    final dimensions = AppDimensions.getScreenBasedDimensions(screenSize);
 
-    // Calculate the size of the harmony logo based on the screen size
-    final logoWidth = screenSize.width * 1.3;
-    final logoHeight = screenSize.height / goldenRatio;
-    // Calculate the harmony logo position based on the golden ratio
-    final logoX = screenSize.width * 0.1;
-    final logoY = gr_top1 - (screenSize.height * 0.08);
-    // Calculate how far the right side of the logo needs shifted to account for the stretch
-    final stretchedLogoShift = screenSize.width * -0.04;
     
     return Container(
       color: AppColors.background,
@@ -62,8 +40,8 @@ class _Home2RouteState extends State<Home2Route> {
               Align(
                 alignment: Alignment.topCenter,
                 child: Container(
-                  width: topContainerWidth,
-                  height: topContainerHeight,
+                  width: dimensions['topContainerWidth']!,
+                  height: dimensions['topContainerHeight']!,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage('assets/images/backgrounds/topContainerBG.png'),
@@ -85,8 +63,8 @@ class _Home2RouteState extends State<Home2Route> {
                             left: 0,
                             top: 0,
                             child: Container(
-                              width: gr_top1,
-                              height: gr_top1,
+                              width: dimensions['gr_top1']!,
+                              height: dimensions['gr_top1']!,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                 image: AssetImage('assets/images/backgrounds/topSubcontainer1BG.png'),
@@ -100,11 +78,11 @@ class _Home2RouteState extends State<Home2Route> {
                           
                           // Second subcontainer - right of the first
                           Positioned(
-                            left: gr_top1,
+                            left: dimensions['gr_top1']!,
                             top: 0,
                             child: Container(
-                              width: gr_top2,
-                              height: gr_top2,
+                              width: dimensions['gr_top2']!,
+                              height: dimensions['gr_top2']!,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                 image: AssetImage('assets/images/backgrounds/topSubcontainer2BG.png'),
@@ -121,8 +99,8 @@ class _Home2RouteState extends State<Home2Route> {
                             right: 0,
                             bottom: 0,
                             child: Container(
-                              width: gr_top3,
-                              height: gr_top3,
+                              width: dimensions['gr_top3']!,
+                              height: dimensions['gr_top3']!,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                 image: AssetImage('assets/images/backgrounds/topSubcontainer3BG.png'),
@@ -136,11 +114,11 @@ class _Home2RouteState extends State<Home2Route> {
                           
                           // Fourth subcontainer - left of the third
                           Positioned(
-                            left: gr_top1,
+                            left: dimensions['gr_top1']!,
                             bottom: 0,
                             child: Container(
-                              width: gr_top4,
-                              height: gr_top4,
+                              width: dimensions['gr_top4']!,
+                              height: dimensions['gr_top4']!,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                 image: AssetImage('assets/images/backgrounds/topSubcontainer4BG.png'),
@@ -154,11 +132,11 @@ class _Home2RouteState extends State<Home2Route> {
                           
                           // Fifth subcontainer - above the fourth
                           Positioned(
-                            left: gr_top1,
-                            bottom: gr_top4,
+                            left: dimensions['gr_top1']!,
+                            bottom: dimensions['gr_top4']!,
                             child: Container(
-                              width: gr_top4,  
-                              height: gr_top5, 
+                              width: dimensions['gr_top4']!,  
+                              height: dimensions['gr_top5']!, 
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                 image: AssetImage('assets/images/backgrounds/topSubcontainer4BG.png'),
@@ -178,17 +156,17 @@ class _Home2RouteState extends State<Home2Route> {
               
               // Harmony Logo - placed in the main Stack
               Positioned(
-                left: logoX,
-                top: logoY,
+                left: dimensions['logoX']!,
+                top: dimensions['logoY']!,
                 child: Container(
-                  width: logoWidth,
-                  height: logoHeight,
+                  width: dimensions['logoWidth']!,
+                  height: dimensions['logoHeight']!,
                   child: Stack(
                     alignment: Alignment.centerLeft,
                     children: [
                       // Right part of the logo (stretched) with offset
                       Positioned(
-                        left: stretchedLogoShift, 
+                        left: dimensions['stretchedLogoShift']!, 
                         right: 0,
                         top: 0,
                         bottom: 0,
@@ -203,7 +181,7 @@ class _Home2RouteState extends State<Home2Route> {
                         top: 0,
                         child: Image.asset(
                           'assets/images/logos/inverseLogoLeft.png',
-                          height: logoHeight,
+                          height: dimensions['logoHeight']!,
                           fit: BoxFit.fitHeight,
                         ),
                       ),
@@ -214,8 +192,8 @@ class _Home2RouteState extends State<Home2Route> {
               
               // Add the sidebar to the main stack
               Positioned(
-                left: 5,  // Adjust position as needed
-                top: topContainerHeight + 20,  // Position below top container
+                left: dimensions['sbOffsetX']!,  
+                top:  dimensions['logoY']! + dimensions['sbOffsetY']!,  // Position below top container
                 child: Sidebar(
                   selectedIndex: _selectedIndex,
                   onItemSelected: (index) {

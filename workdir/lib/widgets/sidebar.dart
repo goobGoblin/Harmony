@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/constants/constants.dart';
 import 'package:flutter_application_1/widgets/widgets.dart';
-import 'package:flutter_application_1/theme/app_colors.dart'; // Added theme import
+import 'package:flutter_application_1/theme/app_colors.dart';
 
 class Sidebar extends StatefulWidget {
   final int selectedIndex;
@@ -20,53 +20,49 @@ class Sidebar extends StatefulWidget {
 class _SidebarState extends State<Sidebar> {
   @override
   Widget build(BuildContext context) {
+    // Get the screen size
+    final screenSize = MediaQuery.of(context).size;
+    
+    // Get dimensions using the helper method
+    final dimensions = AppDimensions.getScreenBasedDimensions(screenSize);
+    
+    // Calculate sidebar dimensions
+    final sidebarWidth = dimensions['sbWidth']!;
+    final sidebarHeight = dimensions['sbHeight']!;
+    final sidebarVertSpacing = dimensions['sbWidth']! / dimensions['goldenRatio']!;
     return Column(
       children: [
         Container(
-          width: 52,
-          height: 326,
+          width: sidebarWidth,
+          height: sidebarHeight,
           child: Stack(
             children: [
               // Background container with rounded corners
-              Positioned(
-                left: 0,
-                top: 0,
-                child: Opacity(
-                  opacity: 0.80,
-                  child: Container(
-                    width: 52,
-                    height: 326,
-                    decoration: ShapeDecoration(
-                      color: AppColors.primary, // Using theme primary color
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
+              Container(
+                width: sidebarWidth,
+                height: sidebarHeight,
+                decoration: ShapeDecoration(
+                  color: AppColors.primary.withOpacity(0.8),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
               ),
-              // Icon column
-              Positioned(
-                left: 6,
-                top: 4,
-                child: Container(
-                  width: 44.41,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildNavItem(0, IconAsset.home),
-                      const SizedBox(height: 29),
-                      _buildNavItem(1, IconAsset.save),
-                      const SizedBox(height: 29),
-                      _buildNavItem(2, IconAsset.search),
-                      const SizedBox(height: 29),
-                      _buildNavItem(3, IconAsset.library),
-                      const SizedBox(height: 29),
-                      _buildNavItem(4, IconAsset.user),
-                    ],
-                  ),
+              // Center the column of icons in the container
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _buildNavItem(0, IconAsset.home),
+                    SizedBox(height: sidebarVertSpacing),
+                    _buildNavItem(1, IconAsset.save),
+                    SizedBox(height: sidebarVertSpacing),
+                    _buildNavItem(2, IconAsset.search),
+                    SizedBox(height: sidebarVertSpacing),
+                    _buildNavItem(3, IconAsset.library),
+                    SizedBox(height: sidebarVertSpacing),
+                    _buildNavItem(4, IconAsset.user),
+                  ],
                 ),
               ),
             ],
@@ -79,21 +75,29 @@ class _SidebarState extends State<Sidebar> {
   Widget _buildNavItem(int index, IconAsset iconAsset) {
     final bool isSelected = widget.selectedIndex == index;
     
+    // Get the screen size
+    final screenSize = MediaQuery.of(context).size;
+    
+    // Get dimensions using the helper method
+    final dimensions = AppDimensions.getScreenBasedDimensions(screenSize);
+
+    final sidebarWidth = dimensions['sbWidth']!;
+
     return GestureDetector(
       onTap: () => widget.onItemSelected(index),
       child: Container(
-        width: 40.41,
-        height: 40.41,
+        width: sidebarWidth,
+        height: sidebarWidth,
         decoration: BoxDecoration(
-          color: Colors.transparent, // No background color
+          color: Colors.transparent,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Center(
           child: AppIcon(
             icon: iconAsset,
             size: IconSize.big,
-            color: isSelected ? ButtonColors.active : ButtonColors.inactive, // Using theme button colors
-            filled: isSelected, // Use filled variant for selected icons
+            color: isSelected ? ButtonColors.active : ButtonColors.inactive,
+            filled: isSelected,
           ),
         ),
       ),
