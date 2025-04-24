@@ -4,9 +4,10 @@ import 'package:flutter_application_1/theme/theme.dart';
 import 'dart:ui' as ui;
 import 'package:flutter_application_1/widgets/widgets.dart'; 
 import 'package:flutter_application_1/constants/constants.dart'; 
+import 'package:flutter_application_1/widgets/top_account_and_profile.dart'; // Import the new widget
 
 
-class Home2Route extends StatefulWidget {  // Changed to StatefulWidget
+class Home2Route extends StatefulWidget {
   const Home2Route({super.key});
 
   @override
@@ -31,7 +32,7 @@ class _Home2RouteState extends State<Home2Route> {
       // Ensure the UI does not cover system UI
       child: SafeArea(
         // Fullscreen container
-        child: Container(
+        child: SizedBox(
           width: screenSize.width,
           height: screenSize.height,
           child: Stack(
@@ -113,7 +114,11 @@ class _Home2RouteState extends State<Home2Route> {
                                 opacity: 0.7,
                               ),
                             ),
-                              child: Center(child: Text('3')),
+                              // Using the new TopAccountAndProfile widget
+                              child: TopAccountAndProfile(
+                                containerSize: dimensions['gr_top3']!,
+                                displayMode: ProfileDisplayMode.account, 
+                              ),
                             ),
                           ),
                           
@@ -163,7 +168,7 @@ class _Home2RouteState extends State<Home2Route> {
               Positioned(
                 left: dimensions['logoX']!,
                 top: dimensions['logoY']!,
-                child: Container(
+                child: SizedBox(
                   width: dimensions['logoWidth']!,
                   height: dimensions['logoHeight']!,
                   child: Stack(
@@ -198,7 +203,7 @@ class _Home2RouteState extends State<Home2Route> {
               // Add the sidebar to the main stack
               Positioned(
                 left: dimensions['sbOffsetX']!,  
-                top:  dimensions['logoY']! + dimensions['sbOffsetY']!,  // Position below top container
+                top: dimensions['logoY']! + dimensions['sbOffsetY']!,
                 child: Sidebar(
                   selectedIndex: _selectedIndex,
                   onItemSelected: (index) {
@@ -222,7 +227,6 @@ class _Home2RouteState extends State<Home2Route> {
       case 0:
         // Already on Home screen
         print('Already on Home screen');
-
         break;
       case 1:
         // Save screen navigation
