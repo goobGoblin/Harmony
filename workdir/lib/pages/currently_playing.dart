@@ -37,7 +37,7 @@ class _CurrentlyPlaying extends State<CurrentlyPlaying> {
   @override
   Widget build(BuildContext context) {
     try {
-      log(globals.currentlyPlaying['Images'][0]['url'].toString());
+      //log(globals.currentlyPlaying['Images'][0]['url'].toString());
       return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).appBarTheme.backgroundColor,

@@ -16,7 +16,7 @@ class Songs extends StatelessWidget {
 
     var theseSongs = [];
 
-    log('Document exists');
+    //log('Document exists');
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
@@ -40,7 +40,7 @@ class Songs extends StatelessWidget {
                 if (snapshot.hasData) {
                   //collection data
                   var temp = snapshot.data;
-                  log("Song data: $temp.toString()");
+                  //("Song data: $temp.toString()");
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: createListOfSongs(temp, context),

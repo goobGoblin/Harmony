@@ -12,19 +12,12 @@ class Globals {
   bool isPlaying = false;
   bool isPaused = false;
   late DocumentSnapshot<Map<String, dynamic>> userDoc;
-  Widget bottomPlayer = BottomPlayer();
-
-  // Globals() {
-  //   if (FirebaseAuth.instance.currentUser != null) {
-  //     getUserData().then((value) {
-  //       userDoc = value;
-  //       notifyListeners();
-  //     });
-  //   }
-  // }
+  ValueNotifier<Widget> bottomPlayerListener = ValueNotifier(
+    const BottomPlayer(),
+  );
 
   void updateBottomPlayer() {
-    bottomPlayer = BottomPlayer();
+    bottomPlayerListener.value = BottomPlayer();
     //notifyListeners();
   }
 

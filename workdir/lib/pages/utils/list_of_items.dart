@@ -7,7 +7,7 @@ List<Widget> createListOfSongs(
   BuildContext context,
 ) {
   globals.currentTracks = collection;
-  List<Widget> thisWidgets = [];
+  List<StatefulWidget> thisWidgets = [];
   for (var i = 0; i < collection!.length; i++) {
     try {
       //get document snapshot from reference {
@@ -19,12 +19,13 @@ List<Widget> createListOfSongs(
           globals.currentIndex = i;
           globals.isPlaying = true;
           //log(globals.currentlyPlaying.toString(), name: 'Currently Playing');
+          globals.updateBottomPlayer();
           audioHandler.play(
             thisSong["URI"],
             thisSong["LinkedService"][0],
             spotifyConnection,
           );
-          globals.updateBottomPlayer();
+          
         },
         style: ButtonStyle(
           padding: WidgetStateProperty.all(

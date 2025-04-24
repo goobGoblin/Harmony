@@ -25,6 +25,9 @@ class _BottomPlayer extends State<BottomPlayer> {
 
   @override
   Widget build(BuildContext contex) {
+
+    log("bottom player being built");
+
     if (!(globals.isPlaying || globals.isPaused)) {
       return Container();
     }

@@ -22,7 +22,13 @@ class _MainLayout extends State<MainLayout> {
       body: Stack(
         children: [
           widget.child,
-          Align(alignment: Alignment.bottomCenter, child: globals.bottomPlayer),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: ValueListenableBuilder<Widget>(
+              valueListenable: globals.bottomPlayerListener,
+              builder: (context, player, _) => player,
+            ),
+          ),
         ],
       ),
     );

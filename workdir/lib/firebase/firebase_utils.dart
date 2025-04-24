@@ -108,7 +108,7 @@ Future<DocumentSnapshot<Map<String, dynamic>>> getUserData() async {
           .doc(FirebaseAuth.instance.currentUser?.uid)
           .get();
 
-  log('Document exists');
+  //log('Document exists');
   return docSnapshot;
 }
 
@@ -116,7 +116,7 @@ Future<List<dynamic>> getGlobalSongData(Map<String, dynamic> tracks) async {
   //store result of each occurence
   var results = [];
 
-  log(tracks.toString());
+  //log(tracks.toString());
 
   //when there are no tracks passed assume the request wants all songs
   if (tracks['Tracklist'] == null) {
@@ -132,10 +132,10 @@ Future<List<dynamic>> getGlobalSongData(Map<String, dynamic> tracks) async {
             .doc(thisRef.id)
             .get();
 
-    log('Document exists');
+    //log('Document exists');
     results.add(docSnapshot);
   }
-  log(results.toString());
+  //log(results.toString());
 
   return results;
 }
@@ -144,7 +144,7 @@ Future<List<dynamic>> getGlobalAlbumData(List<dynamic> albums) async {
   //store result of each occurence
   var results = [];
 
-  log(albums.toString());
+  //log(albums.toString());
 
   //when there are no tracks passed assume the request wants all songs
   if (albums.length < 1) {
@@ -166,10 +166,10 @@ Future<List<dynamic>> getGlobalAlbumData(List<dynamic> albums) async {
             .get();
 
     var temp = docSnapshot.data();
-    log('Document exists $temp');
+    //log('Document exists $temp');
     results.add(temp);
   }
-  log(results.toString());
+  //log(results.toString());
 
   return results;
 }
