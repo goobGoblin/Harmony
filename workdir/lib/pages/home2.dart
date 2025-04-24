@@ -1,1386 +1,262 @@
 import 'package:flutter/material.dart';
 import 'dependencies.dart';
+import 'package:flutter_application_1/theme/app_colors.dart';
+import 'dart:ui' as ui;
+import 'package:flutter_application_1/widgets/widgets.dart'; // Import your widgets
 
-class Home2Route extends StatelessWidget {
+const double goldenRatio = 1.618033988749895;
+const double inverseGoldenRatio = 0.618033988749895;
+
+class Home2Route extends StatefulWidget {  // Changed to StatefulWidget
   const Home2Route({super.key});
 
   @override
+  State<Home2Route> createState() => _Home2RouteState();
+}
+
+class _Home2RouteState extends State<Home2Route> {
+  // Index for sidebar selection
+  int _selectedIndex = 0; // Start with home selected (index 0)
+  
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        width: 390,
-        height: 844,
-        clipBehavior: Clip.antiAlias,
-        decoration: const BoxDecoration(color: Color(0xFF101010)),
-        child: Stack(
-          children: [
-            Positioned(
-              left: -2,
-              top: 47,
-              child: Container(
-                width: 392,
-                height: 242,
-                clipBehavior: Clip.antiAlias,
-                decoration: const BoxDecoration(),
-                child: Stack(
-                  children: [
-                    Positioned(
-                      left: 0,
-                      top: 0,
-                      child: Container(width: 390, height: 242),
-                    ),
-                    Positioned(
-                      left: 298,
-                      top: 150,
-                      child: Container(
-                        width: 92,
-                        height: 92,
-                        clipBehavior: Clip.antiAlias,
-                        decoration: const BoxDecoration(),
-                        child: Stack(
-                          children: [
-                            Positioned(
-                              left: 2,
-                              top: 0,
-                              child: Opacity(
-                                opacity: 0.25,
-                                child: Container(
-                                  width: 89,
-                                  height: 89,
-                                  decoration: const BoxDecoration(color: Color(0xFF444444)),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 6,
-                              top: 46,
-                              child: Container(
-                                width: 40,
-                                height: 40,
-                                decoration: ShapeDecoration(
-                                  image: const DecorationImage(
-                                    image: NetworkImage("https://placehold.co/40x40"),
-                                    fit: BoxFit.cover,
-                                  ),
-                                  shape: OvalBorder(),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 11,
-                              top: 10,
-                              child: SizedBox(
-                                width: 72,
-                                height: 24,
-                                child: Text(
-                                  'account',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontFamily: 'Neue Regrade',
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: 0.42,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 242,
-                      top: 0,
-                      child: Container(
-                        width: 148,
-                        height: 149,
-                        clipBehavior: Clip.antiAlias,
-                        decoration: const BoxDecoration(),
-                        child: Stack(
-                          children: [
-                            Positioned(
-                              left: 1,
-                              top: 1,
-                              child: Opacity(
-                                opacity: 0.25,
-                                child: Container(
-                                  width: 146,
-                                  height: 146,
-                                  decoration: ShapeDecoration(
-                                    gradient: const LinearGradient(
-                                      begin: Alignment(0.50, -0.00),
-                                      end: Alignment(0.50, 1.00),
-                                      colors: [Color(0xFF101010), Color(0xFF444444)],
-                                    ),
-                                    shape: RoundedRectangleBorder(side: BorderSide(width: 1)),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 9,
-                              top: 17,
-                              child: Container(
-                                width: 130,
-                                height: 130,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0),
-                                ),
-                                child: Stack(
-                                  children: [
-                                    Positioned(
-                                      left: 0,
-                                      top: 93,
-                                      child: Opacity(
-                                        opacity: 0.90,
-                                        child: Container(
-                                          width: 130,
-                                          height: 28,
-                                          decoration: ShapeDecoration(
-                                            color: const Color(0xFF201E26),
-                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 5,
-                                      top: 97,
-                                      child: SizedBox(
-                                        width: 100,
-                                        height: 20,
-                                        child: Text(
-                                          'track library',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 14,
-                                            fontFamily: 'Neue Regrade',
-                                            fontWeight: FontWeight.w400,
-                                            letterSpacing: 0.42,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 0,
-                                      top: 62,
-                                      child: Opacity(
-                                        opacity: 0.90,
-                                        child: Container(
-                                          width: 130,
-                                          height: 28,
-                                          decoration: ShapeDecoration(
-                                            color: const Color(0xFF201E26),
-                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 5,
-                                      top: 66,
-                                      child: SizedBox(
-                                        width: 100,
-                                        height: 20,
-                                        child: Text(
-                                          'liked playlists',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 14,
-                                            fontFamily: 'Neue Regrade',
-                                            fontWeight: FontWeight.w400,
-                                            letterSpacing: 0.42,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 0,
-                                      top: 31,
-                                      child: Opacity(
-                                        opacity: 0.90,
-                                        child: Container(
-                                          width: 130,
-                                          height: 28,
-                                          decoration: ShapeDecoration(
-                                            color: const Color(0xFF201E26),
-                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 5,
-                                      top: 35,
-                                      child: SizedBox(
-                                        width: 100,
-                                        height: 20,
-                                        child: Text(
-                                          'your playlists',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 14,
-                                            fontFamily: 'Neue Regrade',
-                                            fontWeight: FontWeight.w400,
-                                            letterSpacing: 0.42,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 0,
-                                      top: 0,
-                                      child: Opacity(
-                                        opacity: 0.90,
-                                        child: Container(
-                                          width: 130,
-                                          height: 28,
-                                          decoration: ShapeDecoration(
-                                            color: const Color(0xFF201E26),
-                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 5,
-                                      top: 4,
-                                      child: SizedBox(
-                                        width: 100,
-                                        height: 20,
-                                        child: Text(
-                                          'smart playlists',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 14,
-                                            fontFamily: 'Neue Regrade',
-                                            fontWeight: FontWeight.w400,
-                                            letterSpacing: 0.42,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 0,
-                      top: 0,
-                      child: Container(
-                        width: 242,
-                        height: 242,
-                        clipBehavior: Clip.antiAlias,
-                        decoration: const BoxDecoration(),
-                        child: Stack(
-                          children: [
-                            Positioned(
-                              left: 1,
-                              top: 1,
-                              child: Opacity(
-                                opacity: 0.30,
-                                child: Container(
-                                  width: 240,
-                                  height: 240,
-                                  decoration: const BoxDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment(0.50, -0.00),
-                                      end: Alignment(0.50, 1.79),
-                                      colors: [Color(0xFF101010), Color(0xFF444444)],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 9,
-                              top: 15,
-                              child: Container(
-                                width: 223,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Opacity(
-                                      opacity: 0.90,
-                                      child: Container(
-                                        width: double.infinity,
-                                        height: 58,
-                                        clipBehavior: Clip.antiAlias,
-                                        decoration: ShapeDecoration(
-                                          color: const Color(0xFF201E26),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(10),
-                                          ),
-                                        ),
-                                        child: Stack(
-                                          children: [
-                                            Positioned(
-                                              left: 8,
-                                              top: 8,
-                                              child: Container(
-                                                width: 43,
-                                                height: 43,
-                                                decoration: ShapeDecoration(
-                                                  image: const DecorationImage(
-                                                    image: NetworkImage("https://placehold.co/43x43"),
-                                                    fit: BoxFit.fill,
-                                                  ),
-                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                                                ),
-                                              ),
-                                            ),
-                                            Positioned(
-                                              left: 59,
-                                              top: 10,
-                                              child: SizedBox(
-                                                width: 120,
-                                                child: Text(
-                                                  'Heavy Rotation',
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 14,
-                                                    fontFamily: 'Neue Regrade',
-                                                    fontWeight: FontWeight.w400,
-                                                    letterSpacing: 0.42,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Positioned(
-                                              left: 59,
-                                              top: 30,
-                                              child: Text(
-                                                'i.e.',
-                                                style: TextStyle(
-                                                  color: const Color(0xFF5E6783),
-                                                  fontSize: 14,
-                                                  fontFamily: 'Neue Regrade',
-                                                  fontWeight: FontWeight.w400,
-                                                  letterSpacing: 0.42,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Container(
-                                      width: double.infinity,
-                                      height: 58,
-                                      clipBehavior: Clip.antiAlias,
-                                      decoration: ShapeDecoration(
-                                        color: const Color(0xFF201E26),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                        ),
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          Positioned(
-                                            left: 7,
-                                            top: 8,
-                                            child: Container(
-                                              width: 43,
-                                              height: 43,
-                                              decoration: ShapeDecoration(
-                                                image: const DecorationImage(
-                                                  image: NetworkImage("https://placehold.co/43x43"),
-                                                  fit: BoxFit.cover,
-                                                ),
-                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 59,
-                                            top: 20,
-                                            child: SizedBox(
-                                              width: 120,
-                                              child: Text(
-                                                'Listening History',
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 14,
-                                                  fontFamily: 'Neue Regrade',
-                                                  fontWeight: FontWeight.w400,
-                                                  letterSpacing: 0.42,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Container(
-                                      width: double.infinity,
-                                      height: 58,
-                                      clipBehavior: Clip.antiAlias,
-                                      decoration: ShapeDecoration(
-                                        color: const Color(0xFF201E26),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                        ),
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          Positioned(
-                                            left: 8,
-                                            top: 8,
-                                            child: Container(
-                                              width: 43,
-                                              height: 43,
-                                              decoration: ShapeDecoration(
-                                                image: const DecorationImage(
-                                                  image: NetworkImage("https://placehold.co/43x43"),
-                                                  fit: BoxFit.cover,
-                                                ),
-                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 59,
-                                            top: 10,
-                                            child: SizedBox(
-                                              width: 108,
-                                              child: Text(
-                                                'Human Robot',
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 14,
-                                                  fontFamily: 'Neue Regrade',
-                                                  fontWeight: FontWeight.w400,
-                                                  letterSpacing: 0.42,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 59,
-                                            top: 30,
-                                            child: Text(
-                                              'i.e.',
-                                              style: TextStyle(
-                                                color: const Color(0xFF5E6783),
-                                                fontSize: 14,
-                                                fontFamily: 'Neue Regrade',
-                                                fontWeight: FontWeight.w400,
-                                                letterSpacing: 0.42,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
-              left: 4,
-              top: 325,
-              child: Opacity(
-                opacity: 0.80,
+    // Get the screen size
+    final screenSize = MediaQuery.of(context).size;
+
+    // Calculate the container dimensions with the golden ratio
+    final topContainerWidth = screenSize.width;
+    final topContainerHeight = screenSize.width / goldenRatio;
+    
+    // Define the sizes of the subcontainers according to the golden ratio
+    // Largest subcontainer aligned to the the top left of the top container 
+    final gr_top1 = screenSize.width / goldenRatio;
+    // Subcontainer aligned to the top right of the top container
+    final gr_top2 = gr_top1 / goldenRatio;
+    // Subcontainer aligned to the bottom left of the top container 
+    final gr_top3 = gr_top2 / goldenRatio;
+    // Small subcontainer aligned near the bottom middle of the top container 
+    final gr_top4 = gr_top3 / goldenRatio;
+    // Smallest subcontainers aligned above the botttom middle small container
+    final gr_top5 = gr_top4 / goldenRatio; 
+
+    // Calculate the size of the harmony logo based on the screen size
+    final logoWidth = screenSize.width * 1.3;
+    final logoHeight = screenSize.height / goldenRatio;
+    // Calculate the harmony logo position based on the golden ratio
+    final logoX = screenSize.width * 0.1;
+    final logoY = gr_top1 - (screenSize.height * 0.08);
+    // Calculate how far the right side of the logo needs shifted to account for the stretch
+    final stretchedLogoShift = screenSize.width * -0.04;
+    
+    return Container(
+      color: AppColors.background,
+      // Ensure the UI does not cover system UI
+      child: SafeArea(
+        // Fullscreen container
+        child: Container(
+          width: screenSize.width,
+          height: screenSize.height,
+          child: Stack(
+            children: [
+              // Top Container
+              Align(
+                alignment: Alignment.topCenter,
                 child: Container(
-                  width: 52,
-                  height: 326,
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFF201E26),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                  width: topContainerWidth,
+                  height: topContainerHeight,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/backgrounds/topContainerBG.png'),
+                      fit: BoxFit.cover,
+                      filterQuality: FilterQuality.high,
                     ),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              left: 10,
-              top: 329,
-              child: Container(
-                width: 44.41,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 40.41,
-                      height: 40.41,
+                  ), 
+                  child: BackdropFilter(
+                    filter: ui.ImageFilter.blur(
+                        sigmaX: 5.0,
+                        sigmaY: 5.0,
+                      ),
+                    child: Container(
+                      color: Colors.transparent,
                       child: Stack(
                         children: [
-                          Icon(Icons.explore, color: Colors.white.withOpacity(0.7), size: 24),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 29),
-                    Container(
-                      width: 40.41,
-                      height: 40.41,
-                      child: Stack(
-                        children: [
-                          Icon(Icons.search, color: Colors.white.withOpacity(0.7), size: 24),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 29),
-                    Container(
-                      width: 40.41,
-                      height: 40.41,
-                      child: Stack(
-                        children: [
-                          Icon(Icons.favorite_border, color: Colors.white.withOpacity(0.7), size: 24),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 29),
-                    Container(
-                      width: 40.41,
-                      height: 40.41,
-                      child: Stack(
-                        children: [
-                          Icon(Icons.queue_music, color: Colors.white.withOpacity(0.7), size: 24),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 29),
-                    Container(
-                      width: 40.41,
-                      height: 40.41,
-                      child: Stack(
-                        children: [
-                          Icon(Icons.history, color: Colors.white.withOpacity(0.7), size: 24),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
-              left: 153,
-              top: 625,
-              child: Container(
-                width: 200,
-                height: 45,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      left: 0,
-                      top: 0,
-                      child: Opacity(
-                        opacity: 0.90,
-                        child: Container(
-                          width: 200,
-                          height: 45,
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFF201E26),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 10,
-                      top: 7,
-                      child: Container(
-                        width: 30,
-                        height: 30,
-                        decoration: ShapeDecoration(
-                          image: const DecorationImage(
-                            image: NetworkImage("https://placehold.co/30x30"),
-                            fit: BoxFit.cover,
-                          ),
-                          shape: OvalBorder(),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 48,
-                      top: 30,
-                      child: SizedBox(
-                        width: 128,
-                        height: 12,
-                        child: Text(
-                          'Long Time',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 10,
-                            fontFamily: 'Neue Regrade',
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 0.30,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 48,
-                      top: 17,
-                      child: SizedBox(
-                        width: 128,
-                        height: 12,
-                        child: Text(
-                          'Die Lit',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 10,
-                            fontFamily: 'Neue Regrade',
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 0.30,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 48,
-                      top: 3,
-                      child: SizedBox(
-                        width: 128,
-                        height: 12,
-                        child: Text(
-                          'Playboi Carti',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 10,
-                            fontFamily: 'Neue Regrade',
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 0.30,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
-              left: 157,
-              top: 555,
-              child: Container(
-                width: 200,
-                height: 60,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      left: 0,
-                      top: 0,
-                      child: Opacity(
-                        opacity: 0.90,
-                        child: Container(
-                          width: 200,
-                          height: 60,
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFF201E26),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 10,
-                      top: 8,
-                      child: Container(
-                        width: 45,
-                        height: 45,
-                        decoration: ShapeDecoration(
-                          image: const DecorationImage(
-                            image: NetworkImage("https://placehold.co/45x45"),
-                            fit: BoxFit.cover,
-                          ),
-                          shape: OvalBorder(),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 59,
-                      top: 41,
-                      child: SizedBox(
-                        width: 128,
-                        height: 12,
-                        child: Text(
-                          'They Who Must Die',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 11,
-                            fontFamily: 'Neue Regrade',
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 0.33,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 59,
-                      top: 24,
-                      child: SizedBox(
-                        width: 128,
-                        height: 12,
-                        child: Text(
-                          'We Are Sent Here ...',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 11,
-                            fontFamily: 'Neue Regrade',
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 0.33,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 59,
-                      top: 7,
-                      child: SizedBox(
-                        width: 128,
-                        height: 12,
-                        child: Text(
-                          'Shabaka and The ...',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 11,
-                            fontFamily: 'Neue Regrade',
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 0.33,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
-              left: 157,
-              top: 359,
-              child: Container(
-                width: 200,
-                height: 60,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      left: 0,
-                      top: 0,
-                      child: Opacity(
-                        opacity: 0.90,
-                        child: Container(
-                          width: 200,
-                          height: 60,
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFF201E26),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 10,
-                      top: 8,
-                      child: Container(
-                        width: 45,
-                        height: 45,
-                        decoration: ShapeDecoration(
-                          image: const DecorationImage(
-                            image: NetworkImage("https://placehold.co/45x45"),
-                            fit: BoxFit.cover,
-                          ),
-                          shape: OvalBorder(),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 60,
-                      top: 41,
-                      child: SizedBox(
-                        width: 128,
-                        height: 12,
-                        child: Text(
-                          'Violence',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 11,
-                            fontFamily: 'Neue Regrade',
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 0.33,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 60,
-                      top: 24,
-                      child: SizedBox(
-                        width: 128,
-                        height: 12,
-                        child: Text(
-                          'Faith in Strangers',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 11,
-                            fontFamily: 'Neue Regrade',
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 0.33,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 60,
-                      top: 7,
-                      child: SizedBox(
-                        width: 128,
-                        height: 12,
-                        child: Text(
-                          'Andy Stott',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 11,
-                            fontFamily: 'Neue Regrade',
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 0.33,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
-              left: 153,
-              top: 300,
-              child: Container(
-                width: 200,
-                height: 45,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      left: 0,
-                      top: 0,
-                      child: Opacity(
-                        opacity: 0.90,
-                        child: Container(
-                          width: 200,
-                          height: 45,
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFF201E26),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 10,
-                      top: 7,
-                      child: Container(
-                        width: 30,
-                        height: 30,
-                        decoration: ShapeDecoration(
-                          image: const DecorationImage(
-                            image: NetworkImage("https://placehold.co/30x30"),
-                            fit: BoxFit.cover,
-                          ),
-                          shape: OvalBorder(),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 48,
-                      top: 29,
-                      child: SizedBox(
-                        width: 128,
-                        height: 12,
-                        child: Text(
-                          'Run It',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 10,
-                            fontFamily: 'Neue Regrade',
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 0.30,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 48,
-                      top: 16,
-                      child: SizedBox(
-                        width: 128,
-                        height: 12,
-                        child: Text(
-                          'Dead Channel Sky',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 10,
-                            fontFamily: 'Neue Regrade',
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 0.30,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 48,
-                      top: 2,
-                      child: SizedBox(
-                        width: 128,
-                        height: 12,
-                        child: Text(
-                          'clipping.',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 10,
-                            fontFamily: 'Neue Regrade',
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 0.30,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
-              left: 37,
-              top: 216,
-              child: Container(
-                width: 342,
-                height: 342,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage("https://placehold.co/542x542"),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              left: 68,
-              top: 441,
-              child: Container(
-                width: 94,
-                height: 94,
-                decoration: ShapeDecoration(
-                  image: const DecorationImage(
-                    image: NetworkImage("https://placehold.co/94x94"),
-                    fit: BoxFit.cover,
-                  ),
-                  shape: OvalBorder(),
-                ),
-              ),
-            ),
-            Positioned(
-              left: 166,
-              top: 447,
-              child: Container(
-                width: 200,
-                height: 80,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      left: 16,
-                      top: 59,
-                      child: SizedBox(
-                        width: 210,
-                        height: 15,
-                        child: Text(
-                          'Up next: Andy Stott - Violence ',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 11,
-                            fontFamily: 'Neue Regrade',
-                            fontWeight: FontWeight.w300,
-                            letterSpacing: 0.33,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 16,
-                      top: 43,
-                      child: SizedBox(
-                        width: 180,
-                        height: 15,
-                        child: Text(
-                          'Record: The Money Store',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 11,
-                            fontFamily: 'Neue Regrade',
-                            fontWeight: FontWeight.w400,
-                            letterSpacing: 0.33,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 16,
-                      top: 26,
-                      child: SizedBox(
-                        width: 180,
-                        height: 15,
-                        child: Text(
-                          'Playlist: Human Robot',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 11,
-                            fontFamily: 'Neue Regrade',
-                            fontWeight: FontWeight.w400,
-                            letterSpacing: 0.33,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 16,
-                      top: 7,
-                      child: SizedBox(
-                        width: 180,
-                        height: 15,
-                        child: Text(
-                          'Playing from:',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 11,
-                            fontFamily: 'Neue Regrade',
-                            fontWeight: FontWeight.w300,
-                            letterSpacing: 0.33,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
-              left: 8,
-              top: 742,
-              child: Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Hacker\n',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontFamily: 'Neue Regrade',
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 0.42,
-                      ),
-                    ),
-                    TextSpan(
-                      text: 'Death Grips',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontFamily: 'Neue Regrade',
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 0.42,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
-              left: 186,
-              top: 728,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                    width: 40.41,
-                    height: 40.41,
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          left: 2,
-                          top: 2,
-                          child: Opacity(
-                            opacity: 0.75,
+                          // First subcontainer - aligned to the left
+                          Positioned(
+                            left: 0,
+                            top: 0,
                             child: Container(
-                              width: 36,
-                              height: 36,
-                              decoration: const ShapeDecoration(
-                                gradient: RadialGradient(
-                                  center: Alignment(0.50, 0.50),
-                                  radius: 1.34,
-                                  colors: [Color(0xFF101010), Color(0xFFC9C9C9)],
-                                ),
-                                shape: OvalBorder(),
+                              width: gr_top1,
+                              height: gr_top1,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                image: AssetImage('assets/images/backgrounds/topSubcontainer1BG.png'),
+                                fit: BoxFit.cover,
+                                opacity: 0.7,
                               ),
                             ),
+                              child: Center(child: Text('1')),
+                            ),
                           ),
-                        ),
-                        Icon(Icons.skip_previous, color: Colors.white, size: 24),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 22),
-                  Container(
-                    width: 40.59,
-                    height: 40.41,
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          left: 2,
-                          top: 2,
-                          child: Opacity(
-                            opacity: 0.75,
+                          
+                          // Second subcontainer - right of the first
+                          Positioned(
+                            left: gr_top1,
+                            top: 0,
                             child: Container(
-                              width: 36,
-                              height: 36,
-                              decoration: const ShapeDecoration(
-                                gradient: RadialGradient(
-                                  center: Alignment(0.50, 0.50),
-                                  radius: 1.34,
-                                  colors: [Color(0xFF101010), Color(0xFFC9C9C9)],
-                                ),
-                                shape: OvalBorder(),
+                              width: gr_top2,
+                              height: gr_top2,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                image: AssetImage('assets/images/backgrounds/topSubcontainer2BG.png'),
+                                fit: BoxFit.cover,
+                                opacity: 0.7,
                               ),
+                            ),
+                              child: Center(child: Text('2')),
                             ),
                           ),
-                        ),
-                        Icon(Icons.pause, color: Colors.white, size: 24),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 22),
-                  Container(
-                    width: 50,
-                    height: 50,
-                    decoration: const ShapeDecoration(
-                      color: Color(0xFFD9D9D9),
-                      shape: OvalBorder(),
-                    ),
-                    child: const Icon(Icons.play_arrow, color: Colors.black, size: 28),
-                  ),
-                  const SizedBox(width: 22),
-                  Container(
-                    width: 40.41,
-                    height: 40.41,
-                    child: Stack(
-                      children: [
-                        Icon(Icons.skip_next, color: Colors.white, size: 24),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              left: 0,
-              top: 0,
-              child: Container(
-                width: 390,
-                height: 47,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Container(
-                        height: double.infinity,
-                        padding: const EdgeInsets.symmetric(horizontal: 42, vertical: 12),
-                        clipBehavior: Clip.antiAlias,
-                        decoration: const BoxDecoration(),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Container(
-                              width: 35,
-                              height: 14,
-                              child: Stack(
-                                children: [
-                                  Positioned(
-                                    left: 0,
-                                    top: 0,
-                                    child: Text(
-                                      '9:41',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: const Color(0xFF888888),
-                                        fontSize: 17,
-                                        fontFamily: 'SF Pro',
-                                        fontWeight: FontWeight.w600,
-                                        height: 0.82,
-                                        letterSpacing: -0.50,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                          
+                          // Third subcontainer - below the second
+                          Positioned(
+                            right: 0,
+                            bottom: 0,
+                            child: Container(
+                              width: gr_top3,
+                              height: gr_top3,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                image: AssetImage('assets/images/backgrounds/topSubcontainer3BG.png'),
+                                fit: BoxFit.cover,
+                                opacity: 0.7,
                               ),
                             ),
-                            const SizedBox(width: 4),
-                            Container(width: 14, height: 14),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 160,
-                      height: double.infinity,
-                      clipBehavior: Clip.antiAlias,
-                      decoration: const BoxDecoration(),
-                    ),
-                    Expanded(
-                      child: Container(
-                        height: double.infinity,
-                        padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 12),
-                        clipBehavior: Clip.antiAlias,
-                        decoration: const BoxDecoration(),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Container(width: 18, height: 14),
-                            const SizedBox(width: 8),
-                            Container(width: 18, height: 14),
-                            const SizedBox(width: 8),
-                            Container(
-                              width: 27,
-                              height: 14,
-                              child: Stack(
-                                children: [
-                                  Positioned(
-                                    left: 5.75,
-                                    top: 0,
-                                    child: Text(
-                                      '78',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: const Color(0xFF060606),
-                                        fontSize: 11,
-                                        fontFamily: 'SF Pro',
-                                        fontWeight: FontWeight.w700,
-                                        height: 1.27,
-                                        letterSpacing: -0.50,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                              child: Center(child: Text('3')),
+                            ),
+                          ),
+                          
+                          // Fourth subcontainer - left of the third
+                          Positioned(
+                            left: gr_top1,
+                            bottom: 0,
+                            child: Container(
+                              width: gr_top4,
+                              height: gr_top4,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                image: AssetImage('assets/images/backgrounds/topSubcontainer4BG.png'),
+                                fit: BoxFit.cover,
+                                opacity: 0.7,
                               ),
                             ),
-                          ],
-                        ),
+                              child: Center(child: Text('4')),
+                            ),
+                          ),
+                          
+                          // Fifth subcontainer - above the fourth
+                          Positioned(
+                            left: gr_top1,
+                            bottom: gr_top4,
+                            child: Container(
+                              width: gr_top4,  
+                              height: gr_top5, 
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                image: AssetImage('assets/images/backgrounds/topSubcontainer4BG.png'),
+                                fit: BoxFit.cover,
+                                opacity: 0.7,
+                              ),
+                            ),
+                              child: Center(child: Text('5')),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
+                  ),
+                ),  // End Top Container
+              ),  // End align
+              
+              // Harmony Logo - placed in the main Stack
+              Positioned(
+                left: logoX,
+                top: logoY,
+                child: Container(
+                  width: logoWidth,
+                  height: logoHeight,
+                  child: Stack(
+                    alignment: Alignment.centerLeft,
+                    children: [
+                      // Right part of the logo (stretched) with offset
+                      Positioned(
+                        left: stretchedLogoShift, 
+                        right: 0,
+                        top: 0,
+                        bottom: 0,
+                        child: Image.asset(
+                          'assets/images/logos/inverseLogoRight.png',
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      // Left part of the logo (unstretched, stays in place)
+                      Positioned(
+                        left: 0,
+                        top: 0,
+                        child: Image.asset(
+                          'assets/images/logos/inverseLogoLeft.png',
+                          height: logoHeight,
+                          fit: BoxFit.fitHeight,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: const Text('Harmony'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () {
-              Navigator.pushNamed(context, '/settings');
-            },
+              
+              // Add the sidebar to the main stack
+              Positioned(
+                left: 5,  // Adjust position as needed
+                top: topContainerHeight + 20,  // Position below top container
+                child: Sidebar(
+                  selectedIndex: _selectedIndex,
+                  onItemSelected: (index) {
+                    setState(() {
+                      _selectedIndex = index;
+                    });
+                    _handleNavigation(context, index);
+                  },
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add navigation to your navigation routes from the original code
-          showModalBottomSheet(
-            context: context,
-            builder: (BuildContext context) {
-              return Container(
-                height: 300,
-                color: const Color(0xFF201E26),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.pushNamed(context, '/playlists');
-                      },
-                      child: const Text('Playlists'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.pushNamed(context, '/artists');
-                      },
-                      child: const Text('Artists'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.pushNamed(context, '/albums');
-                      },
-                      child: const Text('Albums'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.pushNamed(context, '/songs');
-                      },
-                      child: const Text('Songs'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.pushNamed(context, '/downloads');
-                      },
-                      child: const Text('Downloads'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.pushNamed(context, '/currentlyPlaying');
-                      },
-                      child: const Text('Currently Playing'),
-                    ),
-                  ],
-                ),
-              );
-            },
-          );
-        },
-        backgroundColor: const Color(0xFF201E26),
-        child: const Icon(Icons.menu),
-      ),
+        ), // End fullscreen container
+      ),  // End SafeArea
     );
+  }
+  
+  // Handle navigation based on selected index
+  void _handleNavigation(BuildContext context, int index) {
+    switch (index) {
+      case 0:
+        // Already on Home screen
+        print('Already on Home screen');
+
+        break;
+      case 1:
+        // Save screen navigation
+        print('Navigate to Save screen');
+        break;
+      case 2:
+        // Search screen navigation
+        print('Navigate to Search screen');
+        break;
+      case 3:
+        // Library screen navigation
+        print('Navigate to Library screen');
+        break;
+      case 4:
+        // User Profile screen navigation
+        print('Navigate to User Profile screen');
+        break;
+    }
   }
 }
