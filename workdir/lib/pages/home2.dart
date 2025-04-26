@@ -158,19 +158,20 @@ class _Home2RouteState extends State<Home2Route> {
               ),              
 
               // Add the sidebar to the main stack
-              Positioned(
-                left: dimensions['sbOffsetX']!,  
-                top: dimensions['logoY']! + dimensions['sbOffsetY']!,
-                child: Sidebar(
-                  selectedIndex: _selectedIndex,
-                  onItemSelected: (index) {
-                    setState(() {
-                      _selectedIndex = index;
-                    });
-                    _handleNavigation(context, index);
-                  },
-                ),
-              ),
+              // Positioned(
+                // left: dimensions['sbOffsetX']!,  
+                // top: dimensions['logoY']! + dimensions['sbOffsetY']!,
+                // child: Sidebar(
+                //   selectedIndex: _selectedIndex,
+                //   onItemSelected: (index) {
+                //     setState(() {
+                //       _selectedIndex = index;
+                //     });
+                //     _handleNavigation(context, index);
+                //   },
+                // ),
+              // ),
+
             ],
           ),
         ), // End fullscreen container

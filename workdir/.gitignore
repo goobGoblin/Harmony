@@ -50,6 +50,8 @@ macos
 .pub/
 /build/
 
+# Flutter assets related
+/assets/images/
 
 # Symbolication related
 app.*.symbols

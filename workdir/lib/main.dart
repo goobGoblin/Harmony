@@ -130,22 +130,22 @@ Future<void> main() async {
       },
       //default route
       routes: {
-        '/signUp': (context) => MainLayout(child: const SignUpRoute()),
-        '/signIn': (context) => MainLayout(child: const SignInRoute()),
-        '/home': (context) => MainLayout(child: const Home2Route()),
+        '/signUp': (context) => const SignUpRoute(),
+        '/signIn': (context) => const SignInRoute(),
+        '/home': (context) => MainLayout2(child: const Home2Route()),
         '/currentlyPlaying':
-            (context) => MainLayout(child: const CurrentlyPlaying()),
-        '/playlists': (context) => MainLayout(child: const Playlists()),
-        '/albums': (context) => MainLayout(child: const Albums()),
-        '/artists': (context) => MainLayout(child: const Artists()),
+            (context) => MainLayout2(child: const CurrentlyPlaying()),
+        '/playlists': (context) => MainLayout2(child: const Playlists()),
+        '/albums': (context) => MainLayout2(child: const Albums()),
+        '/artists': (context) => MainLayout2(child: const Artists()),
         '/songs':
             (context) =>
-                MainLayout(child: const Songs(thisName: "Songs", tracks: {})),
-        '/downloads': (context) => MainLayout(child: const Downloads()),
-        '/settings': (context) => MainLayout(child: const SettingsRoute()),
-        '/connectedApps': (context) => MainLayout(child: const ConnectedApps2()),
-        '/myAccount': (context) => MainLayout(child: const MyAccount()),
-        '/preferences': (context) => MainLayout(child: const Preferences()),
+                MainLayout2(child: const Songs(thisName: "Songs", tracks: {})),
+        '/downloads': (context) => MainLayout2(child: const Downloads()),
+        '/settings': (context) => MainLayout2(child: const SettingsRoute()),
+        '/connectedApps': (context) => MainLayout2(child: const ConnectedApps2()),
+        '/myAccount': (context) => MainLayout2(child: const MyAccount()),
+        '/preferences': (context) => MainLayout2(child: const Preferences()),
       },
     ),
   );

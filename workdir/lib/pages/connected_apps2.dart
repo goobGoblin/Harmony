@@ -129,7 +129,7 @@ class _ConnectedApps2State extends State<ConnectedApps2> {
                       children: [
                         // Right part of the logo (stretched) with offset
                         Positioned(
-                          left: dimensions['logoNegX']! + dimensions['logoX']!, 
+                          left: dimensions['logoNegX']!, 
                           top: 0,
                           bottom: 0,
                           child: Image.asset(
@@ -144,7 +144,7 @@ class _ConnectedApps2State extends State<ConnectedApps2> {
               ),              
 
               Positioned(
-                left: dimensions['topContainerWidth']! - (dimensions['topContainerWidth']! / dimensions['goldenRatio']!),
+                left: (dimensions['topContainerWidth']! - (dimensions['gr_top1']!)) - dimensions['logoX']!,
                 top: dimensions['logoY']!,
                 width: 100,
                 child: Container(
@@ -229,21 +229,6 @@ class _ConnectedApps2State extends State<ConnectedApps2> {
                       ),
                     ],
                   ),
-                ),
-              ),
-
-              // Add the sidebar to the main stack
-              Positioned(
-                left: dimensions['sbOffsetX']!,  
-                top: dimensions['logoY']! + dimensions['sbOffsetY']!,
-                child: Sidebar(
-                  selectedIndex: _selectedIndex,
-                  onItemSelected: (index) {
-                    setState(() {
-                      _selectedIndex = index;
-                    });
-                    _handleNavigation(context, index);
-                  },
                 ),
               ),
             ],

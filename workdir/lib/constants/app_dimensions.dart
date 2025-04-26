@@ -23,7 +23,7 @@ class AppDimensions {
     final gr_top5 = gr_top4 / goldenRatio;
     
     // Logo dimensions
-    final logoWidth = screenSize.width * 1.3;
+    final logoWidth = screenSize.width * 1.35;
     final logoHeight = screenSize.height / goldenRatio;
     final logoX = (screenSize.width / logoWidth) + (logoHeight*0.08);
     final logoNegX = -1 * (screenSize.width - logoX);
@@ -32,8 +32,9 @@ class AppDimensions {
     
     // Sidebar dimensions
     final sbOffsetX = logoX * 0.2;
-    final sbOffsetY = (screenSize.height / goldenRatio) * 0.15;
-    final sbHeight = (screenSize.height / goldenRatio) * 0.75;
+    final sbOffsetY = logoHeight * 0.15;
+    final sbHeight = (logoHeight) / goldenRatio;
+    final sbY = gr_top1 - (gr_top4*0.85) + ((logoHeight - sbHeight) / goldenRatio); 
     final sbWidth = logoX; 
 
     return {
@@ -53,6 +54,7 @@ class AppDimensions {
       'stretchedLogoShift': stretchedLogoShift,
       'sbOffsetX': sbOffsetX,
       'sbOffsetY': sbOffsetY,
+      'sbY': sbY,
       'sbHeight': sbHeight,
       'sbWidth': sbWidth,
 
