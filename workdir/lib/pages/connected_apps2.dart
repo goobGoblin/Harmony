@@ -3,7 +3,8 @@ import 'dependencies.dart';
 import 'package:flutter_application_1/theme/theme.dart';
 import 'dart:ui' as ui;
 import 'package:flutter_application_1/widgets/widgets.dart'; 
-import 'package:flutter_application_1/constants/constants.dart'; 
+import 'package:flutter_application_1/constants/constants.dart';
+import '../widgets/service_connection_button.dart'; // Import the service connection button
 
 class ConnectedApps2 extends StatefulWidget {
   const ConnectedApps2({super.key});
@@ -24,7 +25,6 @@ class _ConnectedApps2State extends State<ConnectedApps2> {
     // Get dimensions using the helper method
     final dimensions = AppDimensions.getScreenBasedDimensions(screenSize);
 
-    
     return Container(
       color: AppColors.background,
       // Ensure the UI does not cover system UI
@@ -36,7 +36,6 @@ class _ConnectedApps2State extends State<ConnectedApps2> {
           child: Stack(
             children: [
               // Top Container
-
               Align(
                 alignment: Alignment.topCenter,
                 child: Container(
@@ -98,7 +97,6 @@ class _ConnectedApps2State extends State<ConnectedApps2> {
                               containerSize: dimensions['gr_top4']!,
                             ),
                           ),
-                                                    // Test AccountButton (TEMPORARY)
 
                           // Fifth subcontainer - above the fourth
                           Positioned(
@@ -110,14 +108,14 @@ class _ConnectedApps2State extends State<ConnectedApps2> {
                             ),
                           ),
 
-
                         ],
                       ),
                     ),
                   ),
                 ),  // End Top Container
               ),  // End align
-              
+
+
               // Harmony Logo - Using IgnorePointer to allow clicks to pass through
               Positioned(
                 left: 0,
@@ -144,6 +142,95 @@ class _ConnectedApps2State extends State<ConnectedApps2> {
                   ),
                 ),
               ),              
+
+              Positioned(
+                left: dimensions['topContainerWidth']! - (dimensions['topContainerWidth']! / dimensions['goldenRatio']!),
+                top: dimensions['logoY']!,
+                width: 100,
+                child: Container(
+                  padding:  EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: dimensions['logoHeight']! / 7.5,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Spotify button - no offset
+                      ServiceConnectionButton(
+                        service: MusicService.spotify,
+                        isConnected: false,
+                        onPressed: () {
+                          print("Spotify button pressed");
+                        },
+                        width: 40.0,
+                        height: 40.0,
+                      ),
+                      SizedBox(
+                        height: dimensions['logoHeight']! / 16), 
+                      
+                      // Apple Music button - small offset to the left
+                      Padding(
+                        padding: EdgeInsets.only(left: dimensions['logoWidth']! / 24),
+                        child: ServiceConnectionButton(
+                          service: MusicService.apple,
+                          isConnected: false,
+                          onPressed: () {
+                            print("Apple Music button pressed");
+                          },
+                          width: 40.0,
+                          height: 40.0,
+                        ),
+                      ),
+                      SizedBox(height: dimensions['logoHeight']! / 18),
+                      
+                      // YouTube Music button - larger offset to the left
+                      Padding(
+                        padding: EdgeInsets.only(left: dimensions['logoWidth']! / 18),
+                        child: ServiceConnectionButton(
+                          service: MusicService.youtube,
+                          isConnected: false,
+                          onPressed: () {
+                            print("YouTube button pressed");
+                          },
+                          width: 40.0,
+                          height: 40.0,
+                        ),
+                      ),
+                      SizedBox(height: dimensions['logoHeight']! / 18),
+
+                      // SoundCloud button - same offset as Apple Music
+                      Padding(
+                        padding: EdgeInsets.only(left: dimensions['logoWidth']! / 24),
+                        child: ServiceConnectionButton(
+                          service: MusicService.soundcloud,
+                          isConnected: false,
+                          onPressed: () {
+                            print("SoundCloud button pressed");
+                          },
+                          width: 40.0,
+                          height: 40.0,
+                        ),
+                      ),
+                      SizedBox(height: dimensions['logoHeight']! / 16),
+                      
+                      // Last.fm button - no offset
+                      ServiceConnectionButton(
+                        service: MusicService.lastfm,
+                        isConnected: false,
+                        onPressed: () {
+                          print("Last.fm button pressed");
+                        },
+                        width: 40.0,
+                        height: 40.0,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
 
               // Add the sidebar to the main stack
               Positioned(
