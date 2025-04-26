@@ -64,7 +64,9 @@ Future<void> main() async {
     myInitRout = '/home';
     globals.userDoc = await getUserData();
 
-    if (globals.userDoc['Linked Accounts']['Spotify'][0]) {
+    var spotifyAccount = globals.userDoc['Linked Accounts']['Spotify'];
+    if (spotifyAccount is bool && spotifyAccount || 
+        spotifyAccount is List && spotifyAccount.isNotEmpty && spotifyAccount[0]) {
       spotifyConnection.reconnect();
     }
   }
@@ -141,7 +143,7 @@ Future<void> main() async {
                 MainLayout(child: const Songs(thisName: "Songs", tracks: {})),
         '/downloads': (context) => MainLayout(child: const Downloads()),
         '/settings': (context) => MainLayout(child: const SettingsRoute()),
-        '/connectedApps': (context) => MainLayout(child: const ConnectedApps()),
+        '/connectedApps': (context) => MainLayout(child: const ConnectedApps2()),
         '/myAccount': (context) => MainLayout(child: const MyAccount()),
         '/preferences': (context) => MainLayout(child: const Preferences()),
       },

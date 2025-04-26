@@ -14,7 +14,7 @@ class Sidebar extends StatefulWidget {
   }) : super(key: key);
   
   @override
-  State createState() => _SidebarState();
+  State<Sidebar> createState() => _SidebarState();
 }
 
 class _SidebarState extends State<Sidebar> {
@@ -30,6 +30,7 @@ class _SidebarState extends State<Sidebar> {
     final sidebarWidth = dimensions['sbWidth']!;
     final sidebarHeight = dimensions['sbHeight']!;
     final sidebarVertSpacing = dimensions['sbWidth']! / dimensions['goldenRatio']!;
+    
     return Column(
       children: [
         Container(
@@ -80,9 +81,8 @@ class _SidebarState extends State<Sidebar> {
     
     // Get dimensions using the helper method
     final dimensions = AppDimensions.getScreenBasedDimensions(screenSize);
-
     final sidebarWidth = dimensions['sbWidth']!;
-
+    
     return GestureDetector(
       onTap: () => widget.onItemSelected(index),
       child: Container(

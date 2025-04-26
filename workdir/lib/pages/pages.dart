@@ -14,6 +14,7 @@ export 'artists.dart';
 export 'downloads.dart';
 export 'settings_page.dart';
 export 'connected_apps.dart';
+export 'connected_apps2.dart';
 export 'account.dart';
 export 'preferences.dart';
 export 'mainLayout.dart';

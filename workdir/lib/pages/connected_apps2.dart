@@ -5,15 +5,14 @@ import 'dart:ui' as ui;
 import 'package:flutter_application_1/widgets/widgets.dart'; 
 import 'package:flutter_application_1/constants/constants.dart'; 
 
-
-class Home2Route extends StatefulWidget {
-  const Home2Route({super.key});
+class ConnectedApps2 extends StatefulWidget {
+  const ConnectedApps2({super.key});
 
   @override
-  State<Home2Route> createState() => _Home2RouteState();
+  _ConnectedApps2State createState() => _ConnectedApps2State();
 }
 
-class _Home2RouteState extends State<Home2Route> {
+class _ConnectedApps2State extends State<ConnectedApps2> {
   // Index for sidebar selection
   int _selectedIndex = 0; // Start with home selected (index 0)
   
@@ -121,7 +120,7 @@ class _Home2RouteState extends State<Home2Route> {
               
               // Harmony Logo - Using IgnorePointer to allow clicks to pass through
               Positioned(
-                left: dimensions['logoX']!,
+                left: 0,
                 top: dimensions['logoY']!,
                 child: IgnorePointer(  // This makes the logo ignore pointer events
                   child: SizedBox(
@@ -132,23 +131,12 @@ class _Home2RouteState extends State<Home2Route> {
                       children: [
                         // Right part of the logo (stretched) with offset
                         Positioned(
-                          left: dimensions['stretchedLogoShift']!, 
-                          right: 0,
+                          left: dimensions['logoNegX']! + dimensions['logoX']!, 
                           top: 0,
                           bottom: 0,
                           child: Image.asset(
                             'assets/images/logos/inverseLogoRight.png',
                             fit: BoxFit.fill,
-                          ),
-                        ),
-                        // Left part of the logo (unstretched, stays in place)
-                        Positioned(
-                          left: 0,
-                          top: 0,
-                          child: Image.asset(
-                            'assets/images/logos/inverseLogoLeft.png',
-                            height: dimensions['logoHeight']!,
-                            fit: BoxFit.fitHeight,
                           ),
                         ),
                       ],
@@ -184,6 +172,7 @@ class _Home2RouteState extends State<Home2Route> {
       case 0:
         // Home screen
         print('Already on Home screen');
+        Navigator.pushNamed(context, '/home');
         break;
       case 1:
         // Save screen navigation - let's try navigating to Connected Apps here
