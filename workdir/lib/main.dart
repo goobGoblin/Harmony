@@ -59,6 +59,7 @@ Future<void> main() async {
   if (FirebaseAuth.instance.currentUser == null) {
     log('No user logged in');
     myInitRout = '/signUp';
+    globals.userDoc = await getTempData();
   } else {
     log('User logged in: ${FirebaseAuth.instance.currentUser?.email}');
     myInitRout = '/home';
@@ -79,8 +80,10 @@ Future<void> main() async {
   //     androidStopForegroundOnPause: true,
   //   ),
   // );
-
-  var userAlbums = globals.userDoc['albums'];
+  var userAlbums = [];
+  if (globals.userDoc != null) {
+    userAlbums = globals.userDoc['albums'];
+  }
 
   runApp(
     MaterialApp(
@@ -124,8 +127,8 @@ Future<void> main() async {
       },
       //default route
       routes: {
-        '/signUp': (context) => MainLayout(child: const SignUpRoute()),
-        '/signIn': (context) => MainLayout(child: const SignInRoute()),
+        '/signUp': (context) => const SignUpRoute(),
+        '/signIn': (context) => const SignInRoute(),
         '/home': (context) => MainLayout(child: const HomeRoute()),
         '/currentlyPlaying': (context) => CurrentlyPlaying(),
         '/playlists': (context) => MainLayout(child: const Playlists()),

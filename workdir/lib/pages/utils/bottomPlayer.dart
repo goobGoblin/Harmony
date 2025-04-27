@@ -26,6 +26,14 @@ class _BottomPlayer extends State<BottomPlayer> {
 
   @override
   Widget build(BuildContext contex) {
+    var currentImage;
+
+    if (globals.currentlyPlaying['Images'] == null) {
+      currentImage =
+          'https://w7.pngwing.com/pngs/800/189/png-transparent-multimedia-music-play-player-song-video-multimedia-controls-solid-icon.png';
+    } else {
+      currentImage = globals.currentlyPlaying['Images'][0]['url'];
+    }
     log("bottom player being built");
 
     if (!((globals.isPlaying || globals.isPaused) &&
@@ -43,9 +51,7 @@ class _BottomPlayer extends State<BottomPlayer> {
             onTap: () {
               Navigator.pushNamed(context, '/currentlyPlaying');
             },
-            child: Image(
-              image: NetworkImage(globals.currentlyPlaying['Images'][0]['url']),
-            ),
+            child: Image(image: NetworkImage(currentImage)),
           ),
 
           SizedBox(width: 10),
@@ -95,7 +101,9 @@ class _BottomPlayer extends State<BottomPlayer> {
                     audioHandler.play(
                       globals.currentlyPlaying["URI"],
                       globals.currentlyPlaying["LinkedService"][0],
-                      spotifyConnection,
+                      globals.currentlyPlaying["LinkedService"][0] == "Spotify"
+                          ? spotifyConnection
+                          : youtubeConnection,
                     );
                     setState(() {});
                   },
@@ -109,7 +117,12 @@ class _BottomPlayer extends State<BottomPlayer> {
                   onPressed: () {
                     //play song
                     if (globals.isPlaying == true) {
-                      audioHandler.pause(spotifyConnection);
+                      audioHandler.pause(
+                        globals.currentlyPlaying["LinkedService"][0] ==
+                                "Spotify"
+                            ? spotifyConnection
+                            : youtubeConnection,
+                      );
                       setState(() {
                         globals.isPlaying = false;
                         globals.isPaused = true;
@@ -117,7 +130,12 @@ class _BottomPlayer extends State<BottomPlayer> {
                       return;
                     }
                     if (globals.isPaused == true) {
-                      audioHandler.resume(spotifyConnection);
+                      audioHandler.resume(
+                        globals.currentlyPlaying["LinkedService"][0] ==
+                                "Spotify"
+                            ? spotifyConnection
+                            : youtubeConnection,
+                      );
                       setState(() {
                         globals.isPlaying = true;
                         globals.isPaused = false;
@@ -150,7 +168,9 @@ class _BottomPlayer extends State<BottomPlayer> {
                     audioHandler.play(
                       globals.currentlyPlaying["URI"],
                       globals.currentlyPlaying["LinkedService"][0],
-                      spotifyConnection,
+                      globals.currentlyPlaying["LinkedService"][0] == "Spotify"
+                          ? spotifyConnection
+                          : youtubeConnection,
                     );
                     setState(() {});
                   },

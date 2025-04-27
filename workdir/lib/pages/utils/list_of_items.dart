@@ -7,12 +7,14 @@ List<Widget> createListOfSongs(
   BuildContext context,
 ) {
   globals.currentTracks = collection;
+
   List<StatefulWidget> thisWidgets = [];
   for (var i = 0; i < collection!.length; i++) {
     try {
       //get document snapshot from reference {
       // log(collection[i].toString());
       var thisSong = collection[i].data();
+      //log("Current song $thisSong.toString()");
       var newButton = ElevatedButton(
         onPressed: () {
           globals.currentlyPlaying = thisSong;
@@ -23,9 +25,10 @@ List<Widget> createListOfSongs(
           audioHandler.play(
             thisSong["URI"],
             thisSong["LinkedService"][0],
-            spotifyConnection,
+            thisSong["LinkedService"][0] == "Spotify"
+                ? spotifyConnection
+                : youtubeConnection,
           );
-          
         },
         style: ButtonStyle(
           padding: WidgetStateProperty.all(
@@ -48,7 +51,7 @@ List<Widget> createListOfSongs(
       //add the new button to the list
       thisWidgets.add(newButton);
     } catch (e) {
-      log("Error: $e");
+      log("Error in song list creation: $e");
     }
   }
   return thisWidgets;

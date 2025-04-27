@@ -20,6 +20,7 @@ import soundcloud_utils
 import ytmusicapi_utils
 import spotify_utils as su
 import import_utils
+import youtube_utils
 # import lastfm
 
 authFile = open("auth.json", "r")
@@ -80,51 +81,44 @@ def spotify_api(request: https_fn.Request) -> https_fn.Response:
             if(params['Options']['Albums'] == True):
                 print("Importing Albums")
                 su.importAlbums(user, db, params)
-                thisResponse = thisResponse + "Albums imported successfully!"
+                thisResponse = thisResponse + " Albums imported successfully!"
         
         return https_fn.Response(thisResponse)
 
 #----------------------------------------------------------------------------------------------
 #TODO Update this to handle firebase function requests
 #TODO Note: Youtube must be implemented in flutter frontend
-@https_fn.on_request()#("/Youtube", method=["POST"])
+@https_fn.on_request(secrets=["YOUTUBE_API_KEY", "YOUTUBE_CLIENT_ID"])#("/Youtube", method=["POST"])
 def youtube_api(request: https_fn.Request) -> https_fn.Response:
     try:
-        params = json.loads(request.body.read())  # Handle incoming params
+        params = request.get_json()  # Handle incoming params
     except:
-        params = request.query.decode()
+        print("Error")
+        return https_fn.Response("Error")
 
-    if "Youtube" in params and "FirebaseID" in params:
-        print("YouTube Music Integration")
+     #load correct part of json
+    params = json.loads(params['data'])
+    
+    
+    print("YouTube Integration")
 
-        access_token = params["Youtube"]
-        firebase_id = params["FirebaseID"]
+    access_token = os.environ.get("YOUTUBE_API_KEY")
+    firebase_id = params["FirebaseID"]
 
-        # Initialize YTMusic with credentials
-        ytmusic = ytmusicapi_utils.get_ytmusic_credentials(access_token)
+    # Initialize YT with credentials
+    result = None
+    if params["Options"]["Playlists"]:
+        clientID = os.environ.get("YOUTUBE_CLIENT_ID")
+        result = youtube_utils.import_youtube_playlists(params["AccessToken"],params["RefreshToken"] , clientID, firebase_id, db)
+    #TODO implement albums
+    # elif params["Options"]["Albums"]:
+    #     result = youtube_utils.import_youtube_albums(access_token, firebase_id, db)
+    if "error" in result:
+        return https_fn.Response(json.dumps(result), status=400)
 
-        if not ytmusic:
-            #response.status = 400
-            return {"error": "Failed to authenticate with YouTube Music API"}
+    return https_fn.Response(json.dumps(result), status=200)
 
-        # Fetch user info and playlists
-        user_info = ytmusicapi_utils.get_user_info(ytmusic)
-        if not user_info:
-            #response.status = 400
-            return {"error": "Failed to retrieve user data"}
-
-        playlists = ytmusicapi_utils.get_user_playlists(ytmusic)
-        if not playlists:
-            #response.status = 400
-            return {"error": "Failed to retrieve user playlists"}
-
-        # Process playlists and store in Firebase
-        result = ytmusicapi_utils.import_youtube_playlists_to_firestore(playlists, firebase_id, db)
-
-        return {"message": "Playlists imported successfully", "data": result}
-    else:
-        #response.status = 400
-        return {"error": "Invalid request"}
+    return https_fn.Response(json.dumps({"error": "Invalid request"}), status=400)
 
 #----------------------------------------------------------------------------------------------
 #TODO Update this to handle firebase function requests
@@ -272,12 +266,33 @@ def bandcamp_api(request: https_fn.Request) -> https_fn.Response:
         #     print("Bandcamp")
         #     #TODO implement bandcamp api
         
-@https_fn.on_call(secrets=["SPOTIFY_CLIENT_ID"])
+@https_fn.on_call(secrets=["SPOTIFY_CLIENT_ID" , "YOUTUBE_API_KEY","YOUTUBE_CLIENT_ID"])
 def secret_handler(request: https_fn.Request) -> dict:
     #TODO: handle different secrets using the request object
     #i.e. use switch statement to determine which secret to return
+    #TODO fix this to handle firebase function requests
+    response = os.environ.get("SPOTIFY_CLIENT_ID")
+    return {"ClientID": response}
     
-    client_id = os.environ.get("SPOTIFY_CLIENT_ID", "")
+    try:
+        params = request.get_json()  # Handle incoming params
+            
+    except:
+        print("Error")
+        return https_fn.Response("Error")
     
-    return {"ClientID": client_id}
+    params = json.loads(params['data'])
+    
+    if(params['key'] == "SPOTIFY_CLIENT_ID"):
+        response = os.environ.get("SPOTIFY_CLIENT_ID")
+        return {"ClientID": response}
+    
+    elif(params['key'] == "YOUTUBE_API_KEY"):
+        response = os.environ.get("YOUTUBE_API_KEY")
+        return {"ApiKey": response}
+
+    elif(params['key'] == "YOUTUBE_CLIENT_ID"):
+        response = os.environ.get("YOUTUBE_CLIENT_ID")
+        return {"ClientID": response}
+   
 #-----------------------------------------------------------------------------------------------

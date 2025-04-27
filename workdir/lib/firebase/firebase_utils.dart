@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import '../pages/dependencies.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
@@ -58,6 +58,8 @@ Future<String> createFirebaseAccount(
         'dataUsage': true,
       },
     });
+
+    globals.userDoc = await userDoc.get();
   } on FirebaseAuthException catch (e) {
     if (e.code == 'weak-password') {
       return 'The password provided is too weak.';
@@ -145,7 +147,12 @@ Future<List<dynamic>> getGlobalAlbumData(List<dynamic> albums) async {
   var results = [];
 
   //log(albums.toString());
-
+  if (albums == null) {
+    log('No albums passed');
+    var docSnapshot =
+        await FirebaseFirestore.instance.collection('Albums').get();
+    return docSnapshot.docs;
+  }
   //when there are no tracks passed assume the request wants all songs
   if (albums.length < 1) {
     log('No albums passed');
@@ -172,4 +179,12 @@ Future<List<dynamic>> getGlobalAlbumData(List<dynamic> albums) async {
   //log(results.toString());
 
   return results;
+}
+
+Future<DocumentSnapshot<Map<String, dynamic>>> getTempData() async {
+  var docSnapshot =
+      FirebaseFirestore.instance.collection('Users').doc("User").get();
+
+  //log('Document exists');
+  return docSnapshot;
 }

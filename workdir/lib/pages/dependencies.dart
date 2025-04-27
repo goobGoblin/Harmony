@@ -11,11 +11,13 @@ import 'globals.dart';
 import '../audio/audioHandler.dart';
 import '../apis/spotify_api.dart';
 import '../apis/LastFM_parser.dart';
+import '../apis/youtube_api.dart';
 
 //import 'package:bottom_navbar_player/bottom_navbar_player.dart';
 
 var globals = Globals();
 var audioHandler = MyAudioHandler();
 var spotifyConnection = SpotifyAPI();
+var youtubeConnection = YoutubeAPI();
 LastFMParser lastFMConnection = LastFMParser();
 //final thisBottomPlayer = BottomNavBarPlayer();
