@@ -38,6 +38,8 @@ class AccountButton extends StatelessWidget {
         height: size,
         child: InkWell(
           onTap: handleTap,
+          borderRadius: BorderRadius.circular(size / 2), 
+          customBorder: const CircleBorder(),
         ),
       ),
     );

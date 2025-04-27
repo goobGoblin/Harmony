@@ -149,8 +149,8 @@ class _ConnectedApps2State extends State<ConnectedApps2> {
                 width: 100,
                 child: Container(
                   padding:  EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                    vertical: dimensions['logoHeight']! / 7.5,
+                    horizontal: dimensions['logoWidth']! / 96,
+                    vertical: dimensions['logoHeight']! / 9,
                   ),
                   decoration: BoxDecoration(
                     color: Colors.transparent,
@@ -166,11 +166,10 @@ class _ConnectedApps2State extends State<ConnectedApps2> {
                         onPressed: () {
                           print("Spotify button pressed");
                         },
-                        width: 40.0,
-                        height: 40.0,
+                        width: dimensions['logoHeight']! / 8,
+                        height: dimensions['logoHeight']! / 8,
                       ),
-                      SizedBox(
-                        height: dimensions['logoHeight']! / 16), 
+                      SizedBox(height: dimensions['logoHeight']! / 512),
                       
                       // Apple Music button - small offset to the left
                       Padding(
@@ -181,11 +180,11 @@ class _ConnectedApps2State extends State<ConnectedApps2> {
                           onPressed: () {
                             print("Apple Music button pressed");
                           },
-                          width: 40.0,
-                          height: 40.0,
+                          width: dimensions['logoHeight']! / 8,
+                          height: dimensions['logoHeight']! / 8,
                         ),
                       ),
-                      SizedBox(height: dimensions['logoHeight']! / 18),
+                      SizedBox(height: dimensions['logoHeight']! / 512),
                       
                       // YouTube Music button - larger offset to the left
                       Padding(
@@ -196,11 +195,11 @@ class _ConnectedApps2State extends State<ConnectedApps2> {
                           onPressed: () {
                             print("YouTube button pressed");
                           },
-                          width: 40.0,
-                          height: 40.0,
+                          width: dimensions['logoHeight']! / 8,
+                          height: dimensions['logoHeight']! / 8,
                         ),
                       ),
-                      SizedBox(height: dimensions['logoHeight']! / 18),
+                      SizedBox(height: dimensions['logoHeight']! / 512),
 
                       // SoundCloud button - same offset as Apple Music
                       Padding(
@@ -211,11 +210,11 @@ class _ConnectedApps2State extends State<ConnectedApps2> {
                           onPressed: () {
                             print("SoundCloud button pressed");
                           },
-                          width: 40.0,
-                          height: 40.0,
+                          width: dimensions['logoHeight']! / 8,
+                          height: dimensions['logoHeight']! / 8,
                         ),
                       ),
-                      SizedBox(height: dimensions['logoHeight']! / 16),
+                      SizedBox(height: dimensions['logoHeight']! / 512),
                       
                       // Last.fm button - no offset
                       ServiceConnectionButton(
@@ -224,8 +223,8 @@ class _ConnectedApps2State extends State<ConnectedApps2> {
                         onPressed: () {
                           print("Last.fm button pressed");
                         },
-                        width: 40.0,
-                        height: 40.0,
+                        width: dimensions['logoHeight']! / 8,
+                        height: dimensions['logoHeight']! / 8,
                       ),
                     ],
                   ),
