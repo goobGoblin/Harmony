@@ -39,6 +39,7 @@ class AppDimensions {
 
     return {
       'goldenRatio': goldenRatio,
+      'inverseGoldenRatio': inverseGoldenRatio,
       'topContainerWidth': topContainerWidth,
       'topContainerHeight': topContainerHeight,
       'gr_top1': gr_top1,
