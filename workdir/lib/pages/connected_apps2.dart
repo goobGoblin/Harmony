@@ -362,12 +362,12 @@ class _ConnectedApps2State extends State<ConnectedApps2> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Spotify button - no offset
+                      // Last.fm button - no offset
                       ServiceConnectionButton(
-                        service: MusicService.spotify,
-                        isConnected: _isServiceConnected('Spotify'),
+                        service: MusicService.lastfm,
+                        isConnected: false,
                         onPressed: () {
-                          _handleSpotifyConnect();
+                          print("Last.fm button pressed");
                         },
                         width: dimensions['logoHeight']! / 8,
                         height: dimensions['logoHeight']! / 8,
@@ -389,14 +389,14 @@ class _ConnectedApps2State extends State<ConnectedApps2> {
                       ),
                       SizedBox(height: dimensions['logoHeight']! / 512),
                       
-                      // YouTube Music button - larger offset to the left
+                      // Spotify button - larger offset to the left
                       Padding(
                         padding: EdgeInsets.only(left: dimensions['logoWidth']! / 18),
                         child: ServiceConnectionButton(
-                          service: MusicService.youtube,
-                          isConnected: false,
+                          service: MusicService.spotify,
+                          isConnected: _isServiceConnected('Spotify'),
                           onPressed: () {
-                            print("YouTube button pressed");
+                            _handleSpotifyConnect();
                           },
                           width: dimensions['logoHeight']! / 8,
                           height: dimensions['logoHeight']! / 8,
@@ -404,7 +404,7 @@ class _ConnectedApps2State extends State<ConnectedApps2> {
                       ),
                       SizedBox(height: dimensions['logoHeight']! / 512),
 
-                      // SoundCloud button - same offset as Apple Music
+                      // SoundCloud button - small offset to the left
                       Padding(
                         padding: EdgeInsets.only(left: dimensions['logoWidth']! / 24),
                         child: ServiceConnectionButton(
@@ -419,12 +419,12 @@ class _ConnectedApps2State extends State<ConnectedApps2> {
                       ),
                       SizedBox(height: dimensions['logoHeight']! / 512),
                       
-                      // Last.fm button - no offset
+                      // YouTube Music button - no offset
                       ServiceConnectionButton(
-                        service: MusicService.lastfm,
+                        service: MusicService.youtube,
                         isConnected: false,
                         onPressed: () {
-                          print("Last.fm button pressed");
+                          print("YouTube button pressed");
                         },
                         width: dimensions['logoHeight']! / 8,
                         height: dimensions['logoHeight']! / 8,

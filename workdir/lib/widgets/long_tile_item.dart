@@ -38,7 +38,7 @@ class LongTileItem extends StatelessWidget {
         decoration: ShapeDecoration(
           color: AppColors.primary, // Using your defined secondary color
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(containerHeight * 0.17),
+            borderRadius: BorderRadius.circular(containerHeight * 0.2),
           ),
         ),
         child: Stack(
