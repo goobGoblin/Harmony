@@ -34,7 +34,22 @@ List<Widget> getConnectedImages(Map<String, dynamic> thisSong) {
         width: 20,
         fit: BoxFit.contain,
       );
+    } else if (thisSong["LinkedService"][i] == "YouTube") {
+      thisImage = Image.asset(
+        'assets/images/Youtube_logo.png', // your image path
+        height: 20,
+        width: 20,
+        fit: BoxFit.contain,
+      );
     }
+    // } else if (thisSong["LinkedService"][i] == "Apple") {
+    //   thisImage = Image.asset(
+    //     'assets/images/Apple_logo.png', // your image path
+    //     height: 20,
+    //     width: 20,
+    //     fit: BoxFit.contain,
+    //   );
+    // }
 
     //TODO add more images here
 

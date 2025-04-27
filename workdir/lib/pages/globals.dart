@@ -11,20 +11,15 @@ class Globals {
   int currentIndex = 0;
   bool isPlaying = false;
   bool isPaused = false;
+  bool bottomPlayerVisible = true;
+  Stream<List<int>> currentStream = const Stream.empty();
   late DocumentSnapshot<Map<String, dynamic>> userDoc;
-  Widget bottomPlayer = BottomPlayer();
-
-  // Globals() {
-  //   if (FirebaseAuth.instance.currentUser != null) {
-  //     getUserData().then((value) {
-  //       userDoc = value;
-  //       notifyListeners();
-  //     });
-  //   }
-  // }
+  ValueNotifier<Widget> bottomPlayerListener = ValueNotifier(
+    const BottomPlayer(),
+  );
 
   void updateBottomPlayer() {
-    bottomPlayer = BottomPlayer();
+    bottomPlayerListener.value = BottomPlayer();
     //notifyListeners();
   }
 

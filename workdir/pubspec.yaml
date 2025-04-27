@@ -45,6 +45,11 @@ dependencies:
   webview_flutter: ^4.2.2
   #bottom_navbar_player: ^0.1.0
   provider: ^6.0.0
+  marquee: ^2.0.0
+  auto_scroll_text: ^0.0.7
+  google_sign_in: ^6.2.1
+  youtube_explode_dart: ^2.4.0
+  #audioplayers: ^6.4.0
   flutter_web_auth_2: ^4.1.0
 dev_dependencies:
   flutter_test:

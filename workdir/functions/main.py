@@ -17,8 +17,11 @@ from lastfm_utils import handle_auth_request, get_user_loved_tracks
 import google.cloud.firestore
 import spotipy
 import soundcloud_utils
-import youtube_utils
+
+import ytmusicapi_utils
+import spotify_utils as su
 import import_utils
+import youtube_utils
 # import lastfm
 
 authFile = open("auth.json", "r")
@@ -51,7 +54,7 @@ def spotify_api(request: https_fn.Request) -> https_fn.Response:
             #TODO implement albums 
             #TODO Finish playlist implementation
             #TODO implement user data
-           
+            thisResponse = ""
             #global connection
             sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id=authFile["Spotify"]["client_id"],
                                                             client_secret=authFile["Spotify"]["client_secret"],))
@@ -65,80 +68,60 @@ def spotify_api(request: https_fn.Request) -> https_fn.Response:
             
             #Check if user wants to import their playlists
             print(params['Options'])
+            print(params['Options']['Albums'])
             if(params['Options']['Playlists'] == True):
                 print("Importing Playlists")
-                
-                #get user playlists
-                playlists = user.user_playlists(userInfo['id'])
-                
-                #used for setting user data
-                userDocRef = db.collection('Users').document(params['FirebaseID'])
-                #used for setting global songs
-                fireBaseCollectionRef = db.collection('Songs')
-                i = 0
-                for playlist in playlists['items']:
-                    if i == 7: #TODO remove this in production
-                        break
-                    thisSong = sp.user_playlist_tracks(userInfo['id'], playlist['id'])
-                    songsList = []
-                    for song in thisSong['items']:
-                        song.setdefault(None)
-                        songDocRef = {
-                            'Name' : song['track']['name'],
-                            'Artist' : song['track']['artists'],
-                            'Album' : song['track']['album']['name'],
-                            'Images' : song.get("track").get("album").get("images"),
-                            'URI' : song['track']['uri'],
-                            "LinkedService" : ["Spotify"],
-                        }
-                        #add to global and playlist songs
-                        songsList.append(import_utils.addSongToDataBase(songDocRef, fireBaseCollectionRef, "Spotify"))
-                        print(songsList)
-                    #add to user playlists songs as reference if not songDocRef in userDocRef.get().to_dict():
-                    playlistDocRef = {
-                        'Name' : playlist['name'],
-                        'Tracks' : {"Tracklist": songsList, "Number of Tracks": len(songsList)},
-                        'LinkedServices' : ['Spotify'],
-                        'Description' : playlist['description'],
-                        'Images' : playlist.get("images"),
-                        'URI' : playlist['uri'],
-                        'ExternalURL' : playlist['external_urls']['spotify'],
-                        'Owner' : playlist['owner'],
-                        
-                    }
-                    print(playlistDocRef)
-                    import_utils.addPlaylistToDataBase(playlistDocRef, userDocRef, "Spotify")
-                    i += 1
-                    
-                return https_fn.Response("Playlists imported successfully!")
+                try:    
+                    su.importPlaylists(user, userInfo, db, params, sp)
+                    thisResponse = thisResponse + "Playlists imported successfully!"
+                except Exception as e:
+                    print(f"Playlists import failed!{e}")          
+                    return https_fn.Response("Playlists import failed!")
+            
+            #Check if user wants to import their albums
+            if(params['Options']['Albums'] == True):
+                print("Importing Albums")
+                su.importAlbums(user, db, params)
+                thisResponse = thisResponse + " Albums imported successfully!"
         
-        return https_fn.Response("Nothing to import")
+        return https_fn.Response(thisResponse)
 
 #----------------------------------------------------------------------------------------------
 #TODO Update this to handle firebase function requests
 #TODO Note: Youtube must be implemented in flutter frontend
-@https_fn.on_request()#("/Youtube", method=["POST"])
+@https_fn.on_request(secrets=["YOUTUBE_API_KEY", "YOUTUBE_CLIENT_ID"])#("/Youtube", method=["POST"])
 def youtube_api(request: https_fn.Request) -> https_fn.Response:
     """Handles YouTube Data API interaction and playlist import."""
     try:
-        params = json.loads(request.body.read())
+
+        params = request.get_json()  # Handle incoming params
     except:
-        return https_fn.Response("Error reading request body")
+        print("Error")
+        return https_fn.Response("Error")
 
-    if "YouTube" in params and "FirebaseID" in params:
-        print("YouTube Integration")
+     #load correct part of json
+    params = json.loads(params['data'])
+    
+    
+    print("YouTube Integration")
 
-        access_token = params["YouTube"]
-        firebase_id = params["FirebaseID"]
+    access_token = os.environ.get("YOUTUBE_API_KEY")
+    firebase_id = params["FirebaseID"]
 
-        result = youtube_utils.import_youtube_playlists(access_token, firebase_id, db)
+    # Initialize YT with credentials
+    result = None
+    if params["Options"]["Playlists"]:
+        clientID = os.environ.get("YOUTUBE_CLIENT_ID")
+        result = youtube_utils.import_youtube_playlists(params["AccessToken"],params["RefreshToken"] , clientID, firebase_id, db)
+    #TODO implement albums
+    # elif params["Options"]["Albums"]:
+    #     result = youtube_utils.import_youtube_albums(access_token, firebase_id, db)
+    if "error" in result:
+        return https_fn.Response(json.dumps(result), status=400)
 
-        if "error" in result:
-            return https_fn.Response(json.dumps(result), status=400)
+    return https_fn.Response(json.dumps(result), status=200)
 
-        return https_fn.Response(json.dumps(result), status=200)
-
-    return https_fn.Response(json.dumps({"error": "Invalid request"}), status=400)
+    #return https_fn.Response(json.dumps({"error": "Invalid request"}), status=400)
 
 #----------------------------------------------------------------------------------------------
 #TODO Update this to handle firebase function requests
@@ -286,12 +269,33 @@ def bandcamp_api(request: https_fn.Request) -> https_fn.Response:
         #     print("Bandcamp")
         #     #TODO implement bandcamp api
         
-@https_fn.on_call(secrets=["SPOTIFY_CLIENT_ID"])
+@https_fn.on_call(secrets=["SPOTIFY_CLIENT_ID" , "YOUTUBE_API_KEY","YOUTUBE_CLIENT_ID"])
 def secret_handler(request: https_fn.Request) -> dict:
     #TODO: handle different secrets using the request object
     #i.e. use switch statement to determine which secret to return
+    #TODO fix this to handle firebase function requests
+    response = os.environ.get("SPOTIFY_CLIENT_ID")
+    return {"ClientID": response}
     
-    client_id = os.environ.get("SPOTIFY_CLIENT_ID", "")
+    try:
+        params = request.get_json()  # Handle incoming params
+            
+    except:
+        print("Error")
+        return https_fn.Response("Error")
     
-    return {"ClientID": client_id}
+    params = json.loads(params['data'])
+    
+    if(params['key'] == "SPOTIFY_CLIENT_ID"):
+        response = os.environ.get("SPOTIFY_CLIENT_ID")
+        return {"ClientID": response}
+    
+    elif(params['key'] == "YOUTUBE_API_KEY"):
+        response = os.environ.get("YOUTUBE_API_KEY")
+        return {"ApiKey": response}
+
+    elif(params['key'] == "YOUTUBE_CLIENT_ID"):
+        response = os.environ.get("YOUTUBE_CLIENT_ID")
+        return {"ClientID": response}
+   
 #-----------------------------------------------------------------------------------------------

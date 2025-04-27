@@ -116,10 +116,10 @@ class _MyAccount extends State<MyAccount> {
                           Text("YouTube Music"),
                           SizedBox(height: 5),
                           Text(
-                            isLinked("YouTube Music") ? "Linked" : "Not Linked",
+                            isLinked("Youtube") ? "Linked" : "Not Linked",
                             style: TextStyle(
                               color:
-                                  isLinked("YouTube Music")
+                                  isLinked("Youtube")
                                       ? Colors.green
                                       : Colors.red,
                             ),

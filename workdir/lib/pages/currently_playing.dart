@@ -18,6 +18,8 @@ class _CurrentlyPlaying extends State<CurrentlyPlaying> {
     try {
       _imageSource = globals.currentlyPlaying['Images'][0]['url'];
     } catch (e) {
+      _imageSource =
+          'https://w7.pngwing.com/pngs/800/189/png-transparent-multimedia-music-play-player-song-video-multimedia-controls-solid-icon.png';
       log("Image not available: $e");
     }
   }
@@ -28,7 +30,7 @@ class _CurrentlyPlaying extends State<CurrentlyPlaying> {
         _imageSource = globals.currentlyPlaying['Images'][0]['url'];
       } catch (e) {
         _imageSource =
-            'https://www.google.com/url?sa=i&url=https%3A%2F%2Fpngtree.com%2Fso%2Fsong&psig=AOvVaw2iBqxHDnsRCORTSw2voIp0&ust=1743129212552000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCJjQur6cqYwDFQAAAAAdAAAAABAE';
+            'https://w7.pngwing.com/pngs/800/189/png-transparent-multimedia-music-play-player-song-video-multimedia-controls-solid-icon.png';
         log("Image not available: $e");
       }
     });
@@ -37,7 +39,7 @@ class _CurrentlyPlaying extends State<CurrentlyPlaying> {
   @override
   Widget build(BuildContext context) {
     try {
-      log(globals.currentlyPlaying['Images'][0]['url'].toString());
+      //log(globals.currentlyPlaying['Images'][0]['url'].toString());
       return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
@@ -55,11 +57,7 @@ class _CurrentlyPlaying extends State<CurrentlyPlaying> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Image(
-                image: NetworkImage(
-                  globals.currentlyPlaying['Images'][0]['url'],
-                ),
-              ),
+              Image(image: NetworkImage(_imageSource)),
               Text(globals.currentlyPlaying['Name']),
               Text(globals.currentlyPlaying['Artist'][0]['name']),
               //TODO: Likely will be apart of the implementaion of the audio handler
@@ -86,9 +84,13 @@ class _CurrentlyPlaying extends State<CurrentlyPlaying> {
                         audioHandler.play(
                           globals.currentlyPlaying["URI"],
                           globals.currentlyPlaying["LinkedService"][0],
-                          spotifyConnection,
+                          globals.currentlyPlaying["LinkedService"][0] ==
+                                  "Spotify"
+                              ? spotifyConnection
+                              : youtubeConnection,
                         );
                       });
+                      globals.updateBottomPlayer();
                     },
                   ),
                   IconButton(
@@ -96,7 +98,12 @@ class _CurrentlyPlaying extends State<CurrentlyPlaying> {
                     onPressed: () {
                       setState(() {
                         globals.isPlaying = false;
-                        spotifyConnection.pause();
+                        audioHandler.pause(
+                          globals.currentlyPlaying["LinkedService"][0] ==
+                                  "Spotify"
+                              ? spotifyConnection
+                              : youtubeConnection,
+                        );
                       });
                     },
                   ),
@@ -105,7 +112,12 @@ class _CurrentlyPlaying extends State<CurrentlyPlaying> {
                     onPressed: () {
                       setState(() {
                         globals.isPlaying = true;
-                        spotifyConnection.resume();
+                        audioHandler.resume(
+                          globals.currentlyPlaying["LinkedService"][0] ==
+                                  "Spotify"
+                              ? spotifyConnection
+                              : youtubeConnection,
+                        );
                       });
                     },
                   ),
@@ -129,9 +141,13 @@ class _CurrentlyPlaying extends State<CurrentlyPlaying> {
                         audioHandler.play(
                           globals.currentlyPlaying["URI"],
                           globals.currentlyPlaying["LinkedService"][0],
-                          spotifyConnection,
+                          globals.currentlyPlaying["LinkedService"][0] ==
+                                  "Spotify"
+                              ? spotifyConnection
+                              : youtubeConnection,
                         );
                       });
+                      globals.updateBottomPlayer();
                     },
                   ),
                 ],

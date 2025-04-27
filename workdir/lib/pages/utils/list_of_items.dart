@@ -7,24 +7,28 @@ List<Widget> createListOfSongs(
   BuildContext context,
 ) {
   globals.currentTracks = collection;
-  List<Widget> thisWidgets = [];
+
+  List<StatefulWidget> thisWidgets = [];
   for (var i = 0; i < collection!.length; i++) {
     try {
       //get document snapshot from reference {
       // log(collection[i].toString());
       var thisSong = collection[i].data();
+      //log("Current song $thisSong.toString()");
       var newButton = ElevatedButton(
         onPressed: () {
           globals.currentlyPlaying = thisSong;
           globals.currentIndex = i;
           globals.isPlaying = true;
-          log(globals.currentlyPlaying.toString(), name: 'Currently Playing');
+          //log(globals.currentlyPlaying.toString(), name: 'Currently Playing');
+          globals.updateBottomPlayer();
           audioHandler.play(
             thisSong["URI"],
             thisSong["LinkedService"][0],
-            spotifyConnection,
+            thisSong["LinkedService"][0] == "Spotify"
+                ? spotifyConnection
+                : youtubeConnection,
           );
-          globals.updateBottomPlayer();
         },
         style: ButtonStyle(
           padding: WidgetStateProperty.all(
@@ -47,7 +51,7 @@ List<Widget> createListOfSongs(
       //add the new button to the list
       thisWidgets.add(newButton);
     } catch (e) {
-      log("Error: $e");
+      log("Error in song list creation: $e");
     }
   }
   return thisWidgets;
@@ -60,7 +64,46 @@ List<Widget> createListOfPlaylists(
   List<Widget> thisWidgets = [];
   for (var i = 0; i < thisList.length; i++) {
     try {
-      log(thisList[i]["URI"]);
+      //log(thisList[i]["URI"]);
+      var newButton = ElevatedButton(
+        onPressed: () {
+          String temp = thisList[i]["Name"];
+          globals.currentPlaylist = thisList[i]['Tracks'];
+          Navigator.push(
+            context,
+            //create new songs page with name of playlist
+            MaterialPageRoute(
+              builder:
+                  (context) => MainLayout(
+                    child: Songs(thisName: temp, tracks: thisList[i]['Tracks']),
+                  ),
+            ),
+          );
+        },
+        style: ButtonStyle(
+          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18.0),
+              side: const BorderSide(color: Colors.black),
+            ),
+          ),
+        ),
+        child: Text(thisList[i]['Name']),
+      );
+      //add the new button to the list
+      thisWidgets.add(newButton);
+    } catch (e) {
+      log("error:$e");
+    }
+  }
+  return thisWidgets;
+}
+
+List<Widget> createListOfAlbums(List<dynamic> thisList, BuildContext context) {
+  List<Widget> thisWidgets = [];
+  for (var i = 0; i < thisList.length; i++) {
+    try {
+      //log("creating this list : ${thisList[i]["Name"]}");
       var newButton = ElevatedButton(
         onPressed: () {
           String temp = thisList[i]["Name"];
