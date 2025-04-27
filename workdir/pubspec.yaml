@@ -50,6 +50,7 @@ dependencies:
   google_sign_in: ^6.2.1
   youtube_explode_dart: ^2.4.0
   #audioplayers: ^6.4.0
+  flutter_web_auth_2: ^4.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -17,6 +17,7 @@ from lastfm_utils import handle_auth_request, get_user_loved_tracks
 import google.cloud.firestore
 import spotipy
 import soundcloud_utils
+
 import ytmusicapi_utils
 import spotify_utils as su
 import import_utils
@@ -90,7 +91,9 @@ def spotify_api(request: https_fn.Request) -> https_fn.Response:
 #TODO Note: Youtube must be implemented in flutter frontend
 @https_fn.on_request(secrets=["YOUTUBE_API_KEY", "YOUTUBE_CLIENT_ID"])#("/Youtube", method=["POST"])
 def youtube_api(request: https_fn.Request) -> https_fn.Response:
+    """Handles YouTube Data API interaction and playlist import."""
     try:
+
         params = request.get_json()  # Handle incoming params
     except:
         print("Error")
@@ -118,7 +121,7 @@ def youtube_api(request: https_fn.Request) -> https_fn.Response:
 
     return https_fn.Response(json.dumps(result), status=200)
 
-    return https_fn.Response(json.dumps({"error": "Invalid request"}), status=400)
+    #return https_fn.Response(json.dumps({"error": "Invalid request"}), status=400)
 
 #----------------------------------------------------------------------------------------------
 #TODO Update this to handle firebase function requests
