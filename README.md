@@ -2,6 +2,14 @@
 Application that unifies all of your music streaming services with one interface and application
 ## ~~[Backend Repo](https://github.com/hreed88/Harmony-Backend)~~ - Backend is deprecated
 
+# Sprint 6
+
+- Implemented Youtube connection and import
+- Implemented drop down buttons on song buttons to add/ remove song to or from a playlist
+
+![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZmtnaDAya2hlcWpjdGM1Y3FrNnA2MzJqb3VueDA2bG54dTdkNWtsNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/bLLkLLDJaFwF9qfYBh/giphy.gif)![Alt Text](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZGl3cTV6cTVkZHh2Z2IxOXlkNHRoZnZwNnp5MjdmZGw0ajhncmRiZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jweEVnbu0kTcBRsiuI/giphy.gif)
+
+
 # Sprint 5
 
 - Figma updates
