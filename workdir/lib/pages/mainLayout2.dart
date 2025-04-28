@@ -117,7 +117,10 @@ Widget build(BuildContext context) {
         // Bottom player
         Align(
           alignment: Alignment.bottomCenter, 
-          child: globals.bottomPlayer
+          child: ValueListenableBuilder<Widget>(
+              valueListenable: globals.bottomPlayerListener,
+              builder: (context, player, _) => player,
+          ),
         ),
       ],
     ),

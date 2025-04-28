@@ -141,7 +141,7 @@ Future<void> main() async {
         '/currentlyPlaying':
             (context) => MainLayout2(child: const CurrentlyPlaying()),
         '/playlists': (context) => MainLayout2(child: const Playlists()),
-        '/albums': (context) => MainLayout2(child: const Albums()),
+        '/albums': (context) => MainLayout2(child: Albums(albums: (userAlbums))),
         '/artists': (context) => MainLayout2(child: const Artists()),
         '/songs':
             (context) =>

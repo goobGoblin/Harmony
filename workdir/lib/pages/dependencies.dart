@@ -8,6 +8,10 @@ export 'dart:developer' hide Flow;
 export 'package:marquee/marquee.dart';
 export 'package:dropdown_button2/dropdown_button2.dart';
 export 'utils/fixedQueue.dart';
+export '../widgets/widgets.dart';
+export '../theme/theme.dart';
+export '../constants/constants.dart';
+
 
 import 'globals.dart';
 import '../audio/audioHandler.dart';
