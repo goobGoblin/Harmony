@@ -3,7 +3,7 @@ import 'pages/pages.dart';
 //import 'package:webview_flutter/webview_flutter.dart';
 import 'pages/web_view_container.dart';
 import 'pages/dependencies.dart';
-
+import 'package:flutter_application_1/theme/theme.dart';
 //import 'audioHandler.dart';
 // import 'package:flutter_application_1/customThemes.dart'; //TODO
 // import 'package:flutter_application_1/themes.dart';
@@ -65,7 +65,9 @@ Future<void> main() async {
     myInitRout = '/home';
     globals.userDoc = await getUserData();
 
-    if (globals.userDoc['Linked Accounts']['Spotify'][0]) {
+    var spotifyAccount = globals.userDoc['Linked Accounts']['Spotify'];
+    if (spotifyAccount is bool && spotifyAccount || 
+        spotifyAccount is List && spotifyAccount.isNotEmpty && spotifyAccount[0]) {
       spotifyConnection.reconnect();
     }
   }
@@ -88,30 +90,36 @@ Future<void> main() async {
   runApp(
     MaterialApp(
       theme: ThemeData(
-        useMaterial3: true,
-        brightness: Brightness.light,
-        primaryColor: Colors.white,
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: AppBarTheme(
-          backgroundColor: const Color.fromARGB(176, 27, 62, 180),
-          elevation: 5,
-          iconTheme: IconThemeData(color: Colors.black),
+        // Set the primary color of the app
+        primaryColor: AppColors.primary,
+        
+        // Set the background color for scaffolds
+        scaffoldBackgroundColor: AppColors.background,
+        
+        // Set the overall color scheme
+        colorScheme: ColorScheme.dark(
+          primary: AppColors.primary,
+          secondary: AppColors.secondary,
+          surface: AppColors.primary,
+          background: AppColors.background,
+          error: StreamingServiceColors.youtube,
+          onPrimary: AppColors.text,
+          onSecondary: AppColors.text,
+          onSurface: AppColors.text,
+          onBackground: AppColors.text,
         ),
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          backgroundColor: Colors.white,
-          selectedItemColor: Colors.black,
-          unselectedItemColor: Colors.grey,
+        
+        // Text theme with white text
+        textTheme: TextTheme(
+          bodyLarge: TextStyle(color: AppColors.text),
+          bodyMedium: TextStyle(color: AppColors.text),
+          bodySmall: TextStyle(color: AppColors.text),
+          // Other text styles...
         ),
-        buttonTheme: ButtonThemeData(
-          buttonColor: const Color.fromARGB(255, 255, 255, 255),
-        ),
-        pageTransitionsTheme: PageTransitionsTheme(
-          builders: {
-            TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-          },
-        ),
+        
+        // Other theme properties...
       ),
+
       //handle routes(aka pages)
       initialRoute: myInitRout,
       //for navigation to webview
@@ -129,19 +137,20 @@ Future<void> main() async {
       routes: {
         '/signUp': (context) => const SignUpRoute(),
         '/signIn': (context) => const SignInRoute(),
-        '/home': (context) => MainLayout(child: const HomeRoute()),
-        '/currentlyPlaying': (context) => CurrentlyPlaying(),
-        '/playlists': (context) => MainLayout(child: const Playlists()),
-        '/albums': (context) => MainLayout(child: Albums(albums: (userAlbums))),
-        '/artists': (context) => MainLayout(child: const Artists()),
+        '/home': (context) => MainLayout2(child: const Home2Route()),
+        '/currentlyPlaying':
+            (context) => MainLayout2(child: const CurrentlyPlaying()),
+        '/playlists': (context) => MainLayout2(child: const Playlists()),
+        '/albums': (context) => MainLayout2(child: const Albums()),
+        '/artists': (context) => MainLayout2(child: const Artists()),
         '/songs':
             (context) =>
-                MainLayout(child: const Songs(thisName: "Songs", tracks: {})),
-        '/downloads': (context) => MainLayout(child: const Downloads()),
-        '/settings': (context) => MainLayout(child: const SettingsRoute()),
-        '/connectedApps': (context) => MainLayout(child: const ConnectedApps()),
-        '/myAccount': (context) => MainLayout(child: const MyAccount()),
-        '/preferences': (context) => MainLayout(child: const Preferences()),
+                MainLayout2(child: const Songs(thisName: "Songs", tracks: {})),
+        '/downloads': (context) => MainLayout2(child: const Downloads()),
+        '/settings': (context) => MainLayout2(child: const SettingsRoute()),
+        '/connectedApps': (context) => MainLayout2(child: const ConnectedApps2()),
+        '/myAccount': (context) => MainLayout2(child: const MyAccount()),
+        '/preferences': (context) => MainLayout2(child: const Preferences()),
       },
     ),
   );

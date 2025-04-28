@@ -52,6 +52,8 @@ dependencies:
   dropdown_button2: ^2.3.9
   #audioplayers: ^6.4.0
   flutter_web_auth_2: ^4.1.0
+  flutter_svg: ^2.0.5
+  imagebutton: ^1.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -75,7 +77,12 @@ flutter:
   uses-material-design: true
   assets: 
     - assets/images/
-
+    - assets/images/backgrounds/
+    - assets/images/logos/
+    - assets/images/placeholders/
+    - assets/images/icons/iconsBig/
+    - assets/images/icons/iconsSmall/
+    - assets/images/buttons/
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
@@ -92,7 +99,46 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
+  fonts:
+    - family: NeueRegrade
+      fonts:
+        - asset: assets/fonts/neue_regrade/Neue Regrade Regular.otf
+          style: normal
+          weight: 400
+        - asset: assets/fonts/neue_regrade/Neue Regrade Regular Italic.otf
+          style: italic
+          weight: 400
+        - asset: assets/fonts/neue_regrade/Neue Regrade Medium.otf
+          style: normal
+          weight: 500
+        - asset: assets/fonts/neue_regrade/Neue Regrade Medium Italic.otf
+          style: italic
+          weight: 500
+        - asset: assets/fonts/neue_regrade/Neue Regrade Bold.otf
+          style: normal
+          weight: 700
+        - asset: assets/fonts/neue_regrade/Neue Regrade Bold Italic.otf
+          style: italic
+          weight: 700
+        - asset: assets/fonts/neue_regrade/Neue Regrade Light.otf
+          style: normal
+          weight: 300
+        - asset: assets/fonts/neue_regrade/Neue Regrade Light Italic.otf
+          style: italic
+          weight: 300
+        - asset: assets/fonts/neue_regrade/Neue Regrade Semibold.otf
+          style: normal
+          weight: 600
+        - asset: assets/fonts/neue_regrade/Neue Regrade SemiBold Italic.otf
+          style: italic
+          weight: 600
+        - asset: assets/fonts/neue_regrade/Neue Regrade Extrabold.otf
+          style: normal
+          weight: 800
+        - asset: assets/fonts/neue_regrade/Neue Regrade ExtraBold Italic.otf
+          style: italic
+          weight: 800
+        - asset: assets/fonts/neue_regrade/Neue Regrade Variable.ttf
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

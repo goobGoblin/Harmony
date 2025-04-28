@@ -11,6 +11,7 @@
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"
+        android:enableOnBackInvokedCallback="true"
         android:hardwareAccelerated="true">
         <activity
             android:name=".MainActivity"

@@ -16,6 +16,7 @@ class SpotifyAPI extends ChangeNotifier {
   String _token = '';
   var _db;
 
+
   Future<void> sendRequest(String type, Map<String, dynamic> thisData) async {
     //   log("Sending request");
     //   var url = Uri.https('127.0.0.1:5001'); //TODO: Change to localhost
