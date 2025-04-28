@@ -52,7 +52,7 @@ macos
 /build/
 
 pubspec.lock
-/workdir/pubspec.lock
+workdir/pubspec.lock
 
 # Symbolication related
 app.*.symbols
