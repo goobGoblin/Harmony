@@ -15,7 +15,7 @@ class MyAudioHandler {
     try {
       switch (source) {
         case "Spotify":
-          _player.dispose();
+          _player.pause();
           thisParser.play(thisUri);
 
           break;

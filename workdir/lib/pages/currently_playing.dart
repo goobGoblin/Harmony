@@ -89,7 +89,11 @@ class _CurrentlyPlaying extends State<CurrentlyPlaying> {
                               ? spotifyConnection
                               : youtubeConnection,
                         );
+                        globals.recentlyPlayed!.add(
+                          globals.currentlyPlaying.data(),
+                        );
                       });
+
                       globals.updateBottomPlayer();
                     },
                   ),
@@ -146,7 +150,11 @@ class _CurrentlyPlaying extends State<CurrentlyPlaying> {
                               ? spotifyConnection
                               : youtubeConnection,
                         );
+                        globals.recentlyPlayed!.add(
+                          globals.currentlyPlaying.data(),
+                        );
                       });
+
                       globals.updateBottomPlayer();
                     },
                   ),

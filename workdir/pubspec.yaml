@@ -1,5 +1,5 @@
-name: flutter_application_1
-description: "A new Flutter project."
+name: harmony
+description: "Application to unify your music libraries"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -49,6 +49,7 @@ dependencies:
   auto_scroll_text: ^0.0.7
   google_sign_in: ^6.2.1
   youtube_explode_dart: ^2.4.0
+  dropdown_button2: ^2.3.9
   #audioplayers: ^6.4.0
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,7 @@
 import '../dependencies.dart';
 import '../pages.dart';
 import 'connectedImages.dart';
+import 'menuItems.dart';
 
 List<Widget> createListOfSongs(
   List<dynamic>? collection,
@@ -17,6 +18,8 @@ List<Widget> createListOfSongs(
       //log("Current song $thisSong.toString()");
       var newButton = ElevatedButton(
         onPressed: () {
+          globals.recentlyPlayed!.add(thisSong);
+          globals.getRecentlyPlayed();
           globals.currentlyPlaying = thisSong;
           globals.currentIndex = i;
           globals.isPlaying = true;
@@ -45,7 +48,58 @@ List<Widget> createListOfSongs(
           mainAxisSize: MainAxisSize.min,
           //use getConnected images to dynamically add images based on the songs
           //linked services
-          children: getConnectedImages(thisSong),
+          children: [
+            ...getConnectedImages(thisSong),
+            //Dropdown button to show more options
+            DropdownButtonHideUnderline(
+              child: DropdownButton2(
+                customButton: const Icon(
+                  Icons.more_vert,
+                  size: 32,
+                  color: Colors.blueAccent,
+                ),
+                items: [
+                  ...MenuItems.firstItems.map(
+                    (item) => DropdownMenuItem<MenuItem>(
+                      value: item,
+                      child: MenuItems.buildItem(item),
+                    ),
+                  ),
+                  const DropdownMenuItem<Divider>(
+                    enabled: false,
+                    child: Divider(),
+                  ),
+                  ...MenuItems.secondItems.map(
+                    (item) => DropdownMenuItem<MenuItem>(
+                      value: item,
+                      child: MenuItems.buildItem(item),
+                    ),
+                  ),
+                ],
+                onChanged: (value) {
+                  MenuItems.onChanged(context, value! as MenuItem);
+                  globals.currentIndex = i;
+                },
+                dropdownStyleData: DropdownStyleData(
+                  width: 160,
+                  padding: const EdgeInsets.symmetric(vertical: 6),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    color: Theme.of(context).appBarTheme.backgroundColor,
+                  ),
+                  offset: const Offset(0, 8),
+                ),
+                menuItemStyleData: MenuItemStyleData(
+                  customHeights: [
+                    ...List<double>.filled(MenuItems.firstItems.length, 48),
+                    8,
+                    ...List<double>.filled(MenuItems.secondItems.length, 48),
+                  ],
+                  padding: const EdgeInsets.only(left: 16, right: 16),
+                ),
+              ),
+            ),
+          ],
         ),
       );
       //add the new button to the list
@@ -69,6 +123,7 @@ List<Widget> createListOfPlaylists(
         onPressed: () {
           String temp = thisList[i]["Name"];
           globals.currentPlaylist = thisList[i]['Tracks'];
+          globals.userPlaylistIndex = i;
           Navigator.push(
             context,
             //create new songs page with name of playlist

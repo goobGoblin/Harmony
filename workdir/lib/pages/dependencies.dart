@@ -6,6 +6,8 @@ export 'utils/bottomPlayer.dart';
 export 'package:cloud_firestore/cloud_firestore.dart';
 export 'dart:developer' hide Flow;
 export 'package:marquee/marquee.dart';
+export 'package:dropdown_button2/dropdown_button2.dart';
+export 'utils/fixedQueue.dart';
 
 import 'globals.dart';
 import '../audio/audioHandler.dart';

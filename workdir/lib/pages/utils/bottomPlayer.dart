@@ -105,6 +105,11 @@ class _BottomPlayer extends State<BottomPlayer> {
                           ? spotifyConnection
                           : youtubeConnection,
                     );
+
+                    globals.recentlyPlayed!.add(
+                      globals.currentlyPlaying.data(),
+                    );
+
                     setState(() {});
                   },
                 ),
@@ -171,6 +176,10 @@ class _BottomPlayer extends State<BottomPlayer> {
                       globals.currentlyPlaying["LinkedService"][0] == "Spotify"
                           ? spotifyConnection
                           : youtubeConnection,
+                    );
+                    log("Currently playing: ${globals.currentlyPlaying}");
+                    globals.recentlyPlayed!.add(
+                      globals.currentlyPlaying.data(),
                     );
                     setState(() {});
                   },

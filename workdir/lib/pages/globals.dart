@@ -1,5 +1,7 @@
 library;
 
+import 'dart:collection';
+
 import 'dependencies.dart';
 
 //TODO: implement ChangeNotifier for this class to update the UI when the data changes
@@ -8,7 +10,9 @@ class Globals {
   dynamic currentlyPlaying = {};
   Map<String, dynamic> currentPlaylist = {};
   List<dynamic>? currentTracks = [];
+  FixedSizeQueue<dynamic>? recentlyPlayed = FixedSizeQueue<dynamic>(50);
   int currentIndex = 0;
+  int userPlaylistIndex = 0;
   bool isPlaying = false;
   bool isPaused = false;
   bool bottomPlayerVisible = true;
@@ -21,6 +25,12 @@ class Globals {
   void updateBottomPlayer() {
     bottomPlayerListener.value = BottomPlayer();
     //notifyListeners();
+  }
+
+  void getRecentlyPlayed() {
+    for (var i = 0; i < recentlyPlayed!.items.length; i++) {
+      log(recentlyPlayed!.items[i].toString());
+    }
   }
 
   // // void updateUname(String newUName) {
