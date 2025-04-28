@@ -302,16 +302,10 @@ class _ConnectedApps extends State<ConnectedApps> {
             ),
             ElevatedButton(
               onPressed: () async {
-                // Navigate to SoundCloud signup page dynamically
-                Navigator.pushNamed(
-                  context,
-                  '/webViewContainer',
-                  arguments:
-                      'https://soundcloud.com/signin', // Dynamic URL for SoundCloud
-                );
+                await soundcloudConnection.connect();
               },
               child: const Text("SoundCloud"),
-            ), //thisConnection.getConnectedApps()),
+            ),
 
             ElevatedButton(
               onPressed: () async {

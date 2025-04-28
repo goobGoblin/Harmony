@@ -110,12 +110,7 @@ class YoutubeAPI extends ChangeNotifier {
     String channelName,
     Map<String, bool> options,
   ) async {
-    // String channelId =
-    //     await getChannelId(
-    //       channelName,
-    //       'AIzaSyD1Fw1voezTfk4tTrC6l1HQudXl3TLh9CE',
-    //     ) ??
-    //     '';
+    String channelId = ''; //'ea483ed4b6881a1e1f1a0a66966835bff93441fd';
 
     // log('Channel ID: $channelId');
 
