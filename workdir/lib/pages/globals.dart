@@ -1,5 +1,7 @@
 library;
 
+import 'dart:collection';
+
 import 'dependencies.dart';
 
 //TODO: implement ChangeNotifier for this class to update the UI when the data changes
@@ -8,24 +10,27 @@ class Globals {
   dynamic currentlyPlaying = {};
   Map<String, dynamic> currentPlaylist = {};
   List<dynamic>? currentTracks = [];
+  FixedSizeQueue<dynamic>? recentlyPlayed = FixedSizeQueue<dynamic>(50);
   int currentIndex = 0;
+  int userPlaylistIndex = 0;
   bool isPlaying = false;
   bool isPaused = false;
+  bool bottomPlayerVisible = true;
+  Stream<List<int>> currentStream = const Stream.empty();
   late DocumentSnapshot<Map<String, dynamic>> userDoc;
-  Widget bottomPlayer = BottomPlayer();
-
-  // Globals() {
-  //   if (FirebaseAuth.instance.currentUser != null) {
-  //     getUserData().then((value) {
-  //       userDoc = value;
-  //       notifyListeners();
-  //     });
-  //   }
-  // }
+  ValueNotifier<Widget> bottomPlayerListener = ValueNotifier(
+    const BottomPlayer(),
+  );
 
   void updateBottomPlayer() {
-    bottomPlayer = BottomPlayer();
+    bottomPlayerListener.value = BottomPlayer();
     //notifyListeners();
+  }
+
+  void getRecentlyPlayed() {
+    for (var i = 0; i < recentlyPlayed!.items.length; i++) {
+      log(recentlyPlayed!.items[i].toString());
+    }
   }
 
   // // void updateUname(String newUName) {

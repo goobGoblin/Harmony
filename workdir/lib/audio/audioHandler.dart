@@ -8,13 +8,14 @@ import "../apis/spotify_api.dart";
 class MyAudioHandler {
   // e.g. just_audio
 
-  final _player = AudioPlayer();
+  var _player = AudioPlayer();
 
   // The most common callbacks:
   Future<void> play(String thisUri, String source, var thisParser) async {
     try {
       switch (source) {
         case "Spotify":
+          _player.pause();
           thisParser.play(thisUri);
 
           break;
@@ -32,11 +33,10 @@ class MyAudioHandler {
           });
           break;
         //TODO: Implement Apple Music
-        case "Youtube":
-          await thisParser.sendRequest("POST", {
-            "type": "play",
-            "uri": thisUri,
-          });
+        case "YouTube":
+          var thisStream = await thisParser.play(thisUri);
+          _player.setUrl(thisStream.toString());
+          _player.play();
           break;
         //TODO: Implement Youtube
 
@@ -57,7 +57,7 @@ class MyAudioHandler {
     try {
       thisParser.pause();
     } catch (e) {
-      print(e);
+      _player.pause();
     }
   }
 
@@ -65,6 +65,7 @@ class MyAudioHandler {
     try {
       thisParser.resume();
     } catch (e) {
+      _player.play();
       print(e);
     }
   }

@@ -239,3 +239,60 @@ def addSongToDataBase(thisDict: dict, fireBaseCollectionRef: firestore.DocumentR
     print(result)
     return result
 #---------------------------------------------------------------------------------------------
+
+def albumInDatabase(doc1, firebaseCollectionRef: firestore.DocumentReference):
+    
+    #firebaseDocRef is the document reference so now we must build our query
+    
+    dbQuerey = []
+    
+    if(doc1.get("Name") is not None):
+        #query for just name
+        dbQuerey = firebaseCollectionRef.where(filter=FieldFilter("Name", "==", doc1.get("Name"))).limit(1).get()
+        #TODO: add compound query for name and somthing else
+        # dbQuerey = firebaseCollectionRef.where(filter=FieldFilter("Name", "==", doc1.get("Name"))).where(filter=FieldFilter("Album", "==", doc1.get("Album"))).limit(1).get()
+  
+    print("dbQuerey", dbQuerey)
+    if(len(dbQuerey) != 0):
+        return [True, dbQuerey[0]]
+            
+
+            
+            
+    return [False, None]
+
+async def addAlbumToDatabase(thisDict: dict, fireBaseCollectionRef: firestore.DocumentReference, addedFrom: str):
+    
+    result = None
+    
+    try:
+        #TODO add validate_album if(validate_song(thisDict)):
+            #isInDatabase will be a list with the true or false if the document exists or not
+            isInDatabase = albumInDatabase(thisDict, fireBaseCollectionRef)
+            if(not(isInDatabase[0])):
+                result = await fireBaseCollectionRef.add(thisDict)
+            else:
+                #is in database so update linked service
+                isInDatabase[1].to_dict().update({
+                    "LinkedService" : firestore.ArrayUnion([addedFrom])
+                })
+                result = isInDatabase[1].reference
+    # except AssertionError as e:
+    #     print("Assertion Error:", e)
+    except Exception as e:
+        print("Album exception:", e, "line", e.__traceback__.tb_lineno)
+        print(thisDict)
+    print(result)
+    return result
+
+def addAlbumToUser(albumRef: firestore.DocumentReference, userDocRef: firestore.DocumentReference):
+    #TODO add album to user
+    
+    try:
+        userDocRef.update({
+        "albums" : firestore.ArrayUnion([albumRef])
+        })
+    except Exception as e:
+        print("Album to user exception:", e, "line", e.__traceback__.tb_lineno)
+        print(albumRef)
+    pass

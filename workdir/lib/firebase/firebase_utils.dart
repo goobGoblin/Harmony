@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import '../pages/dependencies.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
@@ -58,6 +58,8 @@ Future<String> createFirebaseAccount(
         'dataUsage': true,
       },
     });
+
+    globals.userDoc = await userDoc.get();
   } on FirebaseAuthException catch (e) {
     if (e.code == 'weak-password') {
       return 'The password provided is too weak.';
@@ -108,7 +110,7 @@ Future<DocumentSnapshot<Map<String, dynamic>>> getUserData() async {
           .doc(FirebaseAuth.instance.currentUser?.uid)
           .get();
 
-  log('Document exists');
+  //log('Document exists');
   return docSnapshot;
 }
 
@@ -116,7 +118,7 @@ Future<List<dynamic>> getGlobalSongData(Map<String, dynamic> tracks) async {
   //store result of each occurence
   var results = [];
 
-  log(tracks.toString());
+  //log(tracks.toString());
 
   //when there are no tracks passed assume the request wants all songs
   if (tracks['Tracklist'] == null) {
@@ -132,10 +134,57 @@ Future<List<dynamic>> getGlobalSongData(Map<String, dynamic> tracks) async {
             .doc(thisRef.id)
             .get();
 
-    log('Document exists');
+    //log('Document exists');
     results.add(docSnapshot);
   }
-  log(results.toString());
+  //log(results.toString());
 
   return results;
+}
+
+Future<List<dynamic>> getGlobalAlbumData(List<dynamic> albums) async {
+  //store result of each occurence
+  var results = [];
+
+  //log(albums.toString());
+  if (albums == null) {
+    log('No albums passed');
+    var docSnapshot =
+        await FirebaseFirestore.instance.collection('Albums').get();
+    return docSnapshot.docs;
+  }
+  //when there are no tracks passed assume the request wants all songs
+  if (albums.length < 1) {
+    log('No albums passed');
+    var docSnapshot =
+        await FirebaseFirestore.instance.collection('Playlists').get();
+    return docSnapshot.docs;
+  }
+
+  log('Albums passed');
+  for (var thisRef in albums) {
+    if (thisRef == null) {
+      continue;
+    }
+    var docSnapshot =
+        await FirebaseFirestore.instance
+            .collection('Albums')
+            .doc(thisRef.id)
+            .get();
+
+    var temp = docSnapshot.data();
+    //log('Document exists $temp');
+    results.add(temp);
+  }
+  //log(results.toString());
+
+  return results;
+}
+
+Future<DocumentSnapshot<Map<String, dynamic>>> getTempData() async {
+  var docSnapshot =
+      FirebaseFirestore.instance.collection('Users').doc("User").get();
+
+  //log('Document exists');
+  return docSnapshot;
 }

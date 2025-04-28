@@ -59,6 +59,7 @@ Future<void> main() async {
   if (FirebaseAuth.instance.currentUser == null) {
     log('No user logged in');
     myInitRout = '/signUp';
+    globals.userDoc = await getTempData();
   } else {
     log('User logged in: ${FirebaseAuth.instance.currentUser?.email}');
     myInitRout = '/home';
@@ -81,6 +82,10 @@ Future<void> main() async {
   //     androidStopForegroundOnPause: true,
   //   ),
   // );
+  var userAlbums = [];
+  if (globals.userDoc != null) {
+    userAlbums = globals.userDoc['albums'];
+  }
 
   runApp(
     MaterialApp(
