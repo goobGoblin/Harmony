@@ -80,17 +80,22 @@ class SpotifyAPI extends ChangeNotifier {
 
   Future<Map> getClientID() async {
     var clientID;
-    try {
-      FirebaseFunctions functions = FirebaseFunctions.instanceFor(
-        region: 'us-central1',
-      );
-      //functions.useFunctionsEmulator('127.0.0.1', 5001);
-      HttpsCallable callable = functions.httpsCallable('secret_handler');
-      final result = await callable.call({"key": "spotify"});
-      clientID = result.data;
-    } catch (e) {
-      log('Error: $e');
-    }
+    FirebaseFunctions functions = FirebaseFunctions.instanceFor(
+      region: 'us-central1',
+    );
+
+    Map<String, dynamic> data = {'key': 'SPOTIFY_CLIENT_ID'};
+
+    //functions.useFunctionsEmulator('127.0.0.1', 5001);
+    HttpsCallable callable = functions.httpsCallable('secret_handler');
+    log("callable: $callable");
+    final result = await callable.call(jsonEncode(data));
+    log("Result: $result");
+    clientID = result.data;
+    log('ClientID: $clientID');
+    // } catch (e) {
+    //   log('Error: $e');
+    // }
 
     return clientID;
   }
@@ -102,7 +107,7 @@ class SpotifyAPI extends ChangeNotifier {
     try {
       var temp = SpotifySdk.connectToSpotifyRemote(
         clientId:
-            (await clientID)["ClientID"], //please contact me for the client id
+            (await clientID)["ClientID"],
         redirectUrl: "http://localhost:8888/callback",
       );
       log('Connected: $temp');
@@ -119,12 +124,14 @@ class SpotifyAPI extends ChangeNotifier {
     try {
       var temp = SpotifySdk.connectToSpotifyRemote(
         clientId:
-            (await clientID)["ClientID"], //please contact me for the client id
+            (await clientID)["ClientID"],
         redirectUrl: "http://localhost:8888/callback",
+        scope:
+            "user-library-read ,app-remote-control, user-read-playback-state, user-modify-playback-state, user-read-currently-playing, playlist-read-private, playlist-read-collaborative",
       );
       log('Connected: $temp');
     } catch (e) {
-      log('Error: ${parseError(e.toString())}');
+      log('Error: ${e.toString()}');
     }
 
     // Get the authentication token
@@ -132,12 +139,14 @@ class SpotifyAPI extends ChangeNotifier {
       setToken(
         await SpotifySdk.getAccessToken(
           clientId:
-              (await clientID)["ClientID"], //please contact me for the client id
+              (await clientID)["ClientID"],
           redirectUrl: "http://localhost:8888/callback",
+          scope:
+              "user-library-read ,app-remote-control, user-read-playback-state, user-modify-playback-state, user-read-currently-playing, playlist-read-private, playlist-read-collaborative",
         ),
       );
     } catch (e) {
-      log('Error: ${parseError(e.toString())}');
+      log('Error: ${e.toString()}');
     }
     //firebaseInit();
     //set value in users collection to true for spotify, and add users token

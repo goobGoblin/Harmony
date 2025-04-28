@@ -50,7 +50,7 @@ macos
 .pub/
 /build/
 
-# Flutter assets related
+pubspec.lock
 
 # Symbolication related
 app.*.symbols
