@@ -71,7 +71,7 @@ class _ConnectedApps2State extends State<ConnectedApps2> {
       'Top Artists': true,
       'Followed Artists': true,
       'Followed Users': true,
-      'Saved Albums': true,
+      'Albums': true,
       'Saved Podcasts': true,
     };
 
@@ -159,10 +159,10 @@ class _ConnectedApps2State extends State<ConnectedApps2> {
                     ),
                     _buildCheckboxListTile(
                       "Saved Albums",
-                      options['Saved Albums']!,
+                      options['Albums']!,
                       (value) {
                         setState(() {
-                          options['Saved Albums'] = value!;
+                          options['Albums'] = value!;
                         });
                       },
                     ),
