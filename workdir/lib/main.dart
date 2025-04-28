@@ -94,7 +94,7 @@ Future<void> main() async {
         primaryColor: AppColors.primary,
         
         // Set the background color for scaffolds
-        scaffoldBackgroundColor: AppColors.background,
+        scaffoldBackgroundColor: AppColors.secondary,
         
         // Set the overall color scheme
         colorScheme: ColorScheme.dark(

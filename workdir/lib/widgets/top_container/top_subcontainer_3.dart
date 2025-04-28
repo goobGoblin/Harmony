@@ -4,7 +4,6 @@ import 'package:flutter_application_1/constants/constants.dart';
 import 'package:flutter_application_1/theme/theme.dart';
 import 'package:flutter_application_1/widgets/widgets.dart';
 import 'package:flutter_application_1/widgets/account_button.dart';
-import 'package:flutter_application_1/widgets/top_subcontainer_base.dart';
 
 enum ProfileDisplayMode {
   account,

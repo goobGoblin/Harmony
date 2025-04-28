@@ -425,6 +425,12 @@ class _ConnectedApps2State extends State<ConnectedApps2> {
                         isConnected: false,
                         onPressed: () {
                           print("YouTube button pressed");
+                          // youtubeConnection.connect(
+                          //   FirebaseAuth.instance.currentUser!.uid,
+                          //   "reconsproject",
+                          //   options,
+                          //   // You can pass these options in your connect logic if needed
+                          // );
                         },
                         width: dimensions['logoHeight']! / 8,
                         height: dimensions['logoHeight']! / 8,
