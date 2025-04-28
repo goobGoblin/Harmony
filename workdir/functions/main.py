@@ -48,13 +48,13 @@ def spotify_api(request: https_fn.Request) -> https_fn.Response:
         
         #load correct part of json
         params = json.loads(params['data'])
-    
+        thisResponse = ""
         if(params['Spotify']):
             print("Spotify")
             #TODO implement albums 
             #TODO Finish playlist implementation
             #TODO implement user data
-            thisResponse = ""
+            
             #global connection
             sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id=authFile["Spotify"]["client_id"],
                                                             client_secret=authFile["Spotify"]["client_secret"],))

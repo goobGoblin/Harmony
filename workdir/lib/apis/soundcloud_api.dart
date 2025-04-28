@@ -2,7 +2,7 @@ import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:flutter_application_1/pages/utils/pkce_util.dart';
+import '../pages/utils/pkce_util.dart';
 import 'dart:io' show Platform;
 
 class SoundCloudAPI {
@@ -10,35 +10,40 @@ class SoundCloudAPI {
   final String clientId = "";
   final String clientSecret = "";
 
-  final String redirectUri = Platform.isAndroid || Platform.isIOS
-  ? 'myapp://soundcloud/callback'
-  : 'https://eecs-582-project-74abe.web.app/callback.html';
+  final String redirectUri =
+      Platform.isAndroid || Platform.isIOS
+          ? 'myapp://soundcloud/callback'
+          : 'https://eecs-582-project-74abe.web.app/callback.html';
 
   Future<void> connect() async {
-  // Generate PKCE verifier and challenge
-  final codeVerifier = PKCEUtil.generateCodeVerifier();
-  final codeChallenge = PKCEUtil.generateCodeChallenge(codeVerifier);
+    // Generate PKCE verifier and challenge
+    final codeVerifier = PKCEUtil.generateCodeVerifier();
+    final codeChallenge = PKCEUtil.generateCodeChallenge(codeVerifier);
 
-  try {
-    await authenticateWithSoundCloud(codeChallenge, codeVerifier);
-    log('SoundCloud authentication successful!');
-  } catch (e) {
-    log('SoundCloud authentication failed: $e');
+    try {
+      await authenticateWithSoundCloud(codeChallenge, codeVerifier);
+      log('SoundCloud authentication successful!');
+    } catch (e) {
+      log('SoundCloud authentication failed: $e');
+    }
   }
-}
 
   /// Starts the OAuth2 flow: opens SoundCloud login, gets authorization code,
   /// and exchanges it for access/refresh tokens using PKCE.
-  Future<void> authenticateWithSoundCloud(String codeChallenge, String codeVerifier) async {
-    final authUrl = Uri.https("soundcloud.com", "/connect", {
-      "client_id": clientId,
-      "redirect_uri": redirectUri,
-      "response_type": "code",
-      "code_challenge": codeChallenge,
-      "code_challenge_method": "S256",
-      "display": "popup",
-      "state": DateTime.now().millisecondsSinceEpoch.toString(),
-    }).toString();
+  Future<void> authenticateWithSoundCloud(
+    String codeChallenge,
+    String codeVerifier,
+  ) async {
+    final authUrl =
+        Uri.https("soundcloud.com", "/connect", {
+          "client_id": clientId,
+          "redirect_uri": redirectUri,
+          "response_type": "code",
+          "code_challenge": codeChallenge,
+          "code_challenge_method": "S256",
+          "display": "popup",
+          "state": DateTime.now().millisecondsSinceEpoch.toString(),
+        }).toString();
 
     try {
       // Launch browser or WebView for user to authenticate
@@ -66,9 +71,7 @@ class SoundCloudAPI {
   Future<void> exchangeCodeForToken(String code, String codeVerifier) async {
     final response = await http.post(
       Uri.parse("https://api.soundcloud.com/oauth2/token"),
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
+      headers: {"Content-Type": "application/x-www-form-urlencoded"},
       body: {
         "client_id": clientId,
         "client_secret": clientSecret,
@@ -94,9 +97,7 @@ class SoundCloudAPI {
   Future<Map<String, dynamic>?> getUserInfo(String accessToken) async {
     final response = await http.get(
       Uri.parse("https://api.soundcloud.com/me"),
-      headers: {
-        "Authorization": "Bearer $accessToken",
-      },
+      headers: {"Authorization": "Bearer $accessToken"},
     );
 
     if (response.statusCode == 200) {

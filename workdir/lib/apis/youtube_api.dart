@@ -16,7 +16,6 @@ class YoutubeAPI extends ChangeNotifier {
 
   Future<void> sendRequest(Map<String, dynamic> thisData) async {
     try {
-
       //use this for local testing
       // FirebaseFunctions functions = FirebaseFunctions.instanceFor(
       //   region: 'us-central1',
@@ -29,7 +28,7 @@ class YoutubeAPI extends ChangeNotifier {
       FirebaseFunctions functions = FirebaseFunctions.instance;
       HttpsCallable callable = functions.httpsCallable('youtube_api');
       final results = await callable.call(jsonEncode(thisData));
-      
+
       log('Results: $results');
     } catch (e) {
       log('Error: $e');
@@ -111,14 +110,14 @@ class YoutubeAPI extends ChangeNotifier {
     String channelName,
     Map<String, bool> options,
   ) async {
-    String channelId = '';
+    String channelId = ''; //'ea483ed4b6881a1e1f1a0a66966835bff93441fd';
 
-    log('Channel ID: $channelId');
+    // log('Channel ID: $channelId');
 
-    if (channelId.isEmpty) {
-      log('Error: Channel does not exist');
-      return;
-    }
+    // if (channelId.isEmpty) {
+    //   log('Error: Channel does not exist');
+    //   return;
+    // }
 
     //get access token
     GoogleSignInAuthentication googleAuth;
@@ -141,7 +140,6 @@ class YoutubeAPI extends ChangeNotifier {
 
     Map<String, dynamic> thisData = {
       'FirebaseID': firebaseID,
-      'ChannelID': channelId,
       'Options': options,
       'AccessToken': googleAuth.accessToken,
       'RefreshToken': googleAuth.idToken,

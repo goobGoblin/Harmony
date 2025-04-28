@@ -107,7 +107,7 @@ class SpotifyAPI extends ChangeNotifier {
     try {
       var temp = SpotifySdk.connectToSpotifyRemote(
         clientId:
-            (await clientID)["ClientID"], //please contact me for the client id
+            (await clientID)["ClientID"],
         redirectUrl: "http://localhost:8888/callback",
       );
       log('Connected: $temp');
@@ -124,7 +124,7 @@ class SpotifyAPI extends ChangeNotifier {
     try {
       var temp = SpotifySdk.connectToSpotifyRemote(
         clientId:
-            (await clientID)["ClientID"], //please contact me for the client id
+            (await clientID)["ClientID"],
         redirectUrl: "http://localhost:8888/callback",
         scope:
             "user-library-read ,app-remote-control, user-read-playback-state, user-modify-playback-state, user-read-currently-playing, playlist-read-private, playlist-read-collaborative",
@@ -139,7 +139,7 @@ class SpotifyAPI extends ChangeNotifier {
       setToken(
         await SpotifySdk.getAccessToken(
           clientId:
-              (await clientID)["ClientID"], //please contact me for the client id
+              (await clientID)["ClientID"],
           redirectUrl: "http://localhost:8888/callback",
           scope:
               "user-library-read ,app-remote-control, user-read-playback-state, user-modify-playback-state, user-read-currently-playing, playlist-read-private, playlist-read-collaborative",

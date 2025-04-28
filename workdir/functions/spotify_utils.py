@@ -33,7 +33,7 @@ def importPlaylists(user, userInfo, db, params, sp):
         #add to user playlists songs as reference if not songDocRef in userDocRef.get().to_dict():
         playlistDocRef = {
             'Name' : playlist['name'],
-            'Tracks' : {"Tracklist": songsList, "NumberOfTracks": len(songsList)},
+            'Tracks' : {"Tracklist": songsList, "Number of Tracks": len(songsList)},
             'LinkedServices' : ['Spotify'],
             'Description' : playlist['description'],
             'Images' : playlist.get("images"),
@@ -76,7 +76,7 @@ def importAlbums(user ,db, params):
             
         albumDoc = {
             'Name' : album['album']['name'],
-            "Tracks" : {"Tracklist" : songsList, "NumberOfTracks" : len(songsList)},
+            "Tracks" : {"Tracklist" : songsList, "Number of Tracks" : len(songsList)},
             'Artist' : album['album']['artists'],
             'Images' : album['album']['images'],
             'URI' : album['album']['uri'],
