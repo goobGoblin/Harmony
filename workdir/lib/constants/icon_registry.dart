@@ -59,4 +59,6 @@ class IconRegistry {
   static const IconAsset pinFilled = IconAsset.pinFilled;
   static const IconAsset check = IconAsset.check;
   static const IconAsset checkFilled = IconAsset.checkFilled;
+  static const IconAsset private = IconAsset.private;
+  static const IconAsset public = IconAsset.public;
 }

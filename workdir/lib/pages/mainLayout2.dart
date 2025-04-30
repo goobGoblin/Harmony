@@ -100,7 +100,7 @@ Widget build(BuildContext context) {
         // Main content area first (at the bottom layer)
         widget.child,
         
-        // Sidebar - correctly using Positioned inside Stack
+        // Sidebar - correctly using Positioned inside Stac2k
         Positioned(
           left: dimensions['sbOffsetX']!,  
           top: dimensions['sbY']!,

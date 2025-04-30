@@ -5,14 +5,14 @@ import 'dependencies.dart';
 import '../widgets/playlist_header.dart';
 
 // Convert to StatefulWidget to manage the privacy state
-class Playlists extends StatefulWidget {
-  const Playlists({Key? key}) : super(key: key);
+class Playlists2 extends StatefulWidget {
+  const Playlists2({Key? key}) : super(key: key);
 
   @override
-  State<Playlists> createState() => _PlaylistsState();
+  State<Playlists2> createState() => _Playlists2State();
 }
 
-class _PlaylistsState extends State<Playlists> {
+class _Playlists2State extends State<Playlists2> {
   // Add state variable for privacy
   bool _playlistPrivacyState = false;
   

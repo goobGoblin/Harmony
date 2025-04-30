@@ -9,6 +9,7 @@ export 'currently_playing.dart';
 export 'globals.dart';
 export 'songs.dart';
 export 'playlists.dart';
+export 'playlists2.dart';
 export 'albums.dart';
 export 'artists.dart';
 export 'downloads.dart';

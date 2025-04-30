@@ -67,6 +67,7 @@ enum IconAsset {
   podcast,
   prev,
   private,
+  public,
   queue,
   radio,
   rate,
