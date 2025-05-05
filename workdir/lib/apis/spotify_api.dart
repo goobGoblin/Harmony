@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_application_1/firebase/firebase_utils.dart';
+import 'package:flutter_application_1/pages/dependencies.dart';
 import 'package:spotify_sdk/spotify_sdk.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -15,7 +18,6 @@ class SpotifyAPI extends ChangeNotifier {
   dynamic _playlists;
   String _token = '';
   var _db;
-
 
   Future<void> sendRequest(String type, Map<String, dynamic> thisData) async {
     //   log("Sending request");
@@ -101,19 +103,37 @@ class SpotifyAPI extends ChangeNotifier {
     return clientID;
   }
 
+  Future<void> setFirebaseConnection(bool thisConnect) async {
+    globals.isSpotifyConnected = thisConnect;
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .set({
+          'Linked Accounts': {
+            'Spotify': [thisConnect, _token],
+          },
+        }, SetOptions(merge: true));
+  }
+
   void reconnect() async {
     //grab token from firebase
     var clientID = getClientID();
-
+    log('Reconnecting to spotify');
     try {
       var temp = SpotifySdk.connectToSpotifyRemote(
-        clientId:
-            (await clientID)["ClientID"],
+        clientId: (await clientID)["ClientID"],
         redirectUrl: "http://localhost:8888/callback",
+        scope:
+            "user-library-read ,app-remote-control, user-read-playback-state, user-modify-playback-state, user-read-currently-playing, playlist-read-private, playlist-read-collaborative",
       );
       log('Connected: $temp');
+    } on PlatformException catch (e) {
+      if (e.message?.contains('UserNotAuthorizedException') ?? false) {
+        setFirebaseConnection(false);
+      }
+      log('Error spotify not authorized: ${parseError(e.toString())}');
     } catch (e) {
-      log('Error: ${parseError(e.toString())}');
+      log('Error: ${e.toString()}');
     }
   }
 
@@ -124,8 +144,7 @@ class SpotifyAPI extends ChangeNotifier {
 
     try {
       var temp = SpotifySdk.connectToSpotifyRemote(
-        clientId:
-            (await clientID)["ClientID"],
+        clientId: (await clientID)["ClientID"],
         redirectUrl: "http://localhost:8888/callback",
         scope:
             "user-library-read ,app-remote-control, user-read-playback-state, user-modify-playback-state, user-read-currently-playing, playlist-read-private, playlist-read-collaborative",
@@ -139,8 +158,7 @@ class SpotifyAPI extends ChangeNotifier {
     try {
       setToken(
         await SpotifySdk.getAccessToken(
-          clientId:
-              (await clientID)["ClientID"],
+          clientId: (await clientID)["ClientID"],
           redirectUrl: "http://localhost:8888/callback",
           scope:
               "user-library-read ,app-remote-control, user-read-playback-state, user-modify-playback-state, user-read-currently-playing, playlist-read-private, playlist-read-collaborative",
@@ -151,14 +169,7 @@ class SpotifyAPI extends ChangeNotifier {
     }
     //firebaseInit();
     //set value in users collection to true for spotify, and add users token
-    FirebaseFirestore.instance
-        .collection('Users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .set({
-          'Linked Accounts': {
-            'Spotify': [true, _token],
-          },
-        }, SetOptions(merge: true));
+    setFirebaseConnection(true);
 
     log('Token: $_token');
     //connect to backend

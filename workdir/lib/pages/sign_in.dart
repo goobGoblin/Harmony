@@ -1,3 +1,5 @@
+import 'package:flutter_application_1/apis/spotify_api.dart';
+
 import 'dependencies.dart';
 
 class SignInRoute extends StatelessWidget {
@@ -35,6 +37,20 @@ class SignInRoute extends StatelessWidget {
                 );
 
                 if (result == 'Logged in successfully') {
+                  if (!globals.isSpotifyConnected) {
+                    spotifyConnection
+                        .connect(FirebaseAuth.instance.currentUser!.uid, {
+                          'Playlists': false,
+                          'Liked Songs': false,
+                          'Recently Played': false,
+                          'Top Tracks': false,
+                          'Top Artists': false,
+                          'Followed Artists': false,
+                          'Followed Users': false,
+                          'Albums': false,
+                          'Saved Podcasts': false,
+                        });
+                  }
                   Navigator.pushNamed(context, '/home');
                 } else {
                   SnackBar thisSnackBar = SnackBar(content: Text(result));

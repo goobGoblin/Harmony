@@ -66,8 +66,11 @@ Future<void> main() async {
     globals.userDoc = await getUserData();
 
     var spotifyAccount = globals.userDoc['Linked Accounts']['Spotify'];
-    if (spotifyAccount is bool && spotifyAccount || 
-        spotifyAccount is List && spotifyAccount.isNotEmpty && spotifyAccount[0]) {
+    if (spotifyAccount is bool && spotifyAccount ||
+        spotifyAccount is List &&
+            spotifyAccount.isNotEmpty &&
+            spotifyAccount[0]) {
+      log('Spotify account linked');
       spotifyConnection.reconnect();
     }
   }
@@ -92,10 +95,10 @@ Future<void> main() async {
       theme: ThemeData(
         // Set the primary color of the app
         primaryColor: AppColors.primary,
-        
+
         // Set the background color for scaffolds
         scaffoldBackgroundColor: AppColors.secondary,
-        
+
         // Set the overall color scheme
         colorScheme: ColorScheme.dark(
           primary: AppColors.primary,
@@ -108,7 +111,7 @@ Future<void> main() async {
           onSurface: AppColors.text,
           onBackground: AppColors.text,
         ),
-        
+
         // Text theme with white text
         textTheme: TextTheme(
           bodyLarge: TextStyle(color: AppColors.text),
@@ -116,7 +119,7 @@ Future<void> main() async {
           bodySmall: TextStyle(color: AppColors.text),
           // Other text styles...
         ),
-        
+
         // Other theme properties...
       ),
 
@@ -142,14 +145,16 @@ Future<void> main() async {
             (context) => MainLayout2(child: const CurrentlyPlaying()),
         '/playlists': (context) => MainLayout2(child: const Playlists()),
         '/playlists2': (context) => MainLayout2(child: const Playlists2()),
-        '/albums': (context) => MainLayout2(child: Albums(albums: (userAlbums))),
+        '/albums':
+            (context) => MainLayout2(child: Albums(albums: (userAlbums))),
         '/artists': (context) => MainLayout2(child: const Artists()),
         '/songs':
             (context) =>
                 MainLayout2(child: const Songs(thisName: "Songs", tracks: {})),
         '/downloads': (context) => MainLayout2(child: const Downloads()),
         '/settings': (context) => MainLayout2(child: const SettingsRoute()),
-        '/connectedApps': (context) => MainLayout2(child: const ConnectedApps2()),
+        '/connectedApps':
+            (context) => MainLayout2(child: const ConnectedApps2()),
         '/myAccount': (context) => MainLayout2(child: const MyAccount()),
         '/preferences': (context) => MainLayout2(child: const Preferences()),
       },
