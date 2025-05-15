@@ -17,7 +17,6 @@ class MyAudioHandler {
         case "Spotify":
           _player.pause();
           thisParser.play(thisUri);
-
           break;
         case "Soundcloud":
           await thisParser.sendRequest("POST", {

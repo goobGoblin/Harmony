@@ -21,6 +21,7 @@ List<Widget> createListOfSongs(
           globals.recentlyPlayed!.add(thisSong);
           globals.getRecentlyPlayed();
           globals.currentlyPlaying = thisSong;
+          globals.currentSongReference = collection[i];
           globals.currentIndex = i;
           globals.isPlaying = true;
           //log(globals.currentlyPlaying.toString(), name: 'Currently Playing');
@@ -79,6 +80,7 @@ List<Widget> createListOfSongs(
                 onChanged: (value) {
                   MenuItems.onChanged(context, value! as MenuItem);
                   globals.currentIndex = i;
+                  globals.currentSongReference = collection[i];
                 },
                 dropdownStyleData: DropdownStyleData(
                   width: 160,

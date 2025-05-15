@@ -17,6 +17,7 @@ class Globals {
   bool isPaused = false;
   bool bottomPlayerVisible = true;
   Stream<List<int>> currentStream = const Stream.empty();
+  var currentSongReference;
   late DocumentSnapshot<Map<String, dynamic>> userDoc;
   ValueNotifier<Widget> bottomPlayerListener = ValueNotifier(
     const BottomPlayer(),

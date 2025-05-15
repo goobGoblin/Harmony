@@ -1,4 +1,4 @@
-name: harmony
+name: flutter_application_1
 description: "Application to unify your music libraries"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.

@@ -139,5 +139,47 @@ abstract class MenuItems {
     }
   }
 
-  static void _addToPlaylist(String playlistName) {}
+  static void _addToPlaylist(String playlistName) async {
+    //grab data
+    var thisRef =
+        await FirebaseFirestore.instance
+            .collection('Users')
+            .doc(globals.userDoc.id)
+            .get();
+
+    var data = thisRef.data();
+    //log("Data: $data");
+    //find associated playlist
+    var playlists = data?["playlists"];
+
+    var playlistIndex = 0;
+
+    for (int i = 0; i < playlists.length; i++) {
+      if (playlists[i] == null) continue;
+      if (playlists[i]['Name'] == playlistName) {
+        playlistIndex = i;
+        break;
+      }
+    }
+
+    log("Currently Playing: ${globals.currentSongReference.id}");
+
+    String path = "/Songs/${globals.currentSongReference.id}";
+
+    var reference = FirebaseFirestore.instance.doc(path);
+
+    data?["playlists"][playlistIndex]["Tracks"]["Number of Tracks"]++; //increment the number of tracks in the playlist
+    data?["playlists"][playlistIndex]["Tracks"]["Tracklist"].add(reference);
+
+    try {
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(globals.userDoc.id)
+          .update({"playlists": data?["playlists"]});
+    } catch (e) {
+      log("Error in removing track from playlist: $e");
+    }
+  }
+
+  //add the current track to the playlist
 }
