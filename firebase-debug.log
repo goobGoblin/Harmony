@@ -1,0 +1,63 @@
+[debug] [2025-08-25T22:09:11.841Z] ----------------------------------------------------------------------
+[debug] [2025-08-25T22:09:11.843Z] Command:       /usr/local/bin/firebase /home/harrison/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/bin/firebase -P EECS-582-Projecty
+[debug] [2025-08-25T22:09:11.843Z] CLI Version:   14.14.0
+[debug] [2025-08-25T22:09:11.843Z] Platform:      linux
+[debug] [2025-08-25T22:09:11.843Z] Node Version:  v20.18.2
+[debug] [2025-08-25T22:09:11.843Z] Time:          Mon Aug 25 2025 16:09:11 GMT-0600 (Mountain Daylight Time)
+[debug] [2025-08-25T22:09:11.844Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-08-25T22:09:11.845Z] TypeError: Cannot read properties of undefined (reading '0')
+    at Command.<anonymous> (/home/harrison/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/index.js:57:21)
+    at Command.listener [as _actionHandler] (/home/harrison/.cache/firebase/tools/lib/node_modules/commander/index.js:413:31)
+    at Command._parseCommand (/home/harrison/.cache/firebase/tools/lib/node_modules/commander/index.js:914:14)
+    at Command.parse (/home/harrison/.cache/firebase/tools/lib/node_modules/commander/index.js:717:10)
+    at cli (/home/harrison/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/bin/cli.js:95:30)
+    at Object.<anonymous> (/home/harrison/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/bin/firebase.js:18:5)
+    at Module._compile (node:internal/modules/cjs/loader:1469:14)
+    at Module._compile (pkg/prelude/bootstrap.js:1898:32)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1548:10)
+    at Module.load (node:internal/modules/cjs/loader:1288:32)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2025-08-25T22:09:14.017Z] ----------------------------------------------------------------------
+[debug] [2025-08-25T22:09:14.018Z] Command:       /usr/local/bin/firebase /home/harrison/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/bin/firebase -P EECS-582-Project
+[debug] [2025-08-25T22:09:14.019Z] CLI Version:   14.14.0
+[debug] [2025-08-25T22:09:14.019Z] Platform:      linux
+[debug] [2025-08-25T22:09:14.019Z] Node Version:  v20.18.2
+[debug] [2025-08-25T22:09:14.019Z] Time:          Mon Aug 25 2025 16:09:14 GMT-0600 (Mountain Daylight Time)
+[debug] [2025-08-25T22:09:14.019Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-08-25T22:09:14.020Z] TypeError: Cannot read properties of undefined (reading '0')
+    at Command.<anonymous> (/home/harrison/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/index.js:57:21)
+    at Command.listener [as _actionHandler] (/home/harrison/.cache/firebase/tools/lib/node_modules/commander/index.js:413:31)
+    at Command._parseCommand (/home/harrison/.cache/firebase/tools/lib/node_modules/commander/index.js:914:14)
+    at Command.parse (/home/harrison/.cache/firebase/tools/lib/node_modules/commander/index.js:717:10)
+    at cli (/home/harrison/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/bin/cli.js:95:30)
+    at Object.<anonymous> (/home/harrison/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/bin/firebase.js:18:5)
+    at Module._compile (node:internal/modules/cjs/loader:1469:14)
+    at Module._compile (pkg/prelude/bootstrap.js:1898:32)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1548:10)
+    at Module.load (node:internal/modules/cjs/loader:1288:32)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2025-08-25T22:09:31.115Z] ----------------------------------------------------------------------
+[debug] [2025-08-25T22:09:31.116Z] Command:       /usr/local/bin/firebase /home/harrison/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/bin/firebase -P  EECS-582-Project
+[debug] [2025-08-25T22:09:31.117Z] CLI Version:   14.14.0
+[debug] [2025-08-25T22:09:31.117Z] Platform:      linux
+[debug] [2025-08-25T22:09:31.117Z] Node Version:  v20.18.2
+[debug] [2025-08-25T22:09:31.117Z] Time:          Mon Aug 25 2025 16:09:31 GMT-0600 (Mountain Daylight Time)
+[debug] [2025-08-25T22:09:31.117Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-08-25T22:09:31.118Z] TypeError: Cannot read properties of undefined (reading '0')
+    at Command.<anonymous> (/home/harrison/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/index.js:57:21)
+    at Command.listener [as _actionHandler] (/home/harrison/.cache/firebase/tools/lib/node_modules/commander/index.js:413:31)
+    at Command._parseCommand (/home/harrison/.cache/firebase/tools/lib/node_modules/commander/index.js:914:14)
+    at Command.parse (/home/harrison/.cache/firebase/tools/lib/node_modules/commander/index.js:717:10)
+    at cli (/home/harrison/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/bin/cli.js:95:30)
+    at Object.<anonymous> (/home/harrison/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/bin/firebase.js:18:5)
+    at Module._compile (node:internal/modules/cjs/loader:1469:14)
+    at Module._compile (pkg/prelude/bootstrap.js:1898:32)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1548:10)
+    at Module.load (node:internal/modules/cjs/loader:1288:32)
+[error] 
+[error] Error: An unexpected error has occurred.

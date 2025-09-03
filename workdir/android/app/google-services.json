@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "670257855909",
-    "project_id": "eecs-582-project-74abe",
-    "storage_bucket": "eecs-582-project-74abe.firebasestorage.app"
+    "project_number": "316959182880",
+    "project_id": "harmony-1a042",
+    "storage_bucket": "harmony-1a042.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:670257855909:android:6688d075f48a90da257c4c",
+        "mobilesdk_app_id": "1:316959182880:android:9d634b86a01d618adfac45",
         "android_client_info": {
           "package_name": "com.example.flutter_application_1"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCvT1SGRvPogSwx9ZDbONi1D8Qy9mLHxdU"
+          "current_key": "AIzaSyDP6wcseDXGGQLbJ1O2g60qfZ98yOPh2as"
         }
       ],
       "services": {

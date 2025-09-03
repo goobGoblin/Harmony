@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -49,20 +46,30 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyAH-xyp2j-RT664j0W9Hh7hWQzV7OGkQW0',
+    appId: '1:316959182880:web:ef7bf57c842ad1e2dfac45',
+    messagingSenderId: '316959182880',
+    projectId: 'harmony-1a042',
+    authDomain: 'harmony-1a042.firebaseapp.com',
+    storageBucket: 'harmony-1a042.firebasestorage.app',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: "AIzaSyCvT1SGRvPogSwx9ZDbONi1D8Qy9mLHxdU",
-    appId: "1:670257855909:android:6688d075f48a90da257c4c",
-    messagingSenderId: "670257855909",
-    projectId: "eecs-582-project-74abe",
-    storageBucket: "eecs-582-project-74abe.firebasestorage.app",
+    apiKey: 'AIzaSyDP6wcseDXGGQLbJ1O2g60qfZ98yOPh2as',
+    appId: '1:316959182880:android:9d634b86a01d618adfac45',
+    messagingSenderId: '316959182880',
+    projectId: 'harmony-1a042',
+    storageBucket: 'harmony-1a042.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: "AIzaSyA8o2JGXDjfQ68iex2eUFWw7DvKTaX7Aeo",
-    appId: "1:670257855909:ios:cf987a48c2e688bf257c4c",
-    messagingSenderId: "670257855909",
-    projectId: "eecs-582-project-74abe",
-    storageBucket: "eecs-582-project-74abe.firebasestorage.app",
-    iosBundleId: "com.example.flutterApplication1",
+    apiKey: 'AIzaSyAU9eM7LkXGwoNiVwcd9QXQv8X90itDXQw',
+    appId: '1:316959182880:ios:51ee0705637764dddfac45',
+    messagingSenderId: '316959182880',
+    projectId: 'harmony-1a042',
+    storageBucket: 'harmony-1a042.firebasestorage.app',
+    iosBundleId: 'com.example.flutterApplication1',
   );
+
 }

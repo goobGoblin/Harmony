@@ -1,5 +1,6 @@
 export 'package:flutter/material.dart';
 export 'package:firebase_core/firebase_core.dart';
+export 'package:firebase_auth/firebase_auth.dart';
 export '../firebase/firebase_utils.dart';
 export 'utils/list_of_items.dart';
 export 'utils/bottomPlayer.dart';

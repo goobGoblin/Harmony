@@ -182,9 +182,14 @@ Future<List<dynamic>> getGlobalAlbumData(List<dynamic> albums) async {
 }
 
 Future<DocumentSnapshot<Map<String, dynamic>>> getTempData() async {
-  var docSnapshot =
-      FirebaseFirestore.instance.collection('Users').doc("User").get();
+  var docSnapshot;
 
+  try {
+    docSnapshot =
+        await FirebaseFirestore.instance.collection('Users').doc("User").get();
+  } catch (e) {
+    log('Error getting temp data: $e');
+  }
   //log('Document exists');
   return docSnapshot;
 }
